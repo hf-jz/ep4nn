@@ -395,7 +395,10 @@ def demo(ticks: int = 1200) -> None:
     print(f"ticks={ep.ticks} kept={ep.growths_kept} failed={ep.growths_failed} "
           f"refused_no_response={no_response} silent_answers={ep.silent} "
           f"neurons={ep.neurons} synapses={ep.synapses}")
-    from .receipt import build as build_receipt, write as write_receipt
+    try:  # importable as a module and runnable as a file: python ep4nn/grow.py
+        from .receipt import build as build_receipt, write as write_receipt
+    except ImportError:
+        from receipt import build as build_receipt, write as write_receipt
 
     write_receipt(build_receipt(
         dataset={"source": "openworm/c302 A_Full via cadence-examples/worm",

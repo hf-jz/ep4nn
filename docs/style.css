@@ -1,0 +1,21 @@
+/* ep4nn site: one stylesheet, no framework */
+:root { --ink:#1a1a1a; --mute:#666; --line:#e3e3e3; --bg:#fff; --accent:#0b6e4f; }
+* { box-sizing: border-box; }
+body { margin:0 auto; padding:3rem 1.25rem 6rem; max-width:52rem; background:var(--bg); color:var(--ink);
+  font:16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "PingFang SC", sans-serif; }
+h1 { font-size:1.9rem; line-height:1.25; margin:0 0 .3rem; letter-spacing:-.01em; }
+h2 { font-size:1.25rem; margin:2.6rem 0 .6rem; padding-bottom:.3rem; border-bottom:1px solid var(--line); }
+h3 { font-size:1.05rem; margin:1.8rem 0 .4rem; }
+p, li { color:var(--ink); }
+header.title-block p.author, header.title-block p.date { color:var(--mute); margin:.1rem 0; font-size:.95rem; }
+table { border-collapse:collapse; width:100%; margin:1.2rem 0; font-size:.92rem; }
+th, td { border:1px solid var(--line); padding:.4rem .55rem; text-align:left; vertical-align:top; }
+th { background:#fafafa; font-weight:600; }
+code { background:#f4f4f4; padding:.1rem .3rem; border-radius:3px; font-size:.92em; }
+pre { background:#f7f7f7; border:1px solid var(--line); border-radius:6px; padding:.8rem 1rem; overflow-x:auto; }
+a { color:var(--accent); }
+blockquote { margin:1.2rem 0; padding:.2rem 1rem; border-left:3px solid var(--line); color:var(--mute); }
+hr { border:0; border-top:1px solid var(--line); margin:2.5rem 0; }
+nav.top { font-size:.9rem; color:var(--mute); margin-bottom:1.5rem; }
+nav.top a { margin-right:.9rem; }
+@media print { nav.top { display:none } body { padding:0; max-width:none } }

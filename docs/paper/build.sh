@@ -11,6 +11,6 @@ if grep -qE "There were undefined references|Citation .* undefined" ep4nn.log; t
 fi
 cp ep4nn.pdf ../ep4nn.pdf
 echo "pages: $(grep -o "([0-9]* pages" ep4nn.log | tail -1 | tr -d '(')"
-echo "overfull: $(grep -c 'Overfull' ep4nn.log || true)"
+if grep -q "Overfull" ep4nn.log; then echo "OVERFULL:"; grep -A2 "Overfull" ep4nn.log | head -12; fi
 rm -f ep4nn.aux ep4nn.log ep4nn.out ep4nn.toc ep4nn.pdf
 echo "built $(cd .. && pwd)/ep4nn.pdf"

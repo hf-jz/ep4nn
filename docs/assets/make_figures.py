@@ -42,11 +42,12 @@ def fig1() -> None:
     ax.text(0.11, MIN_RESPONSE * 1.06, "growth gate  min_response = 0.05",
             fontsize=9.5, color=INK)
     best = max(rows, key=lambda r: r["spread"])
-    ax.annotate(f"best of 60: {best['spread']:.4f}\n(row sum {best['row_sum']}, command gain x{best['class_scale']:g})",
-                xy=(best["row_sum"], best["spread"]), xytext=(1.15, 0.062),
+    cls = "no class gain" if best["gain_class"] is None else f"{best['gain_class'][6:]} gain"
+    ax.annotate(f"best of {len(rows)}: {best['spread']:.4f}\n(row sum {best['row_sum']}, {cls} x{best['class_scale']:g})",
+                xy=(best["row_sum"], best["spread"]), xytext=(0.95, 0.030),
                 fontsize=9.5, color=INK, arrowprops=dict(arrowstyle="-", color=MUTE, lw=.9))
     ax.set(xlabel="row sum of the declared operating point", ylabel="readout spread (mean max - min)",
-           title="The answer barely moves", ylim=(-0.004, 0.09))
+           title="The answer barely moves", ylim=(-0.003, 0.060))
     ax.legend(frameon=False, fontsize=9.5, loc="upper right")
 
     for cls in COLOR:
@@ -74,12 +75,12 @@ def fig1a() -> None:
     ax.axhline(MIN_RESPONSE, ls="--", lw=2, c=INK, zorder=2)
     ax.text(0.115, MIN_RESPONSE + 0.0035, "growth gate  min_response = 0.05", fontsize=15, color=INK)
     best = max(rows, key=lambda r: r["spread"])
-    ax.annotate(f"best of 60: {best['spread']:.4f}", xy=(best["row_sum"], best["spread"]),
-                xytext=(0.78, 0.081), fontsize=15, color=INK,
+    ax.annotate(f"best of {len(rows)}: {best['spread']:.4f}", xy=(best["row_sum"], best["spread"]),
+                xytext=(0.62, 0.060), fontsize=15, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=1.2))
     ax.text(0.115, 0.068, "collision cosine 1.000 at every point", fontsize=15, color=MUTE)
     ax.set(xlabel="row sum of the declared operating point", ylabel="readout spread",
-           ylim=(-0.005, 0.092), xlim=(0, 2.15))
+           ylim=(-0.004, 0.072), xlim=(0, 2.15))
     ax.legend(frameon=False, fontsize=15, loc="upper right")
     ax.tick_params(labelsize=13)
     fig.tight_layout()
@@ -113,20 +114,20 @@ def fig2() -> None:
 
 def fig3() -> None:
     # probes/probe_certificate.py on the worm graph at row sum 0.5
-    names = ["global worst-case\nbound q", "local bound\n(current state)", "weighted witness\nalpha",
-             "contraction\nneeded"]
-    vals = [88.0, 1.186, 0.696, 1.0]
+    names = ["global\nbound q", "row bound\n(fails)", "rho(K)\ndefault",
+             "rho(J)\ndeclared", "witness\nalpha", "needed\n(1)"]
+    vals = [88.0, 1.186, 0.529, 0.931, 0.696, 1.0]
     fig, ax = plt.subplots(figsize=(9.2, 6.0))
-    bars = ax.bar(names, vals, color=[MUTE, LIGHT, ACCENT, "#dcdcd6"], width=.62)
+    bars = ax.bar(names, vals, color=[MUTE, "#c9b7a7", LIGHT, ACCENT, "#4a7fb5", "#dcdcd6"], width=.62)
     ax.set(yscale="log", ylabel="contraction factor (log scale)",
-           title="A certificate exists where the global bound fails\nsource: probes/probe_certificate.py",
-           ylim=(0.4, 200))
+           title="A certificate exists where the global bound fails\nsources: probe_certificate.py, probe_audit_claims.py",
+           ylim=(0.4, 300))
     for b, v in zip(bars, vals):
         ax.text(b.get_x() + b.get_width() / 2, v * 1.12, f"{v:g}", ha="center", fontsize=10.5, color=INK)
-    ax.annotate("292 of 302 rows at or above 1:\nno certificate", xy=(0, 88), xytext=(0.55, 120),
+    ax.annotate("292 of 302 rows at or above 1:\nno certificate", xy=(0, 88), xytext=(0.42, 170),
                 fontsize=9.5, color=INK, arrowprops=dict(arrowstyle="-", color=MUTE, lw=.9))
-    ax.annotate("spectral radius 0.529,\nbudget k = log(eps/delta)/log(1/alpha)", xy=(2, 0.696),
-                xytext=(1.35, 3.4), fontsize=9.5, color=INK,
+    ax.annotate("certificate: spectral radius of the\nmajorant at both operating points,\nbounded by the weighted witness",
+                xy=(2, 0.529), xytext=(1.55, 2.6), fontsize=9.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=.9))
     fig.tight_layout()
     fig.savefig(HERE / "fig3_certificate.png", dpi=100)

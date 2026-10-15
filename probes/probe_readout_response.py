@@ -37,14 +37,14 @@ def load_worm_with_roles() -> Connectome:
     names = [c["name"] for c in raw["neurons"]]
     roles = [c.get("role", "unknown") for c in raw["neurons"]]
     index = {name: i for i, name in enumerate(names)}
-    pre, post, sign = [], [], []
-    for a, b, _, s in ((int(r[0]), int(r[1]), float(r[2]), float(r[3])) for r in raw["chemical"]):
+    pre, post, count, sign = [], [], [], []
+    for a, b, c, s in ((int(r[0]), int(r[1]), float(r[2]), float(r[3])) for r in raw["chemical"]):
         if a != b:
-            pre.append(a); post.append(b); sign.append(s)
-    for a, b, _ in ((int(r[0]), int(r[1]), float(r[2])) for r in raw["gap"]):
+            pre.append(a); post.append(b); count.append(c); sign.append(s)
+    for a, b, c in ((int(r[0]), int(r[1]), float(r[2])) for r in raw["gap"]):
         if a != b:
             for x, y in ((a, b), (b, a)):
-                pre.append(x); post.append(y); sign.append(1.0)
+                pre.append(x); post.append(y); count.append(c); sign.append(1.0)
     populations: dict[str, tuple[int, ...]] = {
         "odour_A": tuple(index[n] for n in ("AWAL", "AWAR")),
         "odour_B": tuple(index[n] for n in ("AWCL", "AWCR")),
@@ -56,7 +56,7 @@ def load_worm_with_roles() -> Connectome:
     }
     for role in sorted(set(roles)):
         populations[f"class_{role}"] = tuple(i for i, r in enumerate(roles) if r == role)
-    return Connectome.from_synapses(len(names), pre=pre, post=post, sign=sign,
+    return Connectome.from_synapses(len(names), pre=pre, post=post, count=count, sign=sign,
                                     populations=populations, label="celegans:c302")
 
 

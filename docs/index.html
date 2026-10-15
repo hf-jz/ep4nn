@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ep4nn: Evidence-Gated Structural Growth in a Connectome-Compiled Equilibrium Network</title>
-<meta name="description" content="A 302-neuron worm connectome in an equilibrium network that grows only when the answer cannot tell two situations apart. Sixty operating points, one direction: the prerequisite fails, and the refusal is the result.">
+<meta name="description" content="A 302-neuron worm connectome in an equilibrium network that grows only when the answer cannot tell two situations apart. Forty-five operating points, one direction: the prerequisite fails, and the refusal is the result.">
 <link rel="canonical" href="https://hf-jz.github.io/ep4nn/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ep4nn: evidence-gated structural growth on a measured connectome">
@@ -172,7 +172,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
     </div>
   </div>
   <figure>
-    <img src="assets/fig1a_hero.png" width="1280" height="580" alt="Readout spread against row sum at sixty operating points: every point sits below the growth gate, the best at 0.0777">
+    <img src="assets/fig1a_hero.png" width="1280" height="580" alt="Readout spread against row sum at forty-five operating points: every point sits below the growth gate, the best at 0.0397">
   </figure>
 </div>
 
@@ -182,16 +182,16 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
     <h2 style="margin-top:10px">The measured worm readout answers along one direction, so capacity is not the binding constraint</h2>
     <dl class="two">
       <div>
-        <dt>Best of sixty operating points</dt>
-        <dd><span class="sym">0.0777</span> readout spread, against a growth gate of 0.05, at row sum 0.5 with a gain of ten on the command class. Amplitude moves; the pattern does not.</dd>
+        <dt>Best of forty-five operating points</dt>
+        <dd><span class="sym">0.0397</span> readout spread, below the growth gate of 0.05, at row sum 0.5 with a gain of two on the interneuron class. No point of the grid reaches the gate.</dd>
         <dt>Collision at that point</dt>
-        <dd><span class="sym">1.000</span> largest absolute cosine between two context answers that must differ, against a gate of 0.85. Every one of the sixty points sits at the same cosine.</dd>
+        <dd><span class="sym">0.9979</span> is the smallest largest absolute cosine between two context answers that must differ, against a gate of 0.85; at the best point the answers span a cone of 1.45 degrees with 99.95 percent of their energy in one singular direction.</dd>
       </div>
       <div>
         <dt>Growth decisions, 1200 ticks</dt>
         <dd><span class="sym">1200 / 1200</span> refused with no response recorded, zero kept and zero rolled back, and 302 neurons before and after. The ungated variant attempted thirty growths and rolled all thirty back.</dd>
         <dt>Certificate on the same graph</dt>
-        <dd><span class="sym">0.696</span> weighted witness with local spectral radius 0.529, where the global worst-case bound is 88.0 and certifies nothing at this gain.</dd>
+        <dd><span class="sym">0.529</span> spectral radius of the settling majorant at the library's default efficacy and <span class="sym">0.931</span> at the declared operating point, against a global worst-case bound of 88.0 that certifies nothing.</dd>
       </div>
     </dl>
   </div>
@@ -207,14 +207,14 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
           <h3>Prerequisite: the answer must move <span class="tmeta">measured before anything else</span></h3>
           <p>The declared readout is a named set of neurons, not the whole state, and the whole state nearly always separates because it contains the driven cells themselves. ep4nn measures the spread of that readout across situations and records a refusal to grow when it falls below the gate, because added capacity cannot separate answers that do not move.</p>
         </div>
-        <p class="tmeta">Measured 0.019 in the growth demo and 0.0777 in the best of sixty scanned operating points, against a gate of 0.05.</p>
+        <p class="tmeta">Measured 0.019 in the growth demo and 0.0397 in the best of forty-five scanned operating points, against a gate of 0.05.</p>
       </article>
       <article class="titem">
         <div>
           <h3>Demand: indistinguishability is the signal <span class="tmeta">Rule 1</span></h3>
           <p>Two situations that the world declares different, share the present input, and produce answers whose absolute cosine exceeds the cap, constitute a capacity signal. The signal is a witness, not a loss: it names the pair that is being confused, and that pair is what the generator wires against.</p>
         </div>
-        <p class="tmeta">Cap 0.85. The worm graph delivers 0.9998 to 1.0000 at every scanned point, so the signal fires on everything and therefore names nothing.</p>
+        <p class="tmeta">Cap 0.85. The worm graph delivers 0.9979 to 1.0000 at every scanned point, so the signal fires on everything and therefore names nothing.</p>
       </article>
       <article class="titem">
         <div>
@@ -248,7 +248,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
     <div class="rows">
       <div class="row">
         <div class="src">Settlement cost<span>worm at 302 / 3,137 and sparse graphs to 100,000</span></div>
-        <p>About 1.76 ns per synapse, so the control frequency of a settling brain is bounded by one over synapses times nanoseconds times sweeps. A sparse 10,000-neuron graph settles in 6.48 ms and a 100,000-neuron graph in 77.4 ms. The worm graph needs five times as many sweeps as a random graph of the same size and degree at the same tolerance, which locates the difficulty in the spectrum rather than in the size.</p>
+        <p>1.76 ns per synapse in the sparse regime, and 8.7 ns at 302 neurons where per-sweep overhead dominates, so the control frequency of a settling brain is bounded by one over synapses times nanoseconds times sweeps. A sparse 10,000-neuron graph settles in 6.48 ms and a 100,000-neuron graph in 77.4 ms. The worm graph needs five times as many sweeps as a random graph of the same size and degree at the same tolerance, and that difference is measured in the spectrum rather than assumed: the settling majorant contracts at 0.931 on the worm and 0.618 on the random graph, and a contraction-rate account predicts a sweep ratio of 5.6 against the measured 5.0.</p>
       </div>
       <div class="row">
         <div class="src">Transport path<span>chosen by size, not by density</span></div>
@@ -256,7 +256,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       </div>
       <div class="row">
         <div class="src">Certificate<span>state-dependent, not worst case</span></div>
-        <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph, which certifies no budget at all. Evaluating the same quantity with the slopes of the current state gives spectral radius 0.529 and a positive weighted witness at 0.696, which does. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
+        <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has spectral radius 0.529 there and 0.931 at the declared row-normalised operating point, bounded by a positive weighted witness at 0.696, and the Gershgorin row criterion exceeds one in both cases, so the certificate is carried by the spectrum and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
       </div>
       <div class="row">
         <div class="src">Continuous tracking<span>a negative control result</span></div>
@@ -279,25 +279,25 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
 <section id="prerequisite">
   <div class="wrap">
     <p class="mono" style="margin:0">Prerequisite scan</p>
-    <h2 style="margin-top:10px">Sixty operating points, nine situations, one direction</h2>
-    <p class="lead" style="max-width:70ch">Five row sums, a gain on one cell class or none, four gain scales, and nine situations: three single senses and six combinations of an odour with a pain level. Spread is the mean over readout cells of the maximum minus the minimum activation across situations. Collision is the largest absolute cosine between two situations that share the present input and differ only in context, which is the pair that growth is supposed to separate.</p>
+    <h2 style="margin-top:10px">Forty-five operating points, nine situations, one direction</h2>
+    <p class="lead" style="max-width:70ch">Five row sums, a gain on one cell class or none, four gain scales, minus the fifteen cells where nothing is gained, and nine situations: three single senses and six combinations of an odour with a pain level. Spread is the mean over readout cells of the maximum minus the minimum activation across situations. Collision is the largest absolute cosine between two situations that share the present input and differ only in context, which is the pair that growth is supposed to separate.</p>
     <table>
-      <caption>Ranked by readout spread, from sixty scanned operating points. Source: probes/probe_readout_response.py, full data in assets/prereq_scan.json.</caption>
+      <caption>Ranked by readout spread, from forty-five scanned operating points. No point reaches the gate. Source: probes/probe_readout_response.py, full data in assets/prereq_scan.json.</caption>
       <thead><tr><th>row sum</th><th>class gain</th><th>scale</th><th>spread</th><th>collision</th><th>sweeps</th></tr></thead>
       <tbody>
-        <tr><td>0.5</td><td>command</td><td>10</td><td>0.0777</td><td>1.0000</td><td>224</td></tr>
-        <tr><td>1.0</td><td>command</td><td>2</td><td>0.0559</td><td>0.9999</td><td>64</td></tr>
-        <tr><td>1.0</td><td>none</td><td>1</td><td>0.0328</td><td>0.9998</td><td>64</td></tr>
-        <tr><td>0.2</td><td>interneuron</td><td>10</td><td>0.0314</td><td>0.9999</td><td>128</td></tr>
-        <tr><td>0.5</td><td>command</td><td>2</td><td>0.0084</td><td>0.9999</td><td>32</td></tr>
-        <tr><td>2.0</td><td>interneuron</td><td>10</td><td>0.0000</td><td>1.0000</td><td>96</td></tr>
+        <tr><td>0.5</td><td>interneuron</td><td>2</td><td>0.0397</td><td>1.0000</td><td>96</td></tr>
+        <tr><td>1.0</td><td>none</td><td>1</td><td>0.0376</td><td>1.0000</td><td>96</td></tr>
+        <tr><td>0.5</td><td>none</td><td>1</td><td>0.0372</td><td>0.9997</td><td>160</td></tr>
+        <tr><td>0.2</td><td>interneuron</td><td>5</td><td>0.0302</td><td>0.9998</td><td>64</td></tr>
+        <tr><td>0.5</td><td>command</td><td>5</td><td>0.0188</td><td>1.0000</td><td>64</td></tr>
+        <tr><td>2.0</td><td>command</td><td>10</td><td>0.0000</td><td>1.0000</td><td>64</td></tr>
       </tbody>
     </table>
     <figure style="margin-top:34px">
       <img src="assets/fig1_prereq_scan.png" width="1280" height="580" alt="Two panels: readout spread against row sum stays under the growth gate, and the largest absolute cosine between context answers sits at 1 for every point">
-      <figcaption class="fig-note">Spread under the gate on the left, and the context collision at 1 on the right, for all sixty points</figcaption>
+      <figcaption class="fig-note">Spread under the gate on the left, and the context collision at 1 on the right, for all forty-five points</figcaption>
     </figure>
-    <p>Several configurations collapse to an answer that is identical for all nine situations to three decimal places, which indicates a fixed point dominated by the recurrent dynamics rather than by the input. This is a negative result about the pair of a measured worm wiring and a rate model at a declared operating point, and not a claim about connectome substrates in general. The remedy has three candidates in ascending cost: a different declared readout, a dynamics with heterogeneous cells and per-type parameters, or a gain selected by protocol against held-out physiological facts, which is how the library's own fly guide repairs the same failure at a cosine of 0.98.</p>
+    <p>Four of the forty-five configurations collapse exactly, to a spread of zero on all nine situations, which indicates a fixed point dominated by the recurrent dynamics rather than by the input. The answer matrix at the best point makes the failure precise: a leading singular value sixty times the second, 99.95 percent of the energy in one direction, a rank-one residual of 2.3 percent, and at most 1.45 degrees between the answers that must be told apart. This is a negative result about the pair of a measured worm wiring and a rate model at a declared operating point, and not a claim about connectome substrates in general. The remedy has three candidates in ascending cost: a different declared readout, a dynamics with heterogeneous cells and per-type parameters, or a gain selected by protocol against held-out physiological facts, which is how the library's own fly guide repairs the same failure at a cosine of 0.98.</p>
   </div>
 </section>
 
@@ -312,7 +312,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
           <li>A growth contract with a prerequisite gate, an evidence gate, and an outcome gate that restores the previous graph when growth does not pay.</li>
           <li>A low-dimensional structural generator whose partner choice comes from the difference between the colliding answers and whose new neurons must reach the readout.</li>
           <li>A state-dependent contraction certificate that yields a settling budget on a measured connectome where the global worst-case bound does not apply.</li>
-          <li>A prerequisite measurement, negative, for the pair of the measured 302-neuron wiring and a rate model at sixty operating points.</li>
+          <li>A prerequisite measurement, negative, for the pair of the measured 302-neuron wiring and a rate model at forty-five operating points.</li>
           <li>Settlement, transport, certificate and continuous-control measurements on the released library, each with the probe file that produced it.</li>
         </ul>
       </div>

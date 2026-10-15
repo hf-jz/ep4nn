@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Build the paper PDF next to the site index, and fail loudly on an unresolved reference.
+# One command: bash docs/paper/build.sh
+set -euo pipefail
+cd "$(dirname "$0")"
+xelatex -interaction=nonstopmode -halt-on-error ep4nn.tex >/dev/null
+xelatex -interaction=nonstopmode -halt-on-error ep4nn.tex >/dev/null
+
+if grep -qE "There were undefined references|Citation .* undefined" ep4nn.log; then
+  echo "FAIL: undefined references"; grep -E "Warning|undefined" ep4nn.log | head -10; exit 1
+fi
+cp ep4nn.pdf ../ep4nn.pdf
+echo "pages: $(grep -o "([0-9]* pages" ep4nn.log | tail -1 | tr -d '(')"
+echo "overfull: $(grep -c 'Overfull' ep4nn.log || true)"
+rm -f ep4nn.aux ep4nn.log ep4nn.out ep4nn.toc ep4nn.pdf
+echo "built $(cd .. && pwd)/ep4nn.pdf"

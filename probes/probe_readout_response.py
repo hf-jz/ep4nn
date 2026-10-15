@@ -125,6 +125,11 @@ def main() -> None:
     rows.sort(key=lambda r: (-r["spread"] if r["spread"] == r["spread"] else 0))
     OUT["top"] = rows[:12]
     OUT["bottom"] = rows[-4:]
+    dump = Path(__file__).resolve().parents[1] / "docs" / "assets" / "prereq_scan.json"
+    dump.parent.mkdir(parents=True, exist_ok=True)
+    dump.write_text(json.dumps({"probe": "probe_readout_response.py", "rows": rows,
+                                "situations": SITUATIONS, "pairs": PAIRS}, indent=1))
+    print(f"wrote {dump} ({len(rows)} rows)")
     print(json.dumps(OUT, indent=2))
     print("\nrow_sum | gain_class        | scale | spread | coll_max | sweeps | res")
     for r in rows[:16]:

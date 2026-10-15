@@ -1,0 +1,1044 @@
+{
+ "probe": "probe_readout_response.py",
+ "rows": [
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_command",
+   "class_scale": 10.0,
+   "spread": 0.0777,
+   "collision_max": 1.0,
+   "collision_mean": 0.9999,
+   "sweeps_max": 224,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.01,
+    0.021,
+    0.271,
+    0.143,
+    0.073,
+    0.122,
+    0.153,
+    0.082,
+    0.16
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_command",
+   "class_scale": 2.0,
+   "spread": 0.0559,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9989,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.021,
+    0.01,
+    0.189,
+    0.079,
+    0.051,
+    0.078,
+    0.098,
+    0.041,
+    0.088
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": null,
+   "class_scale": 1.0,
+   "spread": 0.0328,
+   "collision_max": 0.9998,
+   "collision_mean": 0.9979,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.012,
+    0.006,
+    0.109,
+    0.049,
+    0.03,
+    0.048,
+    0.061,
+    0.024,
+    0.054
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 1.0,
+   "spread": 0.0328,
+   "collision_max": 0.9998,
+   "collision_mean": 0.9979,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.012,
+    0.006,
+    0.109,
+    0.049,
+    0.03,
+    0.048,
+    0.061,
+    0.024,
+    0.054
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_command",
+   "class_scale": 1.0,
+   "spread": 0.0328,
+   "collision_max": 0.9998,
+   "collision_mean": 0.9979,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.012,
+    0.006,
+    0.109,
+    0.049,
+    0.03,
+    0.048,
+    0.061,
+    0.024,
+    0.054
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_interneuron",
+   "class_scale": 10.0,
+   "spread": 0.0314,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9996,
+   "sweeps_max": 128,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.431,
+    0.428,
+    0.447,
+    0.532,
+    0.481,
+    0.516,
+    0.535,
+    0.479,
+    0.533
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 2.0,
+   "spread": 0.0298,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    1.154,
+    1.147,
+    1.237,
+    1.192,
+    1.177,
+    1.192,
+    1.201,
+    1.173,
+    1.198
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_command",
+   "class_scale": 5.0,
+   "spread": 0.0221,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    1.535,
+    1.529,
+    1.585,
+    1.563,
+    1.55,
+    1.563,
+    1.571,
+    1.545,
+    1.567
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_interneuron",
+   "class_scale": 2.0,
+   "spread": 0.0132,
+   "collision_max": 0.9999,
+   "collision_mean": 0.999,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.003,
+    0.002,
+    0.031,
+    0.038,
+    0.017,
+    0.031,
+    0.04,
+    0.016,
+    0.039
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_command",
+   "class_scale": 5.0,
+   "spread": 0.0112,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9974,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.002,
+    0.037,
+    0.018,
+    0.008,
+    0.014,
+    0.019,
+    0.008,
+    0.019
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_interneuron",
+   "class_scale": 5.0,
+   "spread": 0.011,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 128,
+   "residual_max": 0.0,
+   "answer_norm": [
+    1.259,
+    1.258,
+    1.284,
+    1.284,
+    1.272,
+    1.281,
+    1.286,
+    1.272,
+    1.286
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_interneuron",
+   "class_scale": 5.0,
+   "spread": 0.0092,
+   "collision_max": 1.0,
+   "collision_mean": 0.9998,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.001,
+    0.01,
+    0.035,
+    0.014,
+    0.027,
+    0.036,
+    0.014,
+    0.035
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_interneuron",
+   "class_scale": 10.0,
+   "spread": 0.0084,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.005,
+    0.034,
+    0.014,
+    0.026,
+    0.034,
+    0.013,
+    0.034
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_command",
+   "class_scale": 2.0,
+   "spread": 0.0084,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9966,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.002,
+    0.027,
+    0.015,
+    0.006,
+    0.012,
+    0.016,
+    0.006,
+    0.015
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": null,
+   "class_scale": 1.0,
+   "spread": 0.0078,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9964,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.002,
+    0.025,
+    0.014,
+    0.006,
+    0.011,
+    0.015,
+    0.006,
+    0.015
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_interneuron",
+   "class_scale": 1.0,
+   "spread": 0.0078,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9964,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.002,
+    0.025,
+    0.014,
+    0.006,
+    0.011,
+    0.015,
+    0.006,
+    0.015
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_command",
+   "class_scale": 1.0,
+   "spread": 0.0078,
+   "collision_max": 0.9999,
+   "collision_mean": 0.9964,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.001,
+    0.002,
+    0.025,
+    0.014,
+    0.006,
+    0.011,
+    0.015,
+    0.006,
+    0.015
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_command",
+   "class_scale": 10.0,
+   "spread": 0.0066,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.519,
+    2.518,
+    2.532,
+    2.527,
+    2.524,
+    2.527,
+    2.53,
+    2.522,
+    2.528
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": null,
+   "class_scale": 1.0,
+   "spread": 0.0057,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.4,
+    2.4,
+    2.416,
+    2.404,
+    2.402,
+    2.403,
+    2.404,
+    2.402,
+    2.404
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 1.0,
+   "spread": 0.0057,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.4,
+    2.4,
+    2.416,
+    2.404,
+    2.402,
+    2.403,
+    2.404,
+    2.402,
+    2.404
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_command",
+   "class_scale": 1.0,
+   "spread": 0.0057,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.4,
+    2.4,
+    2.416,
+    2.404,
+    2.402,
+    2.403,
+    2.404,
+    2.402,
+    2.404
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_interneuron",
+   "class_scale": 2.0,
+   "spread": 0.0036,
+   "collision_max": 1.0,
+   "collision_mean": 0.999,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.008,
+    0.01,
+    0.004,
+    0.008,
+    0.011,
+    0.004,
+    0.011
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_interneuron",
+   "class_scale": 5.0,
+   "spread": 0.0035,
+   "collision_max": 1.0,
+   "collision_mean": 0.9998,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.013,
+    0.005,
+    0.01,
+    0.014,
+    0.005,
+    0.014
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_command",
+   "class_scale": 2.0,
+   "spread": 0.0032,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.674,
+    2.674,
+    2.683,
+    2.676,
+    2.675,
+    2.676,
+    2.677,
+    2.675,
+    2.677
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_command",
+   "class_scale": 10.0,
+   "spread": 0.003,
+   "collision_max": 1.0,
+   "collision_mean": 0.9967,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.01,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.006
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_command",
+   "class_scale": 5.0,
+   "spread": 0.0027,
+   "collision_max": 1.0,
+   "collision_mean": 0.9964,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.009,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_command",
+   "class_scale": 2.0,
+   "spread": 0.0026,
+   "collision_max": 1.0,
+   "collision_mean": 0.9962,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.008,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": null,
+   "class_scale": 1.0,
+   "spread": 0.0025,
+   "collision_max": 1.0,
+   "collision_mean": 0.9961,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.008,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_interneuron",
+   "class_scale": 1.0,
+   "spread": 0.0025,
+   "collision_max": 1.0,
+   "collision_mean": 0.9961,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.008,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.2,
+   "gain_class": "class_command",
+   "class_scale": 1.0,
+   "spread": 0.0025,
+   "collision_max": 1.0,
+   "collision_mean": 0.9961,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.001,
+    0.008,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_interneuron",
+   "class_scale": 2.0,
+   "spread": 0.0016,
+   "collision_max": 1.0,
+   "collision_mean": 0.9989,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.005,
+    0.002,
+    0.004,
+    0.005,
+    0.002,
+    0.005
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_command",
+   "class_scale": 10.0,
+   "spread": 0.0013,
+   "collision_max": 1.0,
+   "collision_mean": 0.9962,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": null,
+   "class_scale": 1.0,
+   "spread": 0.0012,
+   "collision_max": 1.0,
+   "collision_mean": 0.996,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_interneuron",
+   "class_scale": 1.0,
+   "spread": 0.0012,
+   "collision_max": 1.0,
+   "collision_mean": 0.996,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_command",
+   "class_scale": 1.0,
+   "spread": 0.0012,
+   "collision_max": 1.0,
+   "collision_mean": 0.996,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_command",
+   "class_scale": 2.0,
+   "spread": 0.0012,
+   "collision_max": 1.0,
+   "collision_mean": 0.996,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 0.1,
+   "gain_class": "class_command",
+   "class_scale": 5.0,
+   "spread": 0.0012,
+   "collision_max": 1.0,
+   "collision_mean": 0.9961,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    0.0,
+    0.0,
+    0.004,
+    0.002,
+    0.001,
+    0.002,
+    0.002,
+    0.001,
+    0.002
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_command",
+   "class_scale": 5.0,
+   "spread": 0.001,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.991,
+    2.991,
+    2.993,
+    2.991,
+    2.991,
+    2.991,
+    2.991,
+    2.991,
+    2.991
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 5.0,
+   "spread": 0.0009,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 64,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.824,
+    2.824,
+    2.827,
+    2.824,
+    2.824,
+    2.824,
+    2.824,
+    2.824,
+    2.824
+   ]
+  },
+  {
+   "row_sum": 0.5,
+   "gain_class": "class_interneuron",
+   "class_scale": 10.0,
+   "spread": 0.0008,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.668,
+    2.668,
+    2.671,
+    2.668,
+    2.668,
+    2.668,
+    2.668,
+    2.668,
+    2.669
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 2.0,
+   "spread": 0.0007,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    2.925,
+    2.925,
+    2.927,
+    2.925,
+    2.925,
+    2.925,
+    2.925,
+    2.925,
+    2.925
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_command",
+   "class_scale": 10.0,
+   "spread": 0.0002,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    3.125,
+    3.125,
+    3.125,
+    3.125,
+    3.125,
+    3.125,
+    3.125,
+    3.125,
+    3.125
+   ]
+  },
+  {
+   "row_sum": 1.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 10.0,
+   "spread": 0.0,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 32,
+   "residual_max": 0.0,
+   "answer_norm": [
+    3.123,
+    3.123,
+    3.123,
+    3.123,
+    3.123,
+    3.123,
+    3.123,
+    3.123,
+    3.123
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 5.0,
+   "spread": 0.0,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    3.146,
+    3.146,
+    3.146,
+    3.146,
+    3.146,
+    3.146,
+    3.146,
+    3.146,
+    3.146
+   ]
+  },
+  {
+   "row_sum": 2.0,
+   "gain_class": "class_interneuron",
+   "class_scale": 10.0,
+   "spread": 0.0,
+   "collision_max": 1.0,
+   "collision_mean": 1.0,
+   "sweeps_max": 96,
+   "residual_max": 0.0,
+   "answer_norm": [
+    3.162,
+    3.162,
+    3.162,
+    3.162,
+    3.162,
+    3.162,
+    3.162,
+    3.162,
+    3.162
+   ]
+  }
+ ],
+ "situations": [
+  [
+   [
+    "odour_A",
+    1.0
+   ]
+  ],
+  [
+   [
+    "odour_B",
+    1.0
+   ]
+  ],
+  [
+   [
+    "food",
+    1.0
+   ]
+  ],
+  [
+   [
+    "pain",
+    1.0
+   ]
+  ],
+  [
+   [
+    "odour_A",
+    1.0
+   ],
+   [
+    "pain",
+    0.35
+   ]
+  ],
+  [
+   [
+    "odour_A",
+    1.0
+   ],
+   [
+    "pain",
+    0.7
+   ]
+  ],
+  [
+   [
+    "odour_A",
+    1.0
+   ],
+   [
+    "pain",
+    1.0
+   ]
+  ],
+  [
+   [
+    "odour_B",
+    1.0
+   ],
+   [
+    "pain",
+    0.35
+   ]
+  ],
+  [
+   [
+    "odour_B",
+    1.0
+   ],
+   [
+    "pain",
+    1.0
+   ]
+  ]
+ ],
+ "pairs": [
+  [
+   4,
+   5
+  ],
+  [
+   4,
+   6
+  ],
+  [
+   5,
+   6
+  ],
+  [
+   7,
+   8
+  ]
+ ]
+}

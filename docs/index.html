@@ -1,650 +1,383 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="Hefei Jiuzhai Big Data Technology / Lituo Cloud Intelligence Technology (Nanjing)" />
-  <meta name="dcterms.date" content="2026-10-14" />
-  <title>ep4nn: evidence-gated structural growth on a measured connectome</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-  </style>
-  <link rel="stylesheet" href="style.css" />
-  <script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
-  type="text/javascript"></script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ep4nn: Evidence-Gated Structural Growth in a Connectome-Compiled Equilibrium Network</title>
+<meta name="description" content="A 302-neuron worm connectome in an equilibrium network that grows only when the answer cannot tell two situations apart. Sixty operating points, one direction: the prerequisite fails, and the refusal is the result.">
+<link rel="canonical" href="https://hf-jz.github.io/ep4nn/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ep4nn: evidence-gated structural growth on a measured connectome">
+<meta property="og:description" content="Grow only when the readout cannot tell two situations apart. On the measured 302-neuron worm graph it refuses to grow, and the measurement that justifies the refusal is the result.">
+<meta property="og:url" content="https://hf-jz.github.io/ep4nn/">
+<meta property="og:image" content="https://hf-jz.github.io/ep4nn/assets/fig1_prereq_scan.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Sheng Cheng">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4e89'/%3E%3C/svg%3E">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+:root{
+  color-scheme:light dark;
+  --bg:#f4f4f2;--panel:#fdfdfc;--ink:#15171b;--muted:#575c65;--line:#dcdcd6;
+  --accent:#1d4e89;--accent-ink:#fff;--soft:#e9eef4;
+  --shadow:0 16px 36px rgba(21,23,27,.10);
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style",Palatino,"Palatino Linotype",Georgia,serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r:6px;--maxw:1080px;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#0f1114;--panel:#16191d;--ink:#eceef1;--muted:#9aa1ab;--line:#282d34;--accent:#8fb4e3;--accent-ink:#0f1114;--soft:#17212c;--shadow:0 18px 40px rgba(0,0,0,.5)}
+}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px;text-decoration-color:var(--line)}
+a:hover{text-decoration-color:var(--accent)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:64px 0;border-top:1px solid var(--line);scroll-margin-top:72px}
+html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+h1,h2,h3{margin:0;line-height:1.12;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3vw,1.95rem);font-weight:640}
+h3{font-size:1.05rem;font-weight:640;letter-spacing:-.01em}
+p{margin:14px 0 0;max-width:66ch;color:var(--ink)}
+.lead{color:var(--muted)}
+.mono{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;max-width:none}
+.grade{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--accent);border:1px solid var(--line);border-radius:var(--r);padding:3px 8px;white-space:nowrap}
+
+header.nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-in{max-width:var(--maxw);margin:0 auto;height:62px;padding:0 24px;display:flex;align-items:center;gap:20px}
+.brand{font-family:var(--mono);font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-links{margin-left:auto;display:none;gap:22px;font-size:14px}
+.nav-links a{color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+@media (min-width:820px){.nav-links{display:flex}}
+
+.btn{display:inline-block;font-size:14.5px;font-weight:560;padding:10px 18px;border-radius:var(--r);border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--panel)}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.08)}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+
+.hero{max-width:var(--maxw);margin:0 auto;padding:48px 24px 52px;display:grid;gap:40px}
+@media (min-width:900px){.hero{grid-template-columns:1.35fr .65fr;align-items:center;padding-top:56px;gap:40px}}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;max-width:none}
+.hero h1{font-size:clamp(1.7rem,3.6vw,2rem);margin-top:14px;font-weight:660}
+.hero .sub{margin-top:18px;max-width:50ch;font-family:var(--serif);font-size:1.14rem;line-height:1.55;color:var(--muted)}
+figure{margin:0}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);background:#fff}
+
+.result{background:var(--soft);border-top:1px solid var(--line)}
+.formula{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,4vw,2.2rem);text-align:center;margin:26px 0 0;letter-spacing:.01em;max-width:none}
+.formula .eq{font-style:normal}
+.fig-note{text-align:center;margin-top:14px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.03em;max-width:none}
+.two{display:grid;gap:36px;margin-top:34px}
+@media (min-width:820px){.two{grid-template-columns:1fr 1fr;gap:56px}}
+dl{margin:18px 0 0}
+dt{margin-top:18px;font-weight:600}
+dt:first-child{margin-top:0}
+dd{margin:4px 0 0;color:var(--muted);font-size:15.5px;max-width:52ch}
+.sym{font-family:var(--mono);font-size:13px;color:var(--accent);margin-right:6px}
+
+.titems{margin-top:8px}
+.titem{display:grid;gap:8px;padding:26px 0 26px 20px;border-left:2px solid var(--line)}
+.titem+.titem{margin-top:4px}
+.titem:hover{border-left-color:var(--accent)}
+.titem h3{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.titem p{margin:0;max-width:74ch}
+.tmeta{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.02em}
+@media (min-width:820px){.titem{grid-template-columns:1fr 300px}.titem>div:first-child{margin-right:24px}}
+
+.strip{display:grid;gap:28px;margin-top:34px}
+@media (min-width:760px){.strip{grid-template-columns:repeat(3,1fr);gap:24px}}
+.strip figcaption{margin-top:12px;font-size:13.5px;color:var(--muted);line-height:1.45}
+
+.rows{margin-top:30px}
+.row{display:grid;gap:6px;padding:22px 0}
+.row+.row{border-top:1px solid var(--line)}
+@media (min-width:820px){.row{grid-template-columns:290px 1fr;gap:36px;align-items:start}.row+.row{border-top:1px solid var(--line)}}
+.row .src{font-size:15px;font-weight:620}
+.row .src span{display:block;font-weight:400;font-size:13.5px;color:var(--muted);margin-top:3px}
+.row p{margin:0;font-size:15.5px;color:var(--muted)}
+
+.panels{display:grid;gap:24px;margin-top:34px}
+@media (min-width:820px){.panels{grid-template-columns:1fr 1fr}}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:26px}
+.panel ul{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:15.5px}
+.panel li{margin:8px 0}
+.relax{margin-top:34px;display:grid;gap:2px}
+.relax .r{display:grid;gap:4px;padding:14px 0;border-top:1px solid var(--line)}
+@media (min-width:820px){.relax .r{grid-template-columns:1fr 220px;gap:24px;align-items:baseline}}
+.relax .r span:last-child{font-family:var(--mono);font-size:13px;color:var(--muted)}
+
+.cols2{display:grid;gap:10px;margin-top:26px}
+@media (min-width:760px){.cols2{grid-template-columns:1fr 1fr;gap:14px 44px}}
+.cols2 div{padding:14px 0;border-top:1px solid var(--line)}
+.cols2 b{display:block;font-size:15px}
+.cols2 span{color:var(--muted);font-size:14.5px}
+pre{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;overflow-x:auto;font-family:var(--mono);font-size:13px;line-height:1.6;margin:26px 0 0;color:var(--ink)}
+table{border-collapse:collapse;margin-top:26px;font-size:14.5px;width:100%;max-width:640px}
+caption{caption-side:bottom;text-align:left;margin-top:12px;font-size:13.5px;color:var(--muted);line-height:1.45}
+th,td{text-align:right;padding:8px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+thead th{border-bottom:1px solid var(--ink)}
+tfoot td{font-weight:600;border-bottom:none}
+ol.refs{margin:26px 0 0;padding-left:22px;color:var(--muted);font-size:15px}
+ol.refs li{margin:10px 0}
+.hl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+footer{padding:52px 0 72px;border-top:1px solid var(--line);color:var(--muted);font-size:14.5px}
+footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ScholarlyArticle",
+"name":"ep4nn: Evidence-Gated Structural Growth in a Connectome-Compiled Equilibrium Network",
+"author":{"@type":"Person","name":"Sheng Cheng","affiliation":"Hefei Jiuzhai Big Data Technology Co., Ltd."},
+"datePublished":"2026-10-14","inLanguage":"en","isAccessibleForFree":true,
+"url":"https://hf-jz.github.io/ep4nn/",
+"license":"https://github.com/hf-jz/ep4nn"}
+</script>
 </head>
+
 <body>
-<header id="title-block-header">
-<h1 class="title">ep4nn: evidence-gated structural growth on a measured
-connectome</h1>
-<p class="author">Hefei Jiuzhai Big Data Technology / Lituo Cloud
-Intelligence Technology (Nanjing)</p>
-<p class="date">2026-10-14</p>
+
+<header class="nav">
+  <div class="nav-in">
+    <span class="brand">ep4nn</span>
+    <nav class="nav-links">
+      <a href="#result">Result</a>
+      <a href="#contract">Contract</a>
+      <a href="#measurements">Measurements</a>
+      <a href="#prerequisite">Prerequisite</a>
+      <a href="#scope">Scope</a>
+      <a href="#reproduce">Reproduce</a>
+      <a href="#cite">Cite</a>
+      <a href="paper.html">Paper</a>
+      <a href="https://github.com/hf-jz/ep4nn">GitHub</a>
+    </nav>
+    <a class="btn" style="margin-left:auto" href="paper.html">Read the paper</a>
+  </div>
 </header>
-<h1 id="abstract">Abstract</h1>
-<p>We present <strong>ep4nn</strong>, a continuing network that begins
-as the measured 302-neuron <em>C. elegans</em> wiring imported into a
-rate-based equilibrium model and, when it meets two situations it cannot
-tell apart, appends neurons and synapses under three gates: a
-<strong>prerequisite gate</strong> (does the answer move at all), an
-<strong>evidence gate</strong> (one collision is noise), and an
-<strong>outcome gate</strong> (growth that does not reduce the collision
-is rolled back). The system is built on the released Cadence library and
-reuses two practices from the open fly-connectome projects: protocols
-written before their data, and receipts that separate nominal from
-executed scale. We report measurements rather than claims. On one laptop
-CPU the library settles a 10,000-neuron, 103,943-synapse graph in 6.5 ms
-and a 100,000-neuron, 1,239,921-synapse graph in 77.4 ms (32 sweeps, CSR
-transport, about 1.76 ns per synapse). A <strong>state-dependent
-contraction certificate</strong> exists on the worm graph where the
-library’s global worst-case bound fails (local spectral radius 0.529
-against a worst-case row bound of 88.0). The growth machinery behaves as
-specified: over 1,200 ticks it refused growth 1,200 times because the
-prerequisite failed, and an earlier variant without the prerequisite
-gate produced 30 growths and 30 rollbacks. The paper’s main negative
-finding is that prerequisite: across 60 operating points of the worm
-graph the declared readout responds along a single direction (best
-spread 0.0777 with collision cosine 1.0), so capacity growth is not the
-right repair and ep4nn declines to grow. We conclude that structural
-growth studies must publish the prerequisite measurement alongside the
-growth result, and we propose a receipt format that makes claims
-comparable across connectome projects.</p>
-<h1 id="introduction">1 Introduction</h1>
-<p>A measured connectome is a graph of who contacts whom. It is not an
-operating point, not a dynamical model, and not a behaviour. Three years
-of open fly-connectome work demonstrate the gap concretely: a complete
-male central nervous system of about 166,000 neurons is public under
-CC-BY, yet the projects that run it either supply the controller, supply
-the semantic mapping from cell groups to behaviour, or supply the
-reward. The most disciplined attempt to remove the controller reached a
-negative result: driving the ventral nerve cord through two descending
-neurons produced a 45.5 Hz population oscillation that a scrambled
-wiring reproduced as well.</p>
-<p>Our starting question is narrower than behaviour. Suppose a network
-starts small, on a measured wiring, and must <strong>add
-structure</strong> as the situations it faces accumulate. What should
-trigger growth, what should growth wire, and how do we know the growth
-was worth it?</p>
-<p>We answer with a system and a set of measurements. The system,
-<code>ep4nn</code>, treats growth as a repair of one specific
-witnessable failure: two situations that the world declares different
-share the same present input and produce answers that are nearly
-parallel at the declared readout. The repair is a low-dimensional
-generator that appends neurons wired from the cells that carry the
-difference, and a verdict that measures the same collisions again and
-rolls the growth back when they do not improve.</p>
-<p>The main result of this paper is that the repair is <strong>blocked
-by a prerequisite we did not expect to be the binding
-constraint</strong>: on the worm graph, at 60 operating points, the
-declared readout responds along a single direction. Answers differ in
-magnitude, not in pattern, so every stage of growth is measuring a code
-that carries nothing a lesson can attach to. This is the same failure
-Cadence reports for the fly antennal lobe under one global gain, and it
-is detectable before any growth is attempted. We therefore state the
-prerequisite as a rule and report its measurement as the paper’s
-headline, together with the growth machinery that enforces it.</p>
-<p>Contributions:</p>
-<ol type="1">
-<li>A growth contract with three gates (prerequisite, evidence, outcome)
-that makes a refusal to grow an explicit, recorded outcome rather than a
-silent failure.</li>
-<li>A low-dimensional structural generator whose parameters are genes,
-whose partner choice is driven by the difference between the colliding
-answers, and whose new neurons must reach the readout.</li>
-<li>A state-dependent contraction certificate that certifies a settling
-budget on a measured connectome where the library’s global bound does
-not apply.</li>
-<li>Measurements of the underlying library on the worm graph and on
-sparse graphs up to 100,000 neurons, including a negative control result
-for continuous tracking.</li>
-<li>A receipt format for connectome runs, adopted from the fly projects’
-practice of separating nominal from executed scale.</li>
-</ol>
-<h1 id="related-work">2 Related work</h1>
-<p><strong>Equilibrium learning.</strong> Cadence implements settling
-trained by the contrast of a free and a nudged fixed point, the
-two-phase form of equilibrium propagation [Scellier and Bengio 2017] and
-contrastive Hebbian learning [Movellan 1990]. The library’s own
-documentation states the boundary we rely on: reciprocal learning ties
-paired weights, and arbitrary directed imports need not satisfy that
-gradient contract. Equilibrium propagation scales to deep convolutional
-networks by reducing the bias of its gradient estimator [Laborieux et
-al. 2021], sits beside implicit differentiation and bilevel formulations
-[Zucchet and Sacramento 2022], and shares its object with deep
-equilibrium models [Bai et al. 2019]. Predictive-coding rules
-approximate backpropagation along arbitrary computation graphs [Millidge
-et al. 2022; Song et al. 2020].</p>
-<p><strong>Complementary memories and replay.</strong> Fast episodic
-storage with slow consolidation is the complementary learning systems
-proposal [McClelland et al. 1995]. Cadence implements one version:
-records written once by day, fixed dreams at night taught to slow
-weights, and the residual written back at dawn. Its own measurements
-report held-out sign accuracy rising from 0.55 to about 0.76-0.80 on a
-Connect Four slice, at a night cost of roughly 140-210 s per 1,000 rows
-for a 4,096-cell store, with the limit that dreams reproduce the store’s
-errors as faithfully as its regularities.</p>
-<p><strong>Fly connectomes.</strong> FlyWire published the adult female
-brain reconstruction of 139,255 neurons [Dorkenwald et al. 2024]; the
-male central nervous system (brain, optic lobes, ventral nerve cord;
-about 166,000 neurons) followed under CC-BY. The BANC release used by
-Cadence’s fly lane carries 150,802 proofread neurons and 1,877,099
-connection classes. Because the ventral nerve cord contains the leg and
-wing motor neurons, the male data made connectome-driven locomotion
-addressable in a way the brain-only data was not. Open projects in this
-space differ mainly in what they supply: a hand-wired 850-neuron
-stand-in with fly cell-type names for a browser demo, a learned
-consequence model with an application controller, a directly read motor
-output whose own receipts report that real-time neural control was not
-demonstrated, and an on-device implementation that reports 10 Hz on a
-phone using CSR storage and per-group gating. Cadence’s own fly guide
-reports that at one global gain the antennal lobe ignites, that Kenyon
-cell codes for two odours reach a cosine of 0.98, and that a gain per
-cell class brings the code to 4 and 11 percent sparsity with a cosine of
-0.32.</p>
-<p><strong>Conditional computation.</strong> Mixture-of-experts routing,
-early exit and pruning vary the work per input at the weight level.
-Dynamic structure methods vary the graph. The distinction we test is the
-trigger: ep4nn triggers on a witnessable indistinguishability at the
-declared readout, not on a loss, a router score, or an offline search
-objective.</p>
-<h1 id="system">3 System</h1>
-<h2 id="the-four-rules">3.1 The four rules</h2>
-<p><strong>Rule 1, demand.</strong> Two situations that the world
-declares different, share the present input, and produce answers at the
-declared readout whose absolute cosine exceeds a threshold, constitute a
-capacity signal. The readout is a declared set of neurons, not the whole
-state; the whole state almost always separates because it contains the
-driven cells themselves.</p>
-<p><strong>Rule 2, evidence.</strong> A single collision is noise.
-<code>min_evidence</code> collisions must be observed, and
-<code>min_ticks_between</code> ticks must pass, before any structural
-change is attempted.</p>
-<p><strong>Rule 3, growth.</strong> A generator with a handful of genes
-appends <code>k</code> neurons. Each new neuron draws in-edges and
-out-edges from a degree prior, prefers partners among the cells that
-carry the difference between the colliding answers and their one-hop
-neighbourhood, keeps the graph’s excitatory fraction, adds the reverse
-edge with probability <code>reciprocal</code> so the equilibrium
-contrast contract is preserved, and projects into the readout with
-probability <code>to_readout</code>. The generator is low-dimensional by
-construction: the number of free parameters is far smaller than the
-number of edges it can create, which is what distinguishes structural
-plasticity from implicit weight learning.</p>
-<p><strong>Rule 4, verdict.</strong> After growth, the same collisions
-are measured again. Growth is kept only if the collision cosine falls by
-<code>improve_margin</code>. Otherwise the connectome and the efficacy
-array are restored from the snapshot taken before the attempt, and the
-attempt is counted as a failure.</p>
-<h2 id="the-prerequisite-gate">3.2 The prerequisite gate</h2>
-<p>Before any of the above applies, the answer must move. ep4nn measures
-<code>readout_spread</code>, the mean over readout cells of the maximum
-minus minimum activation across a declared set of situations. Below
-<code>min_response</code> the system records <code>no_response</code>
-and does not grow. The justification is structural: if the declared
-answer is constant across situations, no amount of added capacity can
-reduce a collision, so growth would be the wrong repair and its recorded
-outcome would carry no information.</p>
-<h2 id="the-operating-point">3.3 The operating point</h2>
-<p>A connectome carries contact counts and transmitter signs. It does
-not carry excitability, and the raw counts of the worm graph give row
-sums in the hundreds at which the rate model does not settle. ep4nn
-declares an operating point by row-normalising the signs to
-<code>row_sum</code>. The library offers two further instruments for the
-same purpose, <code>calibrate_bias</code> and a gain selected by
-protocol, and the paper reports measurements for all three.</p>
-<h2 id="a-settling-budget-from-a-state-dependent-certificate">3.4 A
-settling budget from a state-dependent certificate</h2>
-<p>The library’s global contraction bound is a worst-case quantity: it
-multiplies the largest absolute row sum of the weight matrix by the
-largest activation slope. On a measured connectome most neurons are
-inactive at the settled state, so the bound is far larger than the
-actual contraction. ep4nn measures the certificate the library defines
-but with the slopes of the current state, <span class="math inline">\(K
-= (1-\mathrm{d}t)I + \mathrm{d}t\,W\,\mathrm{diag}(s&#39;(v))\)</span>,
-and reports the spectral radius and a positive weighted witness <span
-class="math inline">\(h\)</span> with <span class="math inline">\(Kh \le
-\alpha h\)</span>. The settling budget follows as <span
-class="math inline">\(k \approx
-\log(\epsilon/\delta)/\log(1/\alpha)\)</span>.</p>
-<h1 id="implementation">4 Implementation</h1>
-<p><strong>Data.</strong> The worm wiring is the openworm c302
-<code>A_Full</code> release (302 hermaphrodite neurons, 2,279 chemical
-synapse classes, 1,084 gap junctions; the gap junctions are imported in
-both directions). After dropping autapses and merging parallel edges the
-graph has 3,137 directed synapse classes, 10,133 contacts and a density
-of 3.44 percent, with 61 sensory, 91 interneuron, 118 motor, 10 command
-and 22 pharyngeal cells. Soma positions in the source file are used for
-nothing in this paper.</p>
-<p><strong>Library reuse.</strong> The network is a
-<code>cadence.Connectome</code> with <code>cadence.Brain</code> on it,
-using the library’s rate neuron model, its free and nudged phases, its
-residual qualification, and its CSR transport. No new learning rule is
-introduced. The growth layer sits outside the library because
-<code>Connectome</code> is immutable and because the library forbids
-growth by design; a growth event rebuilds the connectome, which costs
-one pass over the edge arrays, and carries the learned efficacy across
-by regenerating the key order the library sorts by.</p>
-<p><strong>Reuse from the fly projects.</strong> Two practices are
-adopted. First, protocols and thresholds are written before the run and
-the run happens once, following the discipline of the offline fly-body
-study. Second, every run emits a receipt that separates nominal from
-executed scale, following the observation that project descriptions and
-executed graphs differ widely.</p>
-<p><strong>Receipt.</strong> <code>ep4nn/receipt.py</code> writes a JSON
-receipt with six fields: dataset and hashes; nominal and executed
-counts; the dynamical model and its declared parameters; whether the
-loop is closed and which parts are supplied; the prerequisite
-measurements; and the cost.</p>
-<h1 id="measurements">5 Measurements</h1>
-<p>All measurements are from one Apple Silicon laptop, CPU only, Python
-3.13, NumPy 2.5.4 and SciPy 1.18.1, single-threaded, with the released
-library at version 0.80.0 plus local commits (<code>0b0889e</code>).
-Probes are in <code>probes/</code>, one file per table.</p>
-<h2 id="settlement-cost-and-scaling">5.1 Settlement cost and
-scaling</h2>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>graph</th>
-<th>neurons</th>
-<th>synapses</th>
-<th>mean in-degree</th>
-<th>transport</th>
-<th>per sweep</th>
-<th>sweeps to 1e-4</th>
-<th>settle</th>
-<th>CSR</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>worm, measured</td>
-<td>302</td>
-<td>3,137</td>
-<td>10.4</td>
-<td>blocked dense</td>
-<td>27.2 µs</td>
-<td>160</td>
-<td>4.89 ms</td>
-<td>n/a</td>
-</tr>
-<tr class="even">
-<td>sparse random</td>
-<td>1,000</td>
-<td>10,337</td>
-<td>10.3</td>
-<td>blocked dense</td>
-<td>161.4 µs</td>
-<td>32</td>
-<td>5.29 ms</td>
-<td>0.1 MB</td>
-</tr>
-<tr class="odd">
-<td>sparse random</td>
-<td>10,000</td>
-<td>103,943</td>
-<td>10.4</td>
-<td>CSR</td>
-<td>193.0 µs</td>
-<td>32</td>
-<td>6.48 ms</td>
-<td>1.3 MB</td>
-</tr>
-<tr class="even">
-<td>sparse random</td>
-<td>100,000</td>
-<td>1,239,921</td>
-<td>12.4</td>
-<td>CSR</td>
-<td>2,185.8 µs</td>
-<td>32</td>
-<td>77.4 ms</td>
-<td>15.3 MB</td>
-</tr>
-</tbody>
-</table>
-<p>Cost is about 1.76 ns per synapse, so the control frequency of a
-settling brain is bounded by <span class="math inline">\(f \approx
-1/(n_{\text{syn}} \times 1.8\,\text{ns} \times \text{sweeps})\)</span>.
-The worm graph needs five times as many sweeps as a random graph of the
-same size and degree at the same tolerance, which locates the difficulty
-in the spectrum of the graph rather than in its size. Two library
-defaults matter at this scale: the default constructors wire at a
-density of about 30 percent independent of size (measured 29.1, 30.8,
-31.7 and 32.3 percent at 152, 280, 536 and 1,048 neurons), so 10,000
-neurons would carry about 30 million synapses and settle in about 1.7 s;
-and the transport path is chosen by a size test rather than by density,
-so a 3.4 percent dense graph pays a block array 29 times larger than its
-edge count. On that graph the CSR path is 1.78 times faster end to end
-(987 µs against 554 µs per settle), while on a 32 percent dense graph
-the blocked path is faster, which is why the choice must follow
-density.</p>
-<h2 id="a-certificate-where-the-global-bound-fails">5.2 A certificate
-where the global bound fails</h2>
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>quantity</th>
-<th>value</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>global worst-case bound <span class="math inline">\(q\)</span></td>
-<td>88.0 (292 of 302 rows at or above 1)</td>
-</tr>
-<tr class="even">
-<td>local bound, current state</td>
-<td>1.186 (1 of 302 rows)</td>
-</tr>
-<tr class="odd">
-<td>spectral radius of the local <span
-class="math inline">\(K\)</span></td>
-<td>0.529</td>
-</tr>
-<tr class="even">
-<td>weighted witness <span class="math inline">\(\alpha\)</span> with
-<span class="math inline">\(Kh \le \alpha h\)</span></td>
-<td>0.696, <span class="math inline">\(h \in [2.89, 11.08]\)</span></td>
-</tr>
-<tr class="odd">
-<td>active neurons at the settled state</td>
-<td>294 of 302</td>
-</tr>
-</tbody>
-</table>
-<p>The global bound gives no certificate at this gain; the
-state-dependent one does, and it converts a refusal into a bounded
-settling budget. The same quantity is the precondition for treating the
-free and nudged contrast as a gradient, which is why it is measured at
-run time rather than assumed.</p>
-<h2 id="behaviour-of-the-growth-machinery">5.3 Behaviour of the growth
-machinery</h2>
-<p>Two variants were run for 1,200 ticks while the world increased the
-number of context levels that must be distinguished.</p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-<col style="width: 16%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>variant</th>
-<th>kept</th>
-<th>rolled back</th>
-<th>refused, no response</th>
-<th>neurons</th>
-<th>self-check</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>without prerequisite gate</td>
-<td>0</td>
-<td>30</td>
-<td>n/a</td>
-<td>302</td>
-<td>passed</td>
-</tr>
-<tr class="even">
-<td>with prerequisite gate</td>
-<td>0</td>
-<td>0</td>
-<td>1,200</td>
-<td>302</td>
-<td>passed</td>
-</tr>
-</tbody>
-</table>
-<p>In both variants the brain never shrank, every synapse kept an
-efficacy, the readout stayed inside the current graph, and every kept
-growth would have had to reduce its collisions. In the first variant the
-collision cosine read 1.000 before and after every attempt, so the
-verdict layer rolled all 30 attempts back. In the second, the
-prerequisite measured 0.019 and the system declined to act, recording
-why.</p>
-<h2 id="the-prerequisite-scan-a-negative-result">5.4 The prerequisite
-scan, a negative result</h2>
-<p>Sixty operating points were scanned: five row sums, a gain on one
-cell class (none, interneurons, command neurons), and four gain scales,
-over nine situations (three single senses and six combinations of an
-odour with a pain level).</p>
-<table style="width:100%;">
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>rank</th>
-<th>row sum</th>
-<th>gain class</th>
-<th>scale</th>
-<th>spread</th>
-<th>collision cosine</th>
-<th>sweeps</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>1</td>
-<td>0.5</td>
-<td>command</td>
-<td>10</td>
-<td>0.0777</td>
-<td>1.000</td>
-<td>224</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>1.0</td>
-<td>command</td>
-<td>2</td>
-<td>0.0559</td>
-<td>0.9999</td>
-<td>64</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>1.0</td>
-<td>none</td>
-<td>1</td>
-<td>0.0328</td>
-<td>0.9998</td>
-<td>64</td>
-</tr>
-<tr class="even">
-<td>last</td>
-<td>2.0</td>
-<td>interneurons</td>
-<td>10</td>
-<td>0.0000</td>
-<td>1.000</td>
-<td>96</td>
-</tr>
-</tbody>
-</table>
-<p>The best configuration moves the readout by 0.078 across situations
-while leaving every pair of context answers at a cosine of 1.0: the
-differences that exist lie along one direction, so the answer has rank
-one with respect to the situations that must be distinguished. Several
-configurations collapse to an answer that is identical for all nine
-situations to three decimals, which indicates a fixed point dominated by
-the recurrent dynamics rather than by the input. We report this as a
-negative result about the pair (measured worm wiring, rate model at a
-declared operating point): <strong>capacity growth is not the binding
-constraint, and a growth study on this pair would measure an
-uninformative object.</strong> The remedy is left as future work and has
-three candidates, in ascending cost: a different declared readout, a
-dynamics with heterogeneous cells and per-type parameters, or a gain
-selected by protocol against held-out physiological facts as Cadence
-does for the fly.</p>
-<h2 id="a-negative-control-result-for-continuous-tracking">5.5 A
-negative control result for continuous tracking</h2>
-<p>One composed brain (140 neurons, 6,028 synapses) was placed in a
-closed loop on a second-order plant with five force levels, one scalar
-reward per tick, and 6,000 ticks per arm.</p>
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>arm</th>
-<th>mean absolute error</th>
-<th>last quarter</th>
-<th>in-band fraction, last quarter</th>
-<th>dominant action, last quarter</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>uniform random</td>
-<td>1.020</td>
-<td>1.033</td>
-<td>0.000</td>
-<td>uniform</td>
-</tr>
-<tr class="even">
-<td>frozen greedy</td>
-<td>1.011</td>
-<td>1.067</td>
-<td>0.467</td>
-<td>1.00</td>
-</tr>
-<tr class="odd">
-<td>learning, sparse reward</td>
-<td>0.880</td>
-<td>0.855</td>
-<td>0.449</td>
-<td>0.824</td>
-</tr>
-<tr class="even">
-<td>learning, dense reward, seed 5</td>
-<td>0.923</td>
-<td>0.919</td>
-<td>0.209</td>
-<td>0.705</td>
-</tr>
-<tr class="odd">
-<td>learning, dense reward, seed 11</td>
-<td>0.856</td>
-<td>0.815</td>
-<td>0.459</td>
-<td>0.843</td>
-</tr>
-<tr class="even">
-<td>learning every outcome</td>
-<td>1.016</td>
-<td>1.007</td>
-<td>0.000</td>
-<td>0.980</td>
-</tr>
-</tbody>
-</table>
-<p>The learned arms reduce mean error by about 13 percent and never beat
-the frozen baseline on the in-band metric, and the action distribution
-collapses to a single level. The structural reason is the mismatch
-between the credit window and the plant: the composed brain’s
-eligibility span is 12 steps, while the closed-loop time constant of the
-plant is 50 to 100 steps. This is consistent with the library’s own
-control-oriented demo, which learns a consequence model and leaves the
-controller supplied.</p>
-<h1 id="discussion">6 Discussion</h1>
-<p><strong>What is shown.</strong> The growth contract is implementable
-on a measured connectome at negligible rebuild cost, its gates fire in
-the intended order, and the prerequisite measurement is what decides
-whether structural work is meaningful. Two library-level results are
-independent of ep4nn: a state-dependent certificate exists where the
-global bound fails, and a sparse graph is settled at about 1.8 ns per
-synapse with a per-settle cost that makes 10,000 neurons a
-real-time-scale object rather than a research curiosity.</p>
-<p><strong>What is not shown.</strong> No growth has yet been kept. The
-paper therefore makes no claim about the benefit of structural growth,
-only about the contract that would measure it and the prerequisite that
-currently blocks it. We also make no claim that the worm graph is an
-inappropriate substrate in general; the negative result is specific to
-the declared readout, the rate model, and the operating points
-scanned.</p>
-<p><strong>Growth is not the same problem as capacity sharing.</strong>
-Specialised small circuits handle single tasks, and Cadence’s own
-connectome lane reports that a reduced graph matched on population means
-did not match on member behaviour. Retaining transfer while growing
-requires shared structure, which is where interference appears. The
-evidence gate and the outcome gate bound the damage of a wrong growth
-but do not solve sharing.</p>
-<p><strong>Value comes from somewhere.</strong> A reward channel needs a
-scale. A scale supplied by the task caps the system at that task; a
-scale shaped by selection is endogenous but drifts toward whatever is
-measured. Both are legitimate designs and they must be declared, because
-the choice determines which measurements are meaningful. The systems
-that avoid a human score entirely, by making survival and energy the
-only currency, are the only ones in this space whose objective is not
-supplied by a person.</p>
-<p><strong>Rule families do not mix.</strong> A directed measured
-connectome does not satisfy the equilibrium contrast gradient contract.
-Structural growth on directed wiring therefore belongs with a
-predictive-coding or inference-learning rule, or it must accept that its
-updates are heuristic. Mixing the two under one set of convergence
-assumptions is not a defensible default.</p>
-<h1 id="reproducibility">7 Reproducibility</h1>
-<p>Every table above is produced by one file in <code>probes/</code>,
-and <code>ep4nn/grow.py</code> runs its own assertions. The environment
-is a virtual environment with NumPy and SciPy installed from a mirror;
-the library is a local checkout with <code>PYTHONPATH</code> set. The
-worm connectome is committed with the repository and its SHA-256
-recorded. No GPU, no external service and no wallet is involved.
-Measured numbers depend on the host, so the receipts record the
-operation counts alongside wall-clock times.</p>
-<h1 id="conclusion">8 Conclusion</h1>
-<p>A measured connectome gives structure cheaply and dynamics not at
-all. The useful question for a system that grows is not how many neurons
-it has but whether the answer it produces separates the situations that
-must be separated. ep4nn encodes that question as a prerequisite,
-measures it before it grows, and records a refusal to grow as a result
-in its own right. On the 302-neuron worm graph the prerequisite fails,
-and reporting that failure is more useful than adding structure to a
-code that carries nothing. The contract and the receipt format are the
-parts we expect to transfer to the next substrate, in particular to
-connectomes whose motor neurons exist and whose dynamics are
-heterogeneous.</p>
+
+<main>
+
+<div class="hero">
+  <div>
+    <p class="eyebrow" style="margin:0">Evidence-gated structural growth</p>
+    <h1>What should make a small brain grow?</h1>
+    <p class="sub">A 302-neuron worm wiring, an equilibrium network, and one rule for adding neurons: grow only when two situations the world calls different get the same answer. On the measured worm graph the rule refuses, and the measurement that justifies the refusal is the result.</p>
+    <div class="cta">
+      <a class="btn primary" href="paper.html">Read the paper</a>
+      <a class="btn" href="https://github.com/hf-jz/ep4nn">Code, probes and receipts</a>
+    </div>
+  </div>
+  <figure>
+    <img src="assets/fig1a_hero.png" width="1280" height="580" alt="Readout spread against row sum at sixty operating points: every point sits below the growth gate, the best at 0.0777">
+  </figure>
+</div>
+
+<section class="result" id="result">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Prerequisite result</p>
+    <h2 style="margin-top:10px">The measured worm readout answers along one direction, so capacity is not the binding constraint</h2>
+    <dl class="two">
+      <div>
+        <dt>Best of sixty operating points</dt>
+        <dd><span class="sym">0.0777</span> readout spread, against a growth gate of 0.05, at row sum 0.5 with a gain of ten on the command class. Amplitude moves; the pattern does not.</dd>
+        <dt>Collision at that point</dt>
+        <dd><span class="sym">1.000</span> largest absolute cosine between two context answers that must differ, against a gate of 0.85. Every one of the sixty points sits at the same cosine.</dd>
+      </div>
+      <div>
+        <dt>Growth decisions, 1200 ticks</dt>
+        <dd><span class="sym">1200 / 1200</span> refused with no response recorded, zero kept and zero rolled back, and 302 neurons before and after. The ungated variant attempted thirty growths and rolled all thirty back.</dd>
+        <dt>Certificate on the same graph</dt>
+        <dd><span class="sym">0.696</span> weighted witness with local spectral radius 0.529, where the global worst-case bound is 88.0 and certifies nothing at this gain.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section id="contract">
+  <div class="wrap">
+    <p class="mono" style="margin:0">The contract</p>
+    <h2 style="margin-top:10px">Five gates between a situation and a new neuron</h2>
+    <div class="titems">
+      <article class="titem">
+        <div>
+          <h3>Prerequisite: the answer must move <span class="tmeta">measured before anything else</span></h3>
+          <p>The declared readout is a named set of neurons, not the whole state, and the whole state nearly always separates because it contains the driven cells themselves. ep4nn measures the spread of that readout across situations and records a refusal to grow when it falls below the gate, because added capacity cannot separate answers that do not move.</p>
+        </div>
+        <p class="tmeta">Measured 0.019 in the growth demo and 0.0777 in the best of sixty scanned operating points, against a gate of 0.05.</p>
+      </article>
+      <article class="titem">
+        <div>
+          <h3>Demand: indistinguishability is the signal <span class="tmeta">Rule 1</span></h3>
+          <p>Two situations that the world declares different, share the present input, and produce answers whose absolute cosine exceeds the cap, constitute a capacity signal. The signal is a witness, not a loss: it names the pair that is being confused, and that pair is what the generator wires against.</p>
+        </div>
+        <p class="tmeta">Cap 0.85. The worm graph delivers 0.9998 to 1.0000 at every scanned point, so the signal fires on everything and therefore names nothing.</p>
+      </article>
+      <article class="titem">
+        <div>
+          <h3>Evidence: one collision is noise <span class="tmeta">Rule 2</span></h3>
+          <p>A single collision can come from a settling failure or a transient. Growth is attempted only after a minimum number of collisions have been observed and a minimum number of ticks have passed, which keeps the structure layer from chasing instantaneous state.</p>
+        </div>
+        <p class="tmeta">Minimum evidence three collisions, with a tick separation, and a verdict margin of 0.02 on the cosine.</p>
+      </article>
+      <article class="titem">
+        <div>
+          <h3>Growth: a low-dimensional generator, not a dense search <span class="tmeta">Rule 3</span></h3>
+          <p>Each event appends a few neurons. Partners are drawn from the cells that carry the difference between the colliding answers and their one-hop neighbourhood, the excitatory fraction is preserved, the reverse edge is added with a probability so the equilibrium contrast contract survives, and each new neuron projects into the readout with a probability. The generator has thirteen genes, so structural plasticity cannot degrade into implicit weight learning.</p>
+        </div>
+        <p class="tmeta">Thirteen genes against 3,137 directed synapse classes: the parameter count sits four orders below the graph it can touch.</p>
+      </article>
+      <article class="titem">
+        <div>
+          <h3>Verdict: rollback unless the confusion falls <span class="tmeta">Rule 4</span></h3>
+          <p>After growth, the same collisions are measured again. The connectome and the efficacy array are restored from the snapshot unless the collision falls by the margin, and the attempt is recorded as a failure. A growth that does not pay is a measurement, not a mistake to hide.</p>
+        </div>
+        <p class="tmeta">Thirty of thirty attempts rolled back in the ungated variant, at about one millisecond of rebuild each.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="measurements">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Measurements</p>
+    <h2 style="margin-top:10px">Four measurements on the released library, one laptop CPU</h2>
+    <div class="rows">
+      <div class="row">
+        <div class="src">Settlement cost<span>worm at 302 / 3,137 and sparse graphs to 100,000</span></div>
+        <p>About 1.76 ns per synapse, so the control frequency of a settling brain is bounded by one over synapses times nanoseconds times sweeps. A sparse 10,000-neuron graph settles in 6.48 ms and a 100,000-neuron graph in 77.4 ms. The worm graph needs five times as many sweeps as a random graph of the same size and degree at the same tolerance, which locates the difficulty in the spectrum rather than in the size.</p>
+      </div>
+      <div class="row">
+        <div class="src">Transport path<span>chosen by size, not by density</span></div>
+        <p>The library picks its transport by a size test, so a 3.4 percent dense graph pays a block array twenty-nine times larger than its edge count. On the worm graph the sparse path is 1.78 times faster end to end, while on a 32 percent dense graph the blocked path is faster. Two defaults matter at scale: the default constructors wire at about 30 percent density independent of size, and a batch size above one builds a temporary array of the full edge count.</p>
+      </div>
+      <div class="row">
+        <div class="src">Certificate<span>state-dependent, not worst case</span></div>
+        <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph, which certifies no budget at all. Evaluating the same quantity with the slopes of the current state gives spectral radius 0.529 and a positive weighted witness at 0.696, which does. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
+      </div>
+      <div class="row">
+        <div class="src">Continuous tracking<span>a negative control result</span></div>
+        <p>A composed brain of 140 neurons in a closed loop on a second-order plant reduced mean absolute error by about 13 percent over 6,000 ticks, never beat the frozen baseline on the in-band metric, and collapsed to a single action level 70 to 84 percent of the time in the last quarter. The structural reason is a credit window of twelve steps against a closed-loop time constant of 50 to 100 steps. This is consistent with the library's own control demo, which learns a consequence model and leaves the controller supplied.</p>
+      </div>
+    </div>
+    <div class="two">
+      <figure>
+        <img src="assets/fig2_scaling.png" width="920" height="600" alt="Microseconds per sweep against neuron count on a log-log axis, from 302 to 100,000 neurons, with the 20 Hz control budget marked">
+        <figcaption class="fig-note">Per-sweep cost against size, and the 20 Hz control budget</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fig3_certificate.png" width="920" height="600" alt="Bar chart on a log axis comparing the global worst-case contraction bound of 88, the local bound, the weighted witness, and one">
+        <figcaption class="fig-note">A certificate exists where the global bound fails</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="prerequisite">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Prerequisite scan</p>
+    <h2 style="margin-top:10px">Sixty operating points, nine situations, one direction</h2>
+    <p class="lead" style="max-width:70ch">Five row sums, a gain on one cell class or none, four gain scales, and nine situations: three single senses and six combinations of an odour with a pain level. Spread is the mean over readout cells of the maximum minus the minimum activation across situations. Collision is the largest absolute cosine between two situations that share the present input and differ only in context, which is the pair that growth is supposed to separate.</p>
+    <table>
+      <caption>Ranked by readout spread, from sixty scanned operating points. Source: probes/probe_readout_response.py, full data in assets/prereq_scan.json.</caption>
+      <thead><tr><th>row sum</th><th>class gain</th><th>scale</th><th>spread</th><th>collision</th><th>sweeps</th></tr></thead>
+      <tbody>
+        <tr><td>0.5</td><td>command</td><td>10</td><td>0.0777</td><td>1.0000</td><td>224</td></tr>
+        <tr><td>1.0</td><td>command</td><td>2</td><td>0.0559</td><td>0.9999</td><td>64</td></tr>
+        <tr><td>1.0</td><td>none</td><td>1</td><td>0.0328</td><td>0.9998</td><td>64</td></tr>
+        <tr><td>0.2</td><td>interneuron</td><td>10</td><td>0.0314</td><td>0.9999</td><td>128</td></tr>
+        <tr><td>0.5</td><td>command</td><td>2</td><td>0.0084</td><td>0.9999</td><td>32</td></tr>
+        <tr><td>2.0</td><td>interneuron</td><td>10</td><td>0.0000</td><td>1.0000</td><td>96</td></tr>
+      </tbody>
+    </table>
+    <figure style="margin-top:34px">
+      <img src="assets/fig1_prereq_scan.png" width="1280" height="580" alt="Two panels: readout spread against row sum stays under the growth gate, and the largest absolute cosine between context answers sits at 1 for every point">
+      <figcaption class="fig-note">Spread under the gate on the left, and the context collision at 1 on the right, for all sixty points</figcaption>
+    </figure>
+    <p>Several configurations collapse to an answer that is identical for all nine situations to three decimal places, which indicates a fixed point dominated by the recurrent dynamics rather than by the input. This is a negative result about the pair of a measured worm wiring and a rate model at a declared operating point, and not a claim about connectome substrates in general. The remedy has three candidates in ascending cost: a different declared readout, a dynamics with heterogeneous cells and per-type parameters, or a gain selected by protocol against held-out physiological facts, which is how the library's own fly guide repairs the same failure at a cosine of 0.98.</p>
+  </div>
+</section>
+
+<section id="scope">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Scope</p>
+    <h2 style="margin-top:10px">What this work claims, and what it does not</h2>
+    <div class="panels">
+      <div class="panel">
+        <h3>Claimed</h3>
+        <ul>
+          <li>A growth contract with a prerequisite gate, an evidence gate, and an outcome gate that restores the previous graph when growth does not pay.</li>
+          <li>A low-dimensional structural generator whose partner choice comes from the difference between the colliding answers and whose new neurons must reach the readout.</li>
+          <li>A state-dependent contraction certificate that yields a settling budget on a measured connectome where the global worst-case bound does not apply.</li>
+          <li>A prerequisite measurement, negative, for the pair of the measured 302-neuron wiring and a rate model at sixty operating points.</li>
+          <li>Settlement, transport, certificate and continuous-control measurements on the released library, each with the probe file that produced it.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3>Not claimed</h3>
+        <ul>
+          <li>No growth has been kept. Nothing here shows that structural growth improves anything, only the contract that would measure it and the prerequisite that currently blocks it.</li>
+          <li>No claim that the worm graph is an unsuitable substrate in general. The negative result is specific to the declared readout, the rate model, and the scanned operating points.</li>
+          <li>No scaling law from neuron count to capability. Structure and capability are separate questions.</li>
+          <li>No gradient contract for directed wiring. The library's own documentation states that arbitrary directed imports need not satisfy it, so the growth layer does not assume one.</li>
+          <li>No behaviour, no embodiment and no sensory front end. The senses and the outcome are declared by the world, which the receipt records as supplied.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="reproduce">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Reproduce</p>
+    <h2 style="margin-top:10px">Every number and figure on this page, from one checkout</h2>
+    <pre>export PYTHONPATH=/path/to/cadence/src      # the released library
+python ep4nn/receipt.py                     # receipt self-check
+python ep4nn/grow.py                        # 1200 ticks, refuses to grow, writes a receipt
+python probes/probe_readout_response.py     # the 60-point scan, writes assets/prereq_scan.json
+python probes/probe_scaling.py              # settlement cost to 100,000 neurons
+python probes/probe_certificate.py          # global bound against the local witness
+python docs/assets/make_figures.py          # regenerate the three figures</pre>
+    <div class="cols2">
+      <div><b>Eleven probes</b><span>settlement cost, Anderson acceleration, end to end, worm graph, certificate, profile, continuous control, transport A/B, rhythm, scaling, prerequisite scan</span></div>
+      <div><b>Three self-checks</b><span>the growth demo asserts that nothing shrank, that efficacy survived every rebuild, and that no kept growth went unmeasured</span></div>
+      <div><b>Receipts</b><span>six fields: dataset with a hash, nominal against executed counts, dynamics and what is absent, whether the loop is closed and what is supplied, the premise measurements, and the cost</span></div>
+      <div><b>Data</b><span>openworm c302 A_Full, 302 neurons, 3,137 directed synapse classes, committed with SHA-256 2a7b117f, MIT</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cite">
+  <div class="wrap">
+    <p class="mono" style="margin:0">Cite</p>
+    <h2 style="margin-top:10px">Reference</h2>
+    <pre>@misc{cheng2026ep4nn,
+  title  = {ep4nn: Evidence-Gated Structural Growth in a
+            Connectome-Compiled Equilibrium Network},
+  author = {Cheng, Sheng},
+  year   = {2026},
+  month  = {October},
+  note   = {Hefei Jiuzhai Big Data Technology Co., Ltd.},
+  url    = {https://hf-jz.github.io/ep4nn/}
+}</pre>
+    <p class="lead" style="margin-top:26px;max-width:70ch">The network is built on the released Cadence library, whose settling is trained by the contrast of a free and a nudged fixed point, the two-phase form of equilibrium propagation (Scellier and Bengio, 2017) and of contrastive Hebbian learning (Movellan, 1990), with later work on the finite-nudge bias and on Jacobian conditioning. The wiring is the openworm c302 reconstruction of the hermaphrodite. The measuring discipline, protocols written before the run and receipts that separate nominal from executed scale, is adopted from the open fly connectome projects, whose published attempts to drive a body from a measured wiring without a supplied controller are the closest neighbours of this work.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p style="margin:0">Text and figures: CC BY 4.0. Code in <span class="sym">ep4nn</span> and <span class="sym">probes</span>: MIT. Wiring: openworm c302, MIT. Library: cadence-net, GPL-3.0.</p>
+    <div class="frow">
+      <a href="https://hf-jz.github.io/eep/gep/">Certified equilibrium propagation</a>
+      <a href="https://github.com/hf-jz/ep4nn">GitHub</a>
+      <a href="paper.html">Paper</a>
+      <a href="README.md">Project notes</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>

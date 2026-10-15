@@ -15,7 +15,9 @@ EP 是条件普遍的局部伴随法（有向真实接线上梯度语义失效�
 4. `创新点.md` —— 六条创新点 + 明确不宣称的部分。
 5. `方案.md` —— Phase 0–4 详细方案、关键决策、benchmark 与收据格式。
 6. `ep4nn_discussion.md` —— 讨论原文（问题、推演、判语全过程）。
-7. `paper.md` —— 学术论文（英文，本项目的正式表述）；`index.html` 是它渲染出的站点首页（GitHub Pages 用）。
+7. `paper.md` —— 学术论文（英文，本项目的正式表述）；`paper.html` 是它的渲染版，`index.html` 是站点首页。
+   页面布局（配色 `--accent:#1d4e89`、`--maxw:1080px`、62px 吸顶导航、`.hero` 1.35fr/.65fr、`.result` 软色块、`.titem` 左边框、`.row` 290px/1fr、`.panel` 双栏、`pre` 复现块）逐行取自同一作者的 `hf-jz/eep` 的 `gep/` 页面，CSS 原样搬运。
+   `assets/make_figures.py` 一条命令重画四张图，数据来自 `probes/` 与 `assets/prereq_scan.json`。
 8. `receipts/` —— 运行收据（`ep4nn/receipt.py` 写出；六字段：dataset / run / dynamics / loop / premise / cost）。
 
 ## 现状一张表

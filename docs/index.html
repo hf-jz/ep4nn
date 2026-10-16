@@ -189,7 +189,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       </div>
       <div>
         <dt>Growth decisions, 1200 ticks</dt>
-        <dd><span class="sym">90 / 90</span> growth attempts rolled back across three declared readouts, zero kept, and 302 neurons before and after. The same locomotion readout gated on an aggregate spread instead refuses all 1200 ticks, which is what a gate on the wrong quantity costs.</dd>
+        <dd><span class="sym">90 / 90</span> growth attempts rolled back across three declared readouts, zero kept, and 302 neurons before and after. The verdict re-settles the situations after growth, because a comparison against stored answers cannot see the growth at all: with it, growth moves the collision by <span class="sym">+1.0e-4</span> at best, that is it worsens, against a margin of 0.02 and a drift floor of exactly zero. The same locomotion readout gated on an aggregate spread instead refuses all 1200 ticks, which is what a gate on the wrong quantity costs.</dd>
         <dt>Certificate on the same graph</dt>
         <dd><span class="sym">0.529065</span> certified contraction of the settling majorant at the library's default efficacy and <span class="sym">0.931159</span> at the declared operating point, certified by Kolmogorov's inequality with outward rounding, against a global worst-case bound of 88.0 that certifies nothing; worst value 0.941 over a 12-state scanned domain.</dd>
       </div>
@@ -233,9 +233,9 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       <article class="titem">
         <div>
           <h3>Verdict: rollback unless the confusion falls <span class="tmeta">Rule 4</span></h3>
-          <p>After growth, the same collisions are measured again. The connectome and the efficacy array are restored from the snapshot unless the collision falls by the margin, and the attempt is recorded as a failure. A growth that does not pay is a measurement, not a mistake to hide.</p>
+          <p>After growth, the same collisions are measured again, and <em>again</em> means re-settled: the answers of the stored situations are recomputed on the current graph. A comparison against stored answers cannot see the growth at all, because those answers belong to the graph as it was, and a gate written that way rolls every attempt back by construction. The connectome and the efficacy array are then restored from the snapshot unless the collision falls by the margin, and the attempt is recorded as a failure. A growth that does not pay is a measurement, not a mistake to hide.</p>
         </div>
-        <p class="tmeta">Ninety of ninety attempts rolled back across three declared readouts, at about one millisecond of rebuild each, with the receipts in <span class="sym">docs/receipts/</span>.</p>
+        <p class="tmeta">Ninety of ninety attempts rolled back across three declared readouts, at about one millisecond of rebuild each, with the receipts in <span class="sym">docs/receipts/</span>. The first version of this gate compared stored answers and reported an unchanged collision for every attempt: a gate that cannot see the intervention turns a negative result into an artifact of the gate.</p>
       </article>
     </div>
   </div>
@@ -257,6 +257,10 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       <div class="row">
         <div class="src">Certificate<span>state-dependent, not worst case</span></div>
         <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has certified contraction 0.529065 there and 0.931159 at the declared row-normalised operating point, with the witness inequality (Kolmogorov, Perron witness, outward-rounded) asserted rather than assumed, and the worst of a twelve-state scanned domain is 0.941. The Gershgorin row criterion exceeds one everywhere, so the certificate is carried by the certified contraction and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
+      </div>
+      <div class="row">
+        <div class="src">The ceiling<span>what the most favourable intervention achieves</span></div>
+        <p>Twenty direct edges from the two context cells into the ten readout cells, with their weight swept over two orders of magnitude, move the collision by at most 0.0034, five times less than the 0.02 margin a growth must clear, and a hand-built repair neuron that reads the context and writes to the readout does not help at all. With the same budget of thirty attempts, partners drawn from the difference-carrying neighbourhood and partners drawn uniformly produce the same change, +1.0e-4, and growing nothing produces exactly zero. So the negative result belongs to the substrate and its declared readout rather than to the generator, and the generator's targeting is not shown to matter here.</p>
       </div>
       <div class="row">
         <div class="src">Continuous tracking<span>a negative control result</span></div>
@@ -340,7 +344,11 @@ python ep4nn/grow.py                        # 1200 ticks, refuses to grow, write
 python probes/probe_readout_response.py     # the 60-point scan, writes assets/prereq_scan.json
 python probes/probe_scaling.py              # settlement cost to 100,000 neurons
 python probes/probe_certificate.py          # global bound against the local witness
-python docs/assets/make_figures.py          # regenerate the three figures</pre>
+python probes/probe_audit_fixes.py          # certified bound, validity domain, seeds, readout family
+python probes/probe_closure.py              # the ceiling, and the generator against a baseline
+python docs/assets/make_figures.py          # regenerate the four figures
+bash repro_check.sh                         # snapshot, re-run, diff the artefacts
+bash receipt_determinism.sh                 # two runs of the receipts, byte compared</pre>
     <div class="cols2">
       <div><b>Thirteen probes</b><span>settlement cost, Anderson acceleration, end to end, worm graph, certificate, profile, continuous control, transport A/B, rhythm, scaling, prerequisite scan, audit claims, audit fixes</span></div>
       <div><b>Three self-checks</b><span>the growth demo asserts that nothing shrank, that efficacy survived every rebuild, and that no kept growth went unmeasured; <span class="sym">repro_check.sh</span> re-runs the pipeline and diffs the artefacts, <span class="sym">receipt_determinism.sh</span> diffs two runs of the growth receipts, and the paper builds byte-identically under SOURCE_DATE_EPOCH</span></div>

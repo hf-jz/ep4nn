@@ -1,0 +1,90 @@
+{
+ "closed_2_certificate": {
+  "default efficacy": {
+   "alpha_certified": 0.529065,
+   "witness_holds": true,
+   "slack_relative": 3.552713678800501e-15,
+   "rho_numeric": 0.529065
+  },
+  "declared point": {
+   "alpha_certified": 0.931159,
+   "witness_holds": true,
+   "slack_relative": 3.552713678800501e-15,
+   "rho_numeric": 0.931159
+  }
+ },
+ "closed_1_and_3_growth_arms": {
+  "generator partners": {
+   "before": 1.0,
+   "attempts": 30,
+   "mean_delta": 0.0001,
+   "best_delta": 0.0001,
+   "kept": 0,
+   "margin": 0.02
+  },
+  "shuffled partners": {
+   "before": 1.0,
+   "attempts": 30,
+   "mean_delta": 0.0001,
+   "best_delta": 0.0001,
+   "kept": 0,
+   "margin": 0.02
+  },
+  "no growth (drift floor)": {
+   "before": 0.999873,
+   "attempts": 30,
+   "mean_delta": 0.0,
+   "best_delta": 0.0
+  }
+ },
+ "closed_1_pinning": {
+  "baseline_collision": 0.999689,
+  "rows": [
+   {
+    "intervention": "direct pain->readout edges, weight 0.1",
+    "collision": 0.99767,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "direct pain->readout edges, weight 0.5",
+    "collision": 0.996637,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "direct pain->readout edges, weight 1",
+    "collision": 0.996833,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "direct pain->readout edges, weight 2",
+    "collision": 0.996317,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "direct pain->readout edges, weight 5",
+    "collision": 0.997353,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "direct pain->readout edges, weight 10",
+    "collision": 0.999618,
+    "edges_touched": 20
+   },
+   {
+    "intervention": "hand-built repair neuron, weight 0.5",
+    "collision": 1.0,
+    "edges_touched": 12
+   },
+   {
+    "intervention": "hand-built repair neuron, weight 2",
+    "collision": 0.999999,
+    "edges_touched": 12
+   },
+   {
+    "intervention": "hand-built repair neuron, weight 10",
+    "collision": 1.0,
+    "edges_touched": 12
+   }
+  ]
+ }
+}

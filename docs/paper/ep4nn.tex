@@ -218,10 +218,13 @@ the reverse edge with probability \texttt{reciprocal} so the equilibrium contras
 preserved, and projects into the readout with probability \texttt{to\_readout}. The generator is
 low-dimensional by construction.
 
-\textbf{Rule 4, verdict.} After growth the same collisions are measured again. Growth is kept only
-if the collision cosine falls by \texttt{improve\_margin}. Otherwise the connectome and the
-efficacy array are restored from the snapshot taken before the attempt, and the attempt is counted
-as a failure.
+\textbf{Rule 4, verdict.} After growth the same collisions are measured again, and \emph{again}
+means re-settled: the verdict recomputes the answers of the stored situations on the current graph.
+A comparison against stored answers cannot see the growth at all, since those answers belong to the
+graph as it was, and an outcome gate written that way reports an unchanged collision for every
+attempt and rolls all of them back by construction. Growth is kept only if the collision cosine
+falls by \texttt{improve\_margin}. Otherwise the connectome and the efficacy array are restored from
+the snapshot taken before the attempt, and the attempt is counted as a failure.
 
 \subsection{The operating point}
 
@@ -245,11 +248,12 @@ K \;=\; (1-\mathrm{d}t)\,I \;+\; \mathrm{d}t\, \abs{W} \diag\!\big(s'(v)\big),
 \end{equation}
 so $\rho(J) \le \rho(K)$ by monotonicity of the spectral radius on nonnegative matrices, and a positive
 vector $h$ with $Kh \le \alpha h$ bounds $\rho(K)$ from above by the Kolmogorov--Collatz--Wielandt
-inequality. The witness is the Perron vector, obtained by power iteration, and the inequality is
-evaluated with one-ulp outward rounding and asserted, so $\alpha$ is a certificate rather than an
-eigenvalue estimate: at the library's default efficacy $\alpha = 0.529065$, at the declared
-row-normalised operating point $\alpha = 0.931159$, and over a scanned domain of twelve states
-(three operating points, four drive amplitudes) the worst value is $0.941$. The settling budget
+inequality. The witness is the Perron vector, obtained by power iteration, the matrix is inflated
+outward by sixteen machine epsilons before the ratio is taken, and the witness inequality is
+asserted, so $\alpha$ bounds the spectral radius of the model as computed within $3.6\times10^{-15}$
+relative rather than estimating it: at the library's default efficacy $\alpha = 0.529065$, at the
+declared row-normalised operating point $\alpha = 0.931159$, and over a scanned domain of twelve
+states (three operating points, four drive amplitudes) the worst value is $0.941$. The settling budget
 follows as $k \approx \log(\epsilon/\delta)/\log(1/\alpha)$. For the library's stopping
 rule the bridge is one line: the residual of the potential equation is
 $r = -v + Ws(v) + \text{stim} + \text{bias}$, so one step moves $\Delta v = \mathrm{d}t\, r$ and a residual
@@ -446,8 +450,13 @@ readout gated on the aggregate spread instead of the declared pairs: the aggrega
 below its $0.05$ gate, and the system refuses all twelve hundred times, while the pairwise measure of
 the very same answers is $0.0316$ to $0.1228$ across the readout family, well above the gate that
 matters. That is what the change of gate buys, and it is why ninety growth attempts now exist where
-before there were none. All ninety were rolled back: the collision cosine read $1.000$ before and
-after every attempt, so added neurons did not separate the answers that must be told apart. Two failures of the machinery were found and
+before there were none. All ninety were rolled back, and with a verdict that re-settles, the reason is measured rather than
+assumed: after growth the collision moves by $+1.0\times10^{-4}$ on average and by $+1.0\times10^{-4}$
+at best, that is, it worsens, against a drift floor of exactly zero when nothing is grown and a margin
+of $0.02$. The gate that made this visible was itself wrong when first written, and it is the third
+construction failure this paper reports: it compared stored answers, which belong to the graph as it
+was, so it reported an unchanged collision for all thirty attempts of every arm. A gate that cannot
+see the intervention turns a negative result into an artifact of the gate. Two failures of the machinery were found and
 fixed during construction, and both are worth stating because they are cheap to reproduce: a
 calibration that maximised readout response pinned every answer to the same trajectory, and a
 rollback that rebuilt the connectome from truncated arrays silently carried the wrong efficacy. The
@@ -536,6 +545,49 @@ steps. This is consistent with the library's own control-oriented demonstration,
 consequence model and leaves the controller supplied. It is also the reason the growth layer is not
 a remedy for control: a policy that collapses to one action does not present the collisions that
 growth is keyed to.
+
+\subsection{What the most favourable intervention achieves, and the baseline that was missing}
+\label{sec:ceiling}
+
+If every generated growth is rolled back, one question remains: is the generator at fault, or the
+substrate? The way to tell them apart is to stop generating and build the repair by hand, as
+favourably as the graph allows, then measure it with the same instrument
+(Table~\ref{tab:ceiling}).
+
+\begin{table}[t]
+\centering
+\small
+\caption{Hand-built interventions on the worm graph, each measured with the verdict's own
+re-settling instrument. Twenty direct edges from the two context cells into the ten readout cells,
+weight swept over two orders of magnitude, move the collision by at most $0.0034$, five times less
+than the margin a growth must clear; a hand-built repair neuron that reads the context cells and
+writes to the readout does not help at all. The negative result is therefore a property of this
+substrate and its declared readout, not of the generator. Source:
+\texttt{probes/probe\_closure.py}.}
+\label{tab:ceiling}
+\begin{tabular}{lrr}
+\toprule
+intervention & edges & collision \\
+\midrule
+baseline, no intervention & --- & $0.999689$ \\
+direct context edges, weight $0.1$ & $20$ & $0.997670$ \\
+direct context edges, weight $0.5$ & $20$ & $0.996637$ \\
+direct context edges, weight $2$ & $20$ & $0.996317$ \\
+direct context edges, weight $10$ & $20$ & $0.999618$ \\
+hand-built repair neuron, weight $2$ & $12$ & $0.999999$ \\
+\midrule
+verdict margin a growth must clear & --- & $0.020000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The same instrument also supplies the comparison the generator never had. With an identical budget
+of thirty attempts, partners drawn from the difference-carrying neighbourhood and partners drawn
+uniformly produce the same change in the collision, $+1.0\times10^{-4}$, and growing nothing
+produces exactly zero. So on this substrate the generator's targeting is not shown to matter, and
+the claim we make about it stays what it always was: a parameter count of thirteen against $3137$
+synapse classes, with no test in this paper that a dense search of the same dimension would do
+worse.
 
 \section{Discussion}
 

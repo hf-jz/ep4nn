@@ -127,6 +127,7 @@ class EP4NN:
         self.connectome = connectome
         self._efficacy = operating_point(connectome, self.config.row_sum)
         self.memory: list[tuple[np.ndarray, int, int]] = []
+        self._drives: dict[tuple[int, int], np.ndarray] = {}   # (present, context) -> drive
         self.log: list[dict] = []
         self.ticks = self.growths_kept = self.growths_failed = self.silent = 0
         self._last_growth_tick = -10 ** 9
@@ -241,10 +242,43 @@ class EP4NN:
             best = max(best, abs(float(code @ stored) / (norm * snorm)))
         return best
 
-    def _remember(self, code: np.ndarray, present: int, context: int) -> None:
+    def _remember(self, code: np.ndarray, present: int, context: int,
+                  drive: np.ndarray | None = None) -> None:
         self.memory.append((code.copy(), present, context))
         if len(self.memory) > self.config.memory:
             self.memory.pop(0)
+        if drive is not None:
+            self._drives[(present, context)] = np.asarray(drive, float).copy()
+            while len(self._drives) > self.config.memory:
+                self._drives.pop(next(iter(self._drives)))
+
+    def _fresh_collision(self) -> float:
+        """Re-settle every stored situation, then take the largest |cosine| between answers that
+        share a present and differ in context.
+
+        This, and not a comparison of stored answers, is what the verdict needs: the stored codes
+        belong to the graph as it was, so a comparison against them cannot see the growth at all
+        and every attempt would report an unchanged collision.
+        """
+        worst = 0.0
+        by_present: dict[int, list[np.ndarray]] = {}
+        for (present, _context), drive in self._drives.items():
+            # a stored situation outlives a growth event, so its drive must be widened to the
+            # current neuron count; appended neurons are driven by nothing the world declared.
+            if drive.shape[1] != self.neurons:
+                wide = np.zeros((drive.shape[0], self.neurons))
+                wide[:, : drive.shape[1]] = drive
+                drive = wide
+            code, _ = self._settle(drive)
+            by_present.setdefault(present, []).append(code)
+        for codes in by_present.values():
+            for i in range(len(codes)):
+                for j in range(i + 1, len(codes)):
+                    a, b = codes[i], codes[j]
+                    na, nb = float(np.linalg.norm(a)), float(np.linalg.norm(b))
+                    if na and nb:
+                        worst = max(worst, abs(float(a @ b) / (na * nb)))
+        return worst
 
     # -- 3: the generator ------------------------------------------------
     def _neighbours(self, seeds: np.ndarray) -> np.ndarray:
@@ -339,14 +373,14 @@ class EP4NN:
     # -- 4: the verdict --------------------------------------------------
     def try_grow(self, confused: list[tuple[np.ndarray, int, int]]) -> dict:
         """Keep the growth only if the same collisions become less parallel."""
-        before = max(self._collision(c, p, ctx) for c, p, ctx in confused)
+        before = self._fresh_collision()
         prev_connectome, prev_efficacy = self.connectome, self._efficacy.copy()
         t0 = time.perf_counter()
         added = self._grow(confused, np.random.default_rng(self.ticks + 7))
         grow_ms = 1000 * (time.perf_counter() - t0)
         if not added:
             return {"event": "budget", "before": before, "after": before, "added": 0}
-        after = max(self._collision(c, p, ctx) for c, p, ctx in confused)
+        after = self._fresh_collision()
         kept = (before - after) >= self.config.improve_margin
         entry = {"event": "kept" if kept else "rolled_back", "added": added,
                  "before": round(before, 4), "after": round(after, 4),
@@ -366,11 +400,12 @@ class EP4NN:
     def tick(self, present: tuple[str, float], context: tuple[str, float],
              present_id: int, context_id: int) -> dict:
         self.ticks += 1
-        code, info = self._settle(self._drive(present, context))
+        drive = self._drive(present, context)
+        code, info = self._settle(drive)
         if float(np.linalg.norm(code)) == 0.0:
             self.silent += 1  # a silent answer is a response failure, not a capacity one
         collision = self._collision(code, present_id, context_id)
-        self._remember(code, present_id, context_id)
+        self._remember(code, present_id, context_id, drive)
         if self.pair_motion < self.config.min_pair_motion:
             # the premise of growth is false here: the declared pairs do not move the
             # answer, so no amount of capacity can separate them. Say so, do not grow.

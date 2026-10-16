@@ -31,11 +31,12 @@
   "premise": {
     "collision_cap": 0.85,
     "min_pair_motion": 0.001,
-    "pair_motion": 0.13896,
+    "pair_motion": 0.08121,
     "readout": [
-      "class_interneuron"
+      "forward",
+      "reverse"
     ],
-    "readout_spread": 0.0257,
+    "readout_spread": 0.0188,
     "refusals_no_response": 0
   },
   "run": {

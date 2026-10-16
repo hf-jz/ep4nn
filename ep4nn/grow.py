@@ -59,7 +59,13 @@ def _key(pre: np.ndarray, post: np.ndarray, n: int) -> np.ndarray:
     return post * n + pre
 
 
-def load_worm() -> Connectome:
+def load_worm(tone: bool = False) -> Connectome:
+    """The worm wiring, optionally with two extra input cells that drive nothing.
+
+    ``tone`` is the unit test of structural plasticity: the world's context lives in two cells that
+    reach no one, so the situations differ in the network and not in the answer. Supplying that path
+    is exactly the repair growth is supposed to be able to make.
+    """
     raw = json.loads(DATA.read_text())
     names = [c["name"] for c in raw["neurons"]]
     index = {name: i for i, name in enumerate(names)}
@@ -76,7 +82,11 @@ def load_worm() -> Connectome:
     roles = [c.get("role", "unknown") for c in raw["neurons"]]
     for role in sorted(set(roles)):
         populations[f"class_{role}"] = tuple(i for i, r in enumerate(roles) if r == role)
-    return Connectome.from_synapses(len(names), pre=pre, post=post, count=count,
+    n = len(names)
+    if tone:
+        populations["context_tone"] = (n, n + 1)      # two cells with no outgoing edge at all
+        n += 2
+    return Connectome.from_synapses(n, pre=pre, post=post, count=count,
                                     sign=sign, populations=populations, label="celegans:c302")
 
 
@@ -106,9 +116,15 @@ class GrowthConfig:
     calibrate: bool = True             # centre the readout's operating point, as the library prescribes
     row_sum: float = 0.5               # the declared operating point
     code_cap: float = 0.85             # |cosine| above this counts as "the same answer"
-    min_pair_motion: float = 1e-3      # the *declared pair* must differ at least this much, relative to its own
-                                       # size, or the two answers are the same object and growth cannot touch it
+    min_state_motion: float = 1e-3     # the declared pair must differ somewhere in the network, else the two
+                                       # situations are one situation and no wiring can separate them
+    min_pair_motion: float = 0.0       # diagnostic: how far apart the answers of a pair sit, relative to size
     readout: tuple[str, ...] = ("forward", "reverse")   # populations that constitute the declared answer
+    difference_source: str = "state"   # "state": cells whose activity differs anywhere; "readout": only the answer
+    context: str = "pain"              # the population the world varies to make a pair
+    difference_fraction: float = 0.06  # top fraction of differing cells the generator wires from
+    difference_share: float = 0.6      # share of a new neuron's in-edges drawn from those cells
+    readout_sign: float = 1.0          # sign of the new neuron's projection into the answer; -1 is inhibition
     min_evidence: int = 3              # collisions required before one growth event
     min_response: float = 0.05         # the answer must move this much, or growth is the wrong repair
     improve_margin: float = 0.02       # the re-measured collision cosine must drop this much
@@ -128,6 +144,7 @@ class EP4NN:
         self._efficacy = operating_point(connectome, self.config.row_sum)
         self.memory: list[tuple[np.ndarray, int, int]] = []
         self._drives: dict[tuple[int, int], np.ndarray] = {}   # (present, context) -> drive
+        self._full: dict[tuple[int, int], np.ndarray] = {}     # (present, context) -> whole state
         self.log: list[dict] = []
         self.ticks = self.growths_kept = self.growths_failed = self.silent = 0
         self._last_growth_tick = -10 ** 9
@@ -144,13 +161,15 @@ class EP4NN:
         if not self.config.calibrate:
             self.readout_spread = self._spread(np.zeros(self.neurons))
             self.pair_motion = self._pair_motion()
+            self.state_motion = self._state_motion()
             return
         # The operating point a connectome does not carry. Calibration is kept only
         # if it makes the readout *more responsive*: forcing every cell to one half
         # can also pin it, and a pinned readout answers the same thing to everything.
         levels = np.linspace(0.2, 1.0, 5)
-        rows = [self._drive(("odour_A", 1.0), ("pain", float(lv)))[0] for lv in levels]
-        rows += [self._drive(("odour_B", 1.0), ("pain", float(lv)))[0] for lv in levels]
+        ctx = self.config.context
+        rows = [self._drive(("odour_A", 1.0), (ctx, float(lv)))[0] for lv in levels]
+        rows += [self._drive(("odour_B", 1.0), (ctx, float(lv)))[0] for lv in levels]
         drives = np.stack(rows)
         raw = self.brain
         bias = calibrate_bias(raw, drives, {"forward": 0.5, "reverse": 0.5},
@@ -161,9 +180,27 @@ class EP4NN:
         candidates = [(self.readout_spread, raw), (self._spread(bias, drives), calibrated)]
         self.readout_spread, self.brain = max(candidates, key=lambda pair: pair[0])
         self.pair_motion = self._pair_motion()
+        self.state_motion = self._state_motion()
+
+    def _state_motion(self) -> float:
+        """How far apart a declared pair is *anywhere in the network*, relative to its own size.
+
+        This is the honest prerequisite for a structural repair. Asking whether the readout already
+        moves refuses precisely the case growth exists for: a distinction that is present in the
+        network and has no path to the declared answer.
+        """
+        best = 0.0
+        by_present: dict[int, list[np.ndarray]] = {}
+        for (present, _context), state in self._full.items():
+            by_present.setdefault(present, []).append(state)
+        for states in by_present.values():
+            for a, b in zip(states, states[1:]):
+                scale = max(float(np.linalg.norm(a)), float(np.linalg.norm(b)), 1e-12)
+                best = max(best, float(np.linalg.norm(a - b)) / scale)
+        return best
 
     def _pair_motion(self) -> float:
-        """How far apart a *declared pair*'s answers sit, relative to their own size.
+        """Diagnostic: how far apart a declared pair's answers sit, relative to their own size.
 
         The pair is the unit the world declares: same present, different context. The
         relative form is the one that matters, because the gate has to tell "the two
@@ -185,8 +222,9 @@ class EP4NN:
     def _situation_codes(self) -> np.ndarray:
         """The declared readout's answer to every declared situation."""
         levels = np.linspace(0.2, 1.0, 5)
-        rows = [self._drive(("odour_A", 1.0), ("pain", float(lv)))[0] for lv in levels]
-        rows += [self._drive(("odour_B", 1.0), ("pain", float(lv)))[0] for lv in levels]
+        ctx = self.config.context
+        rows = [self._drive(("odour_A", 1.0), (ctx, float(lv)))[0] for lv in levels]
+        rows += [self._drive(("odour_B", 1.0), (ctx, float(lv)))[0] for lv in levels]
         eq = self.brain.equilibrate(np.stack(rows), budget=self.budget, chunk=self.chunk,
                                     tolerance=self.tolerance)
         return np.asarray(eq.state.activation)[:, self.readout]
@@ -195,7 +233,7 @@ class EP4NN:
         """How much the readout cells move across the declared situations."""
         if drives is None:
             levels = np.linspace(0.2, 1.0, 3)
-            drives = np.stack([self._drive(("odour_A", 1.0), ("pain", float(lv)))[0]
+            drives = np.stack([self._drive(("odour_A", 1.0), (self.config.context, float(lv)))[0]
                                for lv in levels])
         probe = Brain(self.connectome, learning_neuron_model(), backend="cpu",
                       efficacy=self._efficacy, bias=bias)
@@ -217,14 +255,18 @@ class EP4NN:
             d[0, list(self.connectome.populations[population])] = level
         return d
 
-    def _settle(self, drive: np.ndarray) -> tuple[np.ndarray, dict]:
+    def _settle_full(self, drive: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict]:
         eq = self.brain.equilibrate(drive, budget=self.budget, chunk=self.chunk,
                                     tolerance=self.tolerance)
         state = np.asarray(eq.state.activation).ravel()
-        return state[self.readout], {
+        return state[self.readout], state, {
             "sweeps": int(eq.steps), "residual": float(np.max(eq.residual)),
             "qualified": bool(np.all(eq.qualified)),
         }
+
+    def _settle(self, drive: np.ndarray) -> tuple[np.ndarray, dict]:
+        code, _state, info = self._settle_full(drive)
+        return code, info
 
     # -- 1+2: demand and evidence ---------------------------------------
     def _collision(self, code: np.ndarray, present: int, context: int) -> float:
@@ -243,10 +285,14 @@ class EP4NN:
         return best
 
     def _remember(self, code: np.ndarray, present: int, context: int,
-                  drive: np.ndarray | None = None) -> None:
+                  drive: np.ndarray | None = None, state: np.ndarray | None = None) -> None:
         self.memory.append((code.copy(), present, context))
         if len(self.memory) > self.config.memory:
             self.memory.pop(0)
+        if state is not None:
+            self._full[(present, context)] = np.asarray(state, float).copy()
+            while len(self._full) > self.config.memory:
+                self._full.pop(next(iter(self._full)))
         if drive is not None:
             self._drives[(present, context)] = np.asarray(drive, float).copy()
             while len(self._drives) > self.config.memory:
@@ -287,21 +333,39 @@ class EP4NN:
         return np.unique(np.concatenate([pre[mask], post[mask]]))
 
     def _difference_cells(self, confused: list[tuple[np.ndarray, int, int]]) -> np.ndarray:
-        """Cells whose readout activity carries what the colliding situations differ in.
+        """The cells that carry what the colliding situations differ in.
 
-        Paired inside one present input: same sense, different context. This is
-        the only place "what to wire" comes from.
+        Paired inside one present input: same sense, different context. With
+        ``difference_source = "state"`` the comparison runs over the whole state, which is where
+        the distinction usually lives, and the returned mask is over all neurons; with
+        ``"readout"`` it runs over the declared answer only, which is what the stored codes hold
+        and is the arm this paper measured against. Reading the difference out of the answer is
+        self-defeating whenever the answer is nearly proportional: the difference vector is then a
+        small multiple of the answer itself, and wiring from it copies the answer instead of the
+        distinction.
         """
-        by_present: dict[int, list[np.ndarray]] = {}
+        if self.config.difference_source == "state" and self._full:
+            by_present: dict[int, list[np.ndarray]] = {}
+            for _code, present, context in confused:
+                state = self._full.get((present, context))
+                if state is not None:
+                    by_present.setdefault(present, []).append(state)
+            diffs = [np.abs(a - b) for states in by_present.values()
+                     for a, b in zip(states, states[1:])]
+            if diffs:
+                peak = np.stack(diffs).max(axis=0)
+                cut = np.quantile(peak[peak > 0], 1.0 - self.config.difference_fraction) if (peak > 0).any() else 1.0
+                return peak >= max(cut, 1e-9)
+            return np.zeros(self.neurons, dtype=bool)
+        by_present = {}
         for code, present, _ in confused:
             by_present.setdefault(present, []).append(code)
-        diffs = []
-        for codes in by_present.values():
-            for a, b in zip(codes, codes[1:]):
-                diffs.append(np.abs(a - b))
+        diffs = [np.abs(a - b) for codes in by_present.values() for a, b in zip(codes, codes[1:])]
         if not diffs:
-            return np.zeros(len(self.readout), dtype=bool)
-        return np.stack(diffs).max(axis=0) > 1e-6
+            return np.zeros(self.neurons, dtype=bool)
+        mask = np.zeros(self.neurons, dtype=bool)
+        mask[self.readout] = np.stack(diffs).max(axis=0) > 1e-6
+        return mask
 
     def _grow(self, confused: list[tuple[np.ndarray, int, int]], rng: np.random.Generator) -> int:
         cfg = self.config
@@ -312,7 +376,7 @@ class EP4NN:
         # and the cells that are active while the answer forms (one hop out).
         hot = np.zeros(n_old, dtype=bool)
         differs = self._difference_cells(confused)
-        hot[self.readout[differs]] = True
+        hot[: len(differs)] = differs            # a mask over all neurons, or over the readout
         for code, _, _ in confused:
             hot[self.readout[np.argsort(-code)[:4]]] = True
         state = self.brain.settle_batch(self._drive(("odour_A", 1.0)), steps=self.chunk, state=None)
@@ -321,19 +385,32 @@ class EP4NN:
         near = self._neighbours(seeds) if len(seeds) else np.arange(n_old)
         if len(near) < 4:
             near = np.arange(n_old)
+        # the cells that carry the distinction are the pool a new neuron should read first:
+        # a neuron fed the same activity in both situations cannot tell them apart, however
+        # many edges it has.
+        diff_idx = np.flatnonzero(differs)[:64]
+        near = np.union1d(near, diff_idx) if len(diff_idx) else near
         mean_in = max(1.0, self.synapses / n_old)
         init = cfg.init_scale * (float(np.mean(np.abs(self._efficacy))) or 0.02)
 
         pre, post, sign = [], [], []
         for j in range(k):
             new = n_old + j
-            for _ in range(2):  # in-edges, then out-edges, one degree prior
+            for which in (0, 1):  # in-edges, then out-edges, one degree prior
                 degree = int(np.clip(rng.lognormal(np.log(cfg.degree), cfg.degree_jitter),
                                      1, 8 * mean_in))
-                take_local = rng.random(degree) < cfg.locality
-                partners = np.empty(degree, dtype=np.int64)
-                partners[take_local] = near[rng.integers(0, len(near), int(take_local.sum()))]
-                partners[~take_local] = rng.integers(0, n_old, int((~take_local).sum()))
+                if which == 0 and len(diff_idx):
+                    from_diff = rng.random(degree) < cfg.difference_share
+                    partners = np.where(
+                        from_diff,
+                        diff_idx[rng.integers(0, len(diff_idx), degree)],
+                        near[rng.integers(0, len(near), degree)],
+                    )
+                else:
+                    take_local = rng.random(degree) < cfg.locality
+                    partners = np.empty(degree, dtype=np.int64)
+                    partners[take_local] = near[rng.integers(0, len(near), int(take_local.sum()))]
+                    partners[~take_local] = rng.integers(0, n_old, int((~take_local).sum()))
                 for partner in np.unique(partners):
                     s = 1.0 if rng.random() < cfg.excitatory else -1.0
                     pre.append(partner); post.append(new); sign.append(s)
@@ -341,8 +418,11 @@ class EP4NN:
                         pre.append(new); post.append(partner); sign.append(s)
             # growth must be able to reach the answer, or it cannot help at all
             if rng.random() < cfg.to_readout:
+                # excitation cannot move a saturated cell; inhibition can move it out of
+                # saturation, which is the only way an added synapse can separate two answers
+                # that both sit at the ceiling.
                 target = int(self.readout[rng.integers(0, len(self.readout))])
-                s = 1.0 if rng.random() < cfg.excitatory else -1.0
+                s = cfg.readout_sign
                 pre.append(new); post.append(target); sign.append(s)
         if not pre:
             return 0
@@ -401,16 +481,19 @@ class EP4NN:
              present_id: int, context_id: int) -> dict:
         self.ticks += 1
         drive = self._drive(present, context)
-        code, info = self._settle(drive)
+        code, full, info = self._settle_full(drive)
         if float(np.linalg.norm(code)) == 0.0:
             self.silent += 1  # a silent answer is a response failure, not a capacity one
         collision = self._collision(code, present_id, context_id)
-        self._remember(code, present_id, context_id, drive)
-        if self.pair_motion < self.config.min_pair_motion:
+        self._remember(code, present_id, context_id, drive, full)
+        # the prerequisite is a property of the pair just seen, so it is recomputed per moment
+        self.state_motion = self._state_motion()
+        if self.state_motion < self.config.min_state_motion:
             # the premise of growth is false here: the declared pairs do not move the
             # answer, so no amount of capacity can separate them. Say so, do not grow.
             self._evidence = 0
-            self.log.append({"event": "no_response", "pair_motion": round(self.pair_motion, 5),
+            self.log.append({"event": "no_response", "state_motion": round(self.state_motion, 8),
+                             "pair_motion": round(self.pair_motion, 5),
                              "spread": round(self.readout_spread, 4), "neurons": self.neurons})
             return {**info, "collision": round(collision, 3), "growth": None}
         if collision > self.config.code_cap:
@@ -435,19 +518,24 @@ def _report(tag: str, ep: EP4NN, t0: float, ticks: int) -> None:
     per_sweep = 1e6 * (time.perf_counter() - t2) / (5 * ep.chunk)
     ms_tick = 1000 * (time.perf_counter() - t0) / max(1, ticks)
     print(f"{tag:>10s} | neurons {ep.neurons:>5d} | synapses {ep.synapses:>6d} | "
-          f"per-sweep {per_sweep:6.1f} us | pair motion {ep.pair_motion:.4f} | "
+          f"per-sweep {per_sweep:6.1f} us | state motion {ep.state_motion:.2e} | "
           f"{ms_tick:5.1f} ms/tick | "
           f"kept {ep.growths_kept:>2d} | failed {ep.growths_failed:>2d}")
 
 
-def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse")) -> None:
+def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse"),
+         source: str = "state", substrate: str = "worm", init_scale: float = 3.0,
+         readout_sign: float = 1.0) -> None:
     """Start at 302 neurons; the world keeps requiring new distinctions.
 
     ``readout`` is the declared answer. The locomotion readout fails the prerequisite on
     this substrate; the sensory readout contains the cells that carry the context, so the
     pairs do move and the growth layer is exercised rather than refused.
     """
-    ep = EP4NN(load_worm(), GrowthConfig(readout=readout))
+    context = "context_tone" if substrate == "tone" else "pain"
+    ep = EP4NN(load_worm(tone=substrate == "tone"),
+               GrowthConfig(readout=readout, difference_source=source, context=context,
+                            init_scale=init_scale, readout_sign=readout_sign))
     print(f"start: neurons={ep.neurons} synapses={ep.synapses} "
           f"(row-normalised operating point {ep.config.row_sum})")
     rng = np.random.default_rng(3)
@@ -457,12 +545,12 @@ def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse")) -
         if i and i % 240 == 0:
             contexts += 1
             _report("milestone", ep, t0, i)
-            print(f"           tick {i}: the world now requires {contexts} levels of pain "
-                  f"to be told apart at the answer")
+            print(f"           tick {i}: the world now requires {contexts} levels of "
+                  f"{ep.config.context} to be told apart")
             t0 = time.perf_counter()
         context_id = int(rng.integers(0, contexts))
         level = 0.35 + 0.65 * context_id / max(1, contexts - 1)
-        out = ep.tick(("odour_A", 1.0), ("pain", level), 0, context_id)
+        out = ep.tick(("odour_A", 1.0), (ep.config.context, level), 0, context_id)
         if out["growth"] and out["growth"]["event"] != "budget":
             g = out["growth"]
             print(f"tick {i:>4d} ctx {context_id} collision {out['collision']:.3f} -> "
@@ -490,8 +578,10 @@ def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse")) -
         loop={"closed": False, "supplied": ["situations", "context levels", "readout declaration"],
               "note": "the world declares which situations must be distinguishable"},
         premise={"readout_spread": round(ep.readout_spread, 4),
+                 "state_motion": round(ep.state_motion, 8),
+                 "min_state_motion": ep.config.min_state_motion,
                  "pair_motion": round(ep.pair_motion, 5),
-                 "min_pair_motion": ep.config.min_pair_motion,
+                 "difference_source": ep.config.difference_source,
                  "readout": list(ep.config.readout),
                  "collision_cap": ep.config.code_cap,
                  "refusals_no_response": no_response},
@@ -509,5 +599,13 @@ def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse")) -
 
 if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "default"
+    scale = float(sys.argv[2]) if len(sys.argv) > 2 else 3.0
+    source = sys.argv[3] if len(sys.argv) > 3 else "state"
+    ticks = int(sys.argv[4]) if len(sys.argv) > 4 else 1200
+    rs = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0
+    tone = which == "tone"
     demo(readout={"default": ("forward", "reverse"), "sensory": ("class_sensory",),
-                  "interneuron": ("class_interneuron",)}.get(which, ("forward", "reverse")))
+                  "interneuron": ("class_interneuron",), "tone": ("forward", "reverse")}
+         .get(which, ("forward", "reverse")),
+         source=source, substrate="tone" if tone else "worm", init_scale=scale, ticks=ticks,
+         readout_sign=rs)

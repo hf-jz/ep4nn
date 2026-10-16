@@ -1,0 +1,23 @@
+start: neurons=304 synapses=3137 (row-normalised operating point 0.5)
+tick    3 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3413 synapses, rebuild 436.3 ms
+tick   43 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3383 synapses, rebuild 452.1 ms
+tick   83 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3401 synapses, rebuild 418.8 ms
+tick  123 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3390 synapses, rebuild 422.8 ms
+tick  163 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3365 synapses, rebuild 438.1 ms
+tick  203 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3407 synapses, rebuild 482.4 ms
+ milestone | neurons   304 | synapses   3137 | per-sweep  101.1 us | state motion 1.51e-01 |  56.2 ms/tick | kept  0 | failed  6
+           tick 240: the world now requires 3 levels of context_tone to be told apart
+tick  243 ctx 2 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3379 synapses, rebuild 452.3 ms
+tick  283 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3402 synapses, rebuild 440.9 ms
+tick  323 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3385 synapses, rebuild 445.5 ms
+tick  363 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3387 synapses, rebuild 441.0 ms
+tick  403 ctx 1 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3401 synapses, rebuild 424.3 ms
+tick  443 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3414 synapses, rebuild 441.1 ms
+ milestone | neurons   304 | synapses   3137 | per-sweep  102.5 us | state motion 1.51e-01 |  28.6 ms/tick | kept  0 | failed 12
+           tick 480: the world now requires 4 levels of context_tone to be told apart
+tick  483 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3376 synapses, rebuild 434.3 ms
+tick  523 ctx 0 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3417 synapses, rebuild 410.7 ms
+tick  563 ctx 2 collision 1.000 -> rolled_back + 8 neurons (1.000 -> 1.000), 312 neurons / 3398 synapses, rebuild 471.3 ms
+     final | neurons   304 | synapses   3137 | per-sweep  100.8 us | state motion 1.06e-01 |  11.5 ms/tick | kept  0 | failed 15
+ticks=600 kept=0 failed=15 refused_no_response=1 silent_answers=0 neurons=304 synapses=3137
+self-check ok: 0 kept growths, 15 rolled back, 2 neurons added, efficacy carried across every rebuild

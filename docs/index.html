@@ -204,10 +204,10 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
     <div class="titems">
       <article class="titem">
         <div>
-          <h3>Prerequisite: the declared pair must move <span class="tmeta">measured before anything else</span></h3>
-          <p>The unit is the declared pair, two situations that share the present input and differ only in context, and the measure is the relative motion of the two answers. The relative form separates "the two answers are the same object" from "they differ a little and a repair could amplify that". An absolute spread averaged over all situations is not a substitute: it can move while every pair stands still, and a mean over many readout cells dilutes the few cells that carry the difference. The whole state does not separate by construction either: at the scanned operating point the whole-state collision is 0.9997, because the driven cells saturate.</p>
+          <h3>Prerequisite: the declared pair must differ somewhere <span class="tmeta">measured before anything else</span></h3>
+          <p>The unit is the declared pair, two situations that share the present input and differ only in context, and the measure is how far apart they are anywhere in the network, relative to their own size. Asking whether the <em>answer</em> already moves refuses precisely the case a structural repair exists for: a distinction that is present in the network and has no path to the declared answer. Two diagnostics are reported and not gated on: the aggregate spread across all situations, which can move while every pair stands still, and the whole-state collision, which is 0.9997 here and gives no support to the idea that the whole state separates by construction.</p>
         </div>
-        <p class="tmeta">Same answers, two gates: 0.0083 by the aggregate measure (refused for 1200 ticks) against 0.0316 by the declared-pair measure (thirty attempts).</p>
+        <p class="tmeta">Same pairs, three gates: 0.0083 measured at the answer (refuses, 1200 ticks), 0.0316 to 0.1228 measured over the state (ninety attempts), and 0.065 to 0.106 on the unit-test substrate.</p>
       </article>
       <article class="titem">
         <div>
@@ -257,6 +257,10 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       <div class="row">
         <div class="src">Certificate<span>state-dependent, not worst case</span></div>
         <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has certified contraction 0.529065 there and 0.931159 at the declared row-normalised operating point, with the witness inequality (Kolmogorov, Perron witness, outward-rounded) asserted rather than assumed, and the worst of a twelve-state scanned domain is 0.941. The Gershgorin row criterion exceeds one everywhere, so the certificate is carried by the certified contraction and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
+      </div>
+      <div class="row">
+        <div class="src">The unit test<span>a distinction with no path to the answer</span></div>
+        <p>Two input cells are appended to the wiring and driven as the context, reaching nothing. The stored states then differ by 6.5 to 10.6 percent, so the prerequisite passes on its own terms, while the collision at the readout stays at 1.000. The generator may read exactly those cells and project into the answer: sixty attempts over four new-synapse scales, excitatory and inhibitory, all rolled back, the collision unchanged to three decimals. The reason is measured and local: the answer's cells sit at the ceiling of the rectified sigmoid, so added excitatory current is invisible and inhibition is too weak to move them off it.</p>
       </div>
       <div class="row">
         <div class="src">The ceiling<span>what the most favourable intervention achieves</span></div>
@@ -348,7 +352,8 @@ python probes/probe_audit_fixes.py          # certified bound, validity domain, 
 python probes/probe_closure.py              # the ceiling, and the generator against a baseline
 python docs/assets/make_figures.py          # regenerate the four figures
 bash repro_check.sh                         # snapshot, re-run, diff the artefacts
-bash receipt_determinism.sh                 # two runs of the receipts, byte compared</pre>
+bash receipt_determinism.sh                 # two runs of the receipts, byte compared
+bash tone_sweep.sh                          # the unit test: a distinction with no path to the answer</pre>
     <div class="cols2">
       <div><b>Thirteen probes</b><span>settlement cost, Anderson acceleration, end to end, worm graph, certificate, profile, continuous control, transport A/B, rhythm, scaling, prerequisite scan, audit claims, audit fixes</span></div>
       <div><b>Three self-checks</b><span>the growth demo asserts that nothing shrank, that efficacy survived every rebuild, and that no kept growth went unmeasured; <span class="sym">repro_check.sh</span> re-runs the pipeline and diffs the artefacts, <span class="sym">receipt_determinism.sh</span> diffs two runs of the growth receipts, and the paper builds byte-identically under SOURCE_DATE_EPOCH</span></div>

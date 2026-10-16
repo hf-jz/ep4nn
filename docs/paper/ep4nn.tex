@@ -190,17 +190,20 @@ search objective.
 
 \textbf{Prerequisite.} The declared readout is a named set of neurons, and the unit the
 prerequisite keys on is the \emph{declared pair}: two situations that share the present input and
-differ only in context. For every pair the system measures the relative motion of the two answers,
+differ only in context. For every pair the system measures how far apart the two situations are \emph{anywhere in the
+network},
 \[
-m(p) \;=\; \frac{\norm{a(s_1)-a(s_2)}}{\max\big(\norm{a(s_1)}, \norm{a(s_2)}\big)},
+m(p) \;=\; \frac{\norm{x(s_1)-x(s_2)}}{\max\big(\norm{x(s_1)}, \norm{x(s_2)}\big)},
 \]
-and refuses to grow when the mean over pairs falls below \texttt{min\_pair\_motion}. The relative
-form is what separates "the two answers are the same object" from "they differ a little, and a
-repair could amplify that". An absolute spread averaged over all situations is not a substitute: it
-can move while every pair stands still, and a mean over many readout cells dilutes the few cells
-that carry the difference. The aggregate spread is still reported, as a diagnostic rather than as a
-gate. We also drop the intuition that the whole state separates by construction: at the scanned
-operating point the whole-state collision is $0.9997$, because the driven cells saturate.
+over the full state $x$, and refuses to grow when it falls below \texttt{min\_state\_motion}. The
+distinction between this and the same quantity measured at the readout is the whole point. Asking
+whether the \emph{answer} already moves refuses precisely the case a structural repair exists for: a
+distinction that is present in the network and has no path to the declared answer. Measured at the
+readout, the worm's pairs move by $0.0083$ and the system refuses; measured over the state, the
+same pairs move by $0.0316$ to $0.1228$ and the growth layer is exercised. Two further diagnostics
+are reported and not gated on: the aggregate spread across all situations, which can move while
+every pair stands still, and the whole-state collision, which is $0.9997$ at the scanned operating
+point and gives no support to the intuition that the whole state separates by construction.
 
 \textbf{Rule 1, demand.} Two situations that the world declares different, share the present input,
 and produce answers whose absolute cosine exceeds \texttt{code\_cap} constitute a capacity signal.
@@ -427,30 +430,31 @@ criterion.}
 \centering
 \small
 \caption{Three declared readouts, $1200$ ticks each, while the world increases the number of context
-levels that must be told apart. With the pairwise prerequisite in place the growth layer is exercised:
-ninety attempts, ninety verdicts, none kept, and no refusal, because every readout's declared pairs do
-move. Source: \texttt{ep4nn/grow.py}, receipts in \texttt{docs/receipts/}.}
+levels that must be told apart. The gate is the state motion, which does not depend on the declared
+readout and reads $0.0746$ for all three; the last row gates on the readout's own motion instead and
+refuses every tick. Ninety attempts produce no kept growth. Source: \texttt{ep4nn/grow.py},
+receipts in \texttt{docs/receipts/}.}
 \label{tab:growth}
 \begin{tabular}{lrrrrr}
 \toprule
-declared readout & pair motion & kept & rolled back & refused & neurons at the end \\
+declared readout & gate & kept & rolled back & refused & neurons at the end \\
 \midrule
-forward + reverse (10 cells) & $0.081$ & $0$ & $30$ & $0$ & $302$ \\
-sensory (61 cells) & $0.083$ & $0$ & $30$ & $0$ & $302$ \\
-interneuron (91 cells) & $0.139$ & $0$ & $30$ & $0$ & $302$ \\
+forward + reverse (10 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
+sensory (61 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
+interneuron (91 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
 \midrule
-forward + reverse, aggregate gate & $0.008$ & $0$ & $0$ & $1200$ & $302$ \\
+forward + reverse, gated on the readout & $0.0083$ & $0$ & $0$ & $1200$ & $302$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 In every variant the brain never shrank, every synapse kept an efficacy across every rebuild, the
-readout stayed inside the current graph, and the self-check passed. The last row is the same
-readout gated on the aggregate spread instead of the declared pairs: the aggregate reads $0.019$,
-below its $0.05$ gate, and the system refuses all twelve hundred times, while the pairwise measure of
-the very same answers is $0.0316$ to $0.1228$ across the readout family, well above the gate that
-matters. That is what the change of gate buys, and it is why ninety growth attempts now exist where
-before there were none. All ninety were rolled back, and with a verdict that re-settles, the reason is measured rather than
+readout stayed inside the current graph, and the self-check passed. The last row gates the same readout on its own motion instead of
+on the network's: that reads $0.0083$, the system refuses all twelve hundred times, and the ninety
+growth attempts of the rows above disappear. That is what the change of gate buys. The distinction is
+not cosmetic: a gate on the readout's motion refuses exactly the case a structural repair exists for,
+a distinction that is present in the network with no path to the answer, which
+Section~\ref{sec:unittest} constructs on purpose. All ninety were rolled back, and with a verdict that re-settles, the reason is measured rather than
 assumed: after growth the collision moves by $+1.0\times10^{-4}$ on average and by $+1.0\times10^{-4}$
 at best, that is, it worsens, against a drift floor of exactly zero when nothing is grown and a margin
 of $0.02$. The gate that made this visible was itself wrong when first written, and it is the third
@@ -588,6 +592,52 @@ produces exactly zero. So on this substrate the generator's targeting is not sho
 the claim we make about it stays what it always was: a parameter count of thirteen against $3137$
 synapse classes, with no test in this paper that a dense search of the same dimension would do
 worse.
+
+\subsection{A unit test for the mechanism, and its outcome}
+\label{sec:unittest}
+
+An outcome that is negative everywhere is only informative if the mechanism was given a fair chance.
+The fair chance is a substrate where the world's distinction exists, reaches the answer through no
+path, and can be connected by adding neurons: the textbook case for structural plasticity. We build
+it by appending two input cells to the worm wiring and driving them as the context, with no outgoing
+edges at all (\texttt{load\_worm(tone=True)}). The stored states then differ by $6.5$ to $10.6$
+percent between the two contexts, so the prerequisite passes on its own terms, while the collision at
+the declared readout stays at $1.000$ and the demand signal fires.
+
+The generator is free to read exactly those two cells, since they are the cells that carry the
+difference, and it may project into the answer. Sixty attempts were run over the design space the
+generator owns: a new-synapse scale of $3$, $6$, $10$ and $20$ times the mean magnitude, with the
+projection into the answer either excitatory or inhibitory, fifteen attempts each.
+
+\begin{table}[t]
+\centering
+\small
+\caption{The unit test. Two input cells carry the distinction and reach nothing; the generator reads
+them and may project into the answer. Every arm rolls every attempt back and leaves the collision
+unchanged to three decimals. The reason is measured and local: the answer's cells sit at the ceiling
+of the rectified sigmoid, so added excitatory current is invisible and inhibition is too weak to move
+them off it. Source: \texttt{tone\_sweep.sh}, logs in \texttt{docs/receipts/}.}
+\label{tab:unittest}
+\begin{tabular}{lrrr}
+\toprule
+arm & attempts & kept & collision, before $\to$ after \\
+\midrule
+scale $3$, excitatory & $15$ & $0$ & $1.000 \to 1.000$ \\
+scale $6$, excitatory & $15$ & $0$ & $1.000 \to 1.000$ \\
+scale $10$, excitatory & $15$ & $0$ & $1.000 \to 1.000$ \\
+scale $20$, excitatory & $15$ & $0$ & $1.000 \to 1.000$ \\
+scale $10$, inhibitory & $15$ & $0$ & $1.000 \to 1.000$ \\
+scale $20$, inhibitory & $15$ & $0$ & $1.000 \to 1.000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+So the negative result survives its own unit test. Combined with the ceiling of
+Section~\ref{sec:ceiling}, where the most favourable hand-built intervention achieves a fifth of the
+margin, the reading is that this substrate's answers are parallel for a structural reason that
+adding neurons does not address: what the readout needs is not another input but an input that
+changes its operating region. That is a statement about the pair of the model and the readout, and it
+is the honest form of the negative this paper reports.
 
 \section{Discussion}
 

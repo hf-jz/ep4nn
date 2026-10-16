@@ -122,6 +122,9 @@ class GrowthConfig:
     readout: tuple[str, ...] = ("forward", "reverse")   # populations that constitute the declared answer
     difference_source: str = "state"   # "state": cells whose activity differs anywhere; "readout": only the answer
     context: str = "pain"              # the population the world varies to make a pair
+    drive_scale: float = 1.0           # scales every input level: the regime knob the protocol selects
+    hetero_spread: float = 0.0         # per-neuron slope/threshold spread; 0 is the library's scalar model
+    hetero_seed: int = 3
     difference_fraction: float = 0.06  # top fraction of differing cells the generator wires from
     difference_share: float = 0.6      # share of a new neuron's in-edges drawn from those cells
     readout_sign: float = 1.0          # sign of the new neuron's projection into the answer; -1 is inhibition
@@ -156,7 +159,7 @@ class EP4NN:
         populations = self.connectome.populations
         self.readout = np.array(sorted({i for name in self.config.readout
                                         for i in populations[name]}))
-        self.brain = Brain(self.connectome, learning_neuron_model(), backend="cpu",
+        self.brain = Brain(self.connectome, self._model(), backend="cpu",
                            efficacy=self._efficacy)
         if not self.config.calibrate:
             self.readout_spread = self._spread(np.zeros(self.neurons))
@@ -175,7 +178,7 @@ class EP4NN:
         bias = calibrate_bias(raw, drives, {"forward": 0.5, "reverse": 0.5},
                               per_neuron=True, rounds=1, iterations=8, steps=64)
         self.readout_spread = self._spread(np.zeros(self.neurons), drives)
-        calibrated = Brain(self.connectome, learning_neuron_model(), backend="cpu",
+        calibrated = Brain(self.connectome, self._model(), backend="cpu",
                            efficacy=self._efficacy, bias=bias)
         candidates = [(self.readout_spread, raw), (self._spread(bias, drives), calibrated)]
         self.readout_spread, self.brain = max(candidates, key=lambda pair: pair[0])
@@ -235,7 +238,7 @@ class EP4NN:
             levels = np.linspace(0.2, 1.0, 3)
             drives = np.stack([self._drive(("odour_A", 1.0), (self.config.context, float(lv)))[0]
                                for lv in levels])
-        probe = Brain(self.connectome, learning_neuron_model(), backend="cpu",
+        probe = Brain(self.connectome, self._model(), backend="cpu",
                       efficacy=self._efficacy, bias=bias)
         eq = probe.equilibrate(drives, budget=256, chunk=32, tolerance=1e-2)
         codes = np.asarray(eq.state.activation)[:, self.readout]
@@ -249,10 +252,18 @@ class EP4NN:
     def synapses(self) -> int:
         return self.connectome.synapses
 
+    def _model(self):
+        """The neuron model for this brain: the library's, or a per-neuron heterogeneous one."""
+        if self.config.hetero_spread <= 0.0:
+            return learning_neuron_model()
+        from .hetero import HeteroRateModel
+        return HeteroRateModel(n=self.neurons, spread=self.config.hetero_spread,
+                               seed=self.config.hetero_seed)
+
     def _drive(self, *senses: tuple[str, float]) -> np.ndarray:
         d = np.zeros((1, self.neurons))
         for population, level in senses:
-            d[0, list(self.connectome.populations[population])] = level
+            d[0, list(self.connectome.populations[population])] = level * self.config.drive_scale
         return d
 
     def _settle_full(self, drive: np.ndarray) -> tuple[np.ndarray, np.ndarray, dict]:
@@ -525,7 +536,8 @@ def _report(tag: str, ep: EP4NN, t0: float, ticks: int) -> None:
 
 def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse"),
          source: str = "state", substrate: str = "worm", init_scale: float = 3.0,
-         readout_sign: float = 1.0) -> None:
+         readout_sign: float = 1.0, drive_scale: float = 1.0,
+         hetero_spread: float = 0.0) -> None:
     """Start at 302 neurons; the world keeps requiring new distinctions.
 
     ``readout`` is the declared answer. The locomotion readout fails the prerequisite on
@@ -535,7 +547,8 @@ def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse"),
     context = "context_tone" if substrate == "tone" else "pain"
     ep = EP4NN(load_worm(tone=substrate == "tone"),
                GrowthConfig(readout=readout, difference_source=source, context=context,
-                            init_scale=init_scale, readout_sign=readout_sign))
+                            init_scale=init_scale, readout_sign=readout_sign,
+                            drive_scale=drive_scale, hetero_spread=hetero_spread))
     print(f"start: neurons={ep.neurons} synapses={ep.synapses} "
           f"(row-normalised operating point {ep.config.row_sum})")
     rng = np.random.default_rng(3)
@@ -603,9 +616,11 @@ if __name__ == "__main__":
     source = sys.argv[3] if len(sys.argv) > 3 else "state"
     ticks = int(sys.argv[4]) if len(sys.argv) > 4 else 1200
     rs = float(sys.argv[5]) if len(sys.argv) > 5 else 1.0
+    drive = float(sys.argv[6]) if len(sys.argv) > 6 else 1.0
+    hetero = float(sys.argv[7]) if len(sys.argv) > 7 else 0.0
     tone = which == "tone"
     demo(readout={"default": ("forward", "reverse"), "sensory": ("class_sensory",),
                   "interneuron": ("class_interneuron",), "tone": ("forward", "reverse")}
          .get(which, ("forward", "reverse")),
          source=source, substrate="tone" if tone else "worm", init_scale=scale, ticks=ticks,
-         readout_sign=rs)
+         readout_sign=rs, drive_scale=drive, hetero_spread=hetero)

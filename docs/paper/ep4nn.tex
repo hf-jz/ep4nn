@@ -47,7 +47,10 @@ prerequisite keyed on the declared pairs, three declared readouts give ninety gr
 $1200$ ticks each, and the verdict layer rolls all ninety back, because added neurons do not separate
 the answers that must be told apart; the same locomotion readout gated on an aggregate spread instead
 refuses all twelve hundred ticks, which is what a gate on the wrong quantity costs. The main negative
-finding is the prerequisite itself. Across forty-five operating points
+finding is the prerequisite itself, and the mechanism's own design space was swept to the end before
+that conclusion was drawn: three hundred and thirty growth attempts across substrates, gates,
+targeting rules, scales, signs, operating points and per-neuron heterogeneity, none kept. Across
+forty-five operating points
 and nine situations the declared readout responds along a single direction: no point reaches the growth
 gate of $0.05$, the best spread is $0.0397$, and the largest absolute cosine between two context answers
 that must differ is at least $0.9979$ at every point. At the best point the answers span a cone of
@@ -290,7 +293,16 @@ the connectome, which costs one pass over the edge arrays, and carries the learn
 regenerating the key order the library sorts by.
 
 \textbf{Model parameters.} The rate model is the library's, unmodified: $\mathrm{d}t = 0.5$, slope $4$,
-threshold $1.5$, synaptic gain $0.02$, stimulus amplitude $3.0$, no adaptation and no delay. The efficacy
+threshold $1.5$, synaptic gain $0.02$, stimulus amplitude $3.0$, no adaptation and no delay. A second
+model ($\texttt{ep4nn/hetero.py}$) gives every neuron its own slope and threshold, log-normal around
+those constants with the mean held fixed, since a measured connectome carries no excitability at all
+and every cell sharing one constant is the least realistic part of the lane. It is duck-typed against
+the library rather than patched into it, and it settles the worm graph in $32$ sweeps with $164$ of
+$302$ cells active, against $294$ for the scalar model.
+
+\textbf{Regime.} Three knobs set the regime a repair would have to act in: the operating point
+(\texttt{row\_sum}), the input scale, and the per-neuron spread above. They are swept rather than
+chosen, because the regime decides whether an added synapse is visible at all. The efficacy
 of every synapse is set by row-normalising the signs to \texttt{row\_sum}, and the operating point of
 each measurement is stated with it, because the numbers move with it.
 
@@ -632,12 +644,44 @@ scale $20$, inhibitory & $15$ & $0$ & $1.000 \to 1.000$ \\
 \end{tabular}
 \end{table}
 
-So the negative result survives its own unit test. Combined with the ceiling of
+The test was then extended over the regime, since the first version left the answer below threshold
+and an added synapse cannot be seen by a cell whose response gain is zero. Twenty-four regimes were
+screened (row sums $0.5$ to $4$, input scales $1$ to $10$, with and without per-neuron
+heterogeneity), reporting the answer's mean potential, its mean local slope, and its collision; growth
+was then run for two hundred and forty attempts in the regimes whose gain is not zero. None was kept
+and none moved the collision.
+
+\begin{table}[t]
+\centering
+\small
+\caption{The regime screen: can the answer show an added input at all? The mean local slope of the
+answer's cells is the quantity that decides it. Below threshold the answer barely responds; at row sum
+$2$ and above the cells sit at the ceiling and the slope collapses; the band where a repair could be
+seen is narrow, and inside it the collision is still $1.000$. Source:
+\texttt{probes/probe\_regime.py}, data in \texttt{docs/assets/regime.json}.}
+\label{tab:regime}
+\begin{tabular}{rrrrrr}
+\toprule
+row sum & scale & spread & mean potential & mean slope & collision \\
+\midrule
+$0.5$ & $1$ & $0.0$ & $0.163$ & $0.495$ & $1.000000$ \\
+$0.5$ & $10$ & $0.0$ & $0.172$ & $0.495$ & $1.000000$ \\
+$1.0$ & $1$ & $0.0$ & $2.163$ & $0.211$ & $1.000000$ \\
+$2.0$ & $1$ & $0.0$ & $6.263$ & $0.011$ & $1.000000$ \\
+$4.0$ & $1$ & $0.0$ & $13.068$ & $0.0001$ & $1.000000$ \\
+$0.5$ & $1$ & $0.5$ & $0.000$ & $0.025$ & $1.000000$ \\
+$1.0$ & $1$ & $0.5$ & $0.000$ & $0.025$ & $1.000000$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+So the negative result survives its own unit test and the regime sweep. Combined with the ceiling of
 Section~\ref{sec:ceiling}, where the most favourable hand-built intervention achieves a fifth of the
-margin, the reading is that this substrate's answers are parallel for a structural reason that
-adding neurons does not address: what the readout needs is not another input but an input that
-changes its operating region. That is a statement about the pair of the model and the readout, and it
-is the honest form of the negative this paper reports.
+margin, the reading is that this substrate's answers are parallel for a structural reason that adding
+neurons does not address, and that the binding quantity is the answer's response gain: a cell below
+threshold and a cell at the ceiling are equally deaf to a new input, and the band between them is
+where the collision is already $1.000$. That is a statement about the pair of the model and the
+readout, and it is the honest form of the negative this paper reports.
 
 \section{Discussion}
 
@@ -666,6 +710,15 @@ is measured. Both are legitimate designs and both must be declared, because the 
 which measurements are meaningful. The systems that avoid a human score entirely, by making survival
 and energy the only currency, are the only ones in this space whose objective is not supplied by a
 person.
+
+\textbf{The fly lane could not be run here.} The strongest test of the mechanism would be a
+substrate whose prerequisite already passes, and the library's fly lane is the natural candidate: its
+own measurements report a per-cell-class gain bringing the antennal-lobe code to a cosine of $0.32$
+where one global gain leaves it at $0.98$. That lane is not runnable from the published material: the
+demonstration repository carries the lane's code, receipts, tests and documentation but no connectome
+data file, and the library's own connectome document contains no dataset URL. We record this as a
+checked limitation rather than an omission: the substitute we could run, a worm-graph regime sweep with
+per-neuron heterogeneity, is reported above and is negative.
 
 \textbf{Rule families do not mix.} A directed measured connectome does not satisfy the equilibrium
 contrast gradient contract. Structural growth on directed wiring therefore belongs with a

@@ -1,0 +1,82 @@
+{
+ "rows": [
+  {
+   "row_sum": 0.5,
+   "hetero": 0.0,
+   "calibrated": true,
+   "readout_spread": 0.00245,
+   "pair_motion": 0.0,
+   "state_motion": 0.151274,
+   "collision_before": 1.0,
+   "mean_activation": 0.08017,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  },
+  {
+   "row_sum": 1.0,
+   "hetero": 0.0,
+   "calibrated": true,
+   "readout_spread": 0.00318,
+   "pair_motion": 0.0,
+   "state_motion": 0.042129,
+   "collision_before": 1.0,
+   "mean_activation": 0.4751,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  },
+  {
+   "row_sum": 2.0,
+   "hetero": 0.0,
+   "calibrated": true,
+   "readout_spread": 3e-05,
+   "pair_motion": 0.0,
+   "state_motion": 0.028951,
+   "collision_before": 1.0,
+   "mean_activation": 0.14964,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  },
+  {
+   "row_sum": 0.5,
+   "hetero": 0.5,
+   "calibrated": true,
+   "readout_spread": 1e-05,
+   "pair_motion": 0.0,
+   "state_motion": 0.080157,
+   "collision_before": 1.0,
+   "mean_activation": 0.50573,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  },
+  {
+   "row_sum": 1.0,
+   "hetero": 0.5,
+   "calibrated": true,
+   "readout_spread": 3e-05,
+   "pair_motion": 0.0,
+   "state_motion": 0.07975,
+   "collision_before": 1.0,
+   "mean_activation": 0.5092,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  },
+  {
+   "row_sum": 2.0,
+   "hetero": 0.5,
+   "calibrated": true,
+   "readout_spread": 6e-05,
+   "pair_motion": 0.0,
+   "state_motion": 0.078901,
+   "collision_before": 1.0,
+   "mean_activation": 0.51639,
+   "kept": 0,
+   "rolled_back": 10,
+   "refused": 2
+  }
+ ]
+}

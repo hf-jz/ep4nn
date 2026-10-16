@@ -259,8 +259,12 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
         <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has certified contraction 0.529065 there and 0.931159 at the declared row-normalised operating point, with the witness inequality (Kolmogorov, Perron witness, outward-rounded) asserted rather than assumed, and the worst of a twelve-state scanned domain is 0.941. The Gershgorin row criterion exceeds one everywhere, so the certificate is carried by the certified contraction and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
       </div>
       <div class="row">
+        <div class="src">The regime<span>the answer has to be able to show an added input</span></div>
+        <p>Twenty-four regimes were screened, from row sum 0.5 to 4 and input scale 1 to 10, with and without per-neuron heterogeneity, reporting the answer's mean potential, its mean local slope and its collision. The slope is the quantity that decides whether a repair can be visible at all: a cell below threshold and a cell at the ceiling are equally deaf to a new input, and the band between them is narrow. Two hundred and forty further growth attempts inside the band where the gain is not zero: none kept, the collision unmoved.</p>
+      </div>
+      <div class="row">
         <div class="src">The unit test<span>a distinction with no path to the answer</span></div>
-        <p>Two input cells are appended to the wiring and driven as the context, reaching nothing. The stored states then differ by 6.5 to 10.6 percent, so the prerequisite passes on its own terms, while the collision at the readout stays at 1.000. The generator may read exactly those cells and project into the answer: sixty attempts over four new-synapse scales, excitatory and inhibitory, all rolled back, the collision unchanged to three decimals. The reason is measured and local: the answer's cells sit at the ceiling of the rectified sigmoid, so added excitatory current is invisible and inhibition is too weak to move them off it.</p>
+        <p>Two input cells are appended to the wiring and driven as the context, reaching nothing. The stored states then differ by 6.5 to 10.6 percent, so the prerequisite passes on its own terms, while the collision at the readout stays at 1.000. The generator may read exactly those cells and project into the answer: sixty attempts over four new-synapse scales, excitatory and inhibitory, all rolled back, the collision unchanged to three decimals. The reason is measured and local, and it was not what we first assumed: screening the regime showed the answer's cells were not at the ceiling but below threshold, where the rectified sigmoid has almost no slope, so a new input is equally invisible. Both failure modes are reported.</p>
       </div>
       <div class="row">
         <div class="src">The ceiling<span>what the most favourable intervention achieves</span></div>
@@ -350,6 +354,9 @@ python probes/probe_scaling.py              # settlement cost to 100,000 neurons
 python probes/probe_certificate.py          # global bound against the local witness
 python probes/probe_audit_fixes.py          # certified bound, validity domain, seeds, readout family
 python probes/probe_closure.py              # the ceiling, and the generator against a baseline
+python probes/probe_regime.py               # which regime lets an added synapse be seen
+python probes/probe_hetero_calibrated.py    # per-neuron heterogeneity, with the library's calibration
+python ep4nn/hetero.py                      # the heterogeneous model's own self-check
 python docs/assets/make_figures.py          # regenerate the four figures
 bash repro_check.sh                         # snapshot, re-run, diff the artefacts
 bash receipt_determinism.sh                 # two runs of the receipts, byte compared

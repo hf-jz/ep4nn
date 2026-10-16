@@ -30,13 +30,15 @@
   },
   "premise": {
     "collision_cap": 0.85,
-    "min_pair_motion": 0.001,
+    "difference_source": "state",
+    "min_state_motion": 0.001,
     "pair_motion": 0.13896,
     "readout": [
       "class_interneuron"
     ],
     "readout_spread": 0.0257,
-    "refusals_no_response": 0
+    "refusals_no_response": 1,
+    "state_motion": 0.07463228
   },
   "run": {
     "executed": {

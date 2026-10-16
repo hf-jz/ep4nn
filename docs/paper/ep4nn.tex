@@ -39,17 +39,21 @@ neurons and $1{,}239{,}921$ synapse classes in $77.4$\,ms, at $1.76$\,ns per syn
 regime ($n\ge10^4$; below it per-sweep overhead dominates and the figure rises to $8.7$\,ns at $302$
 neurons and $15.6$\,ns at $1000$). A
 state-dependent contraction certificate exists on the worm graph where the global worst-case
-bound fails: at the library's default efficacy the settling majorant has spectral radius $0.529$ with
-a positive weighted witness at $0.696$, against a worst-case row bound of $88.0$ that certifies no
-budget, and at the declared row-normalised operating point the same quantity is $0.931$. The growth machinery behaves
-as specified: over $1200$ ticks it refused growth $1200$ times because the prerequisite failed,
-and an earlier variant without the prerequisite gate produced thirty growths that the verdict
-layer rolled back. The main negative finding is that prerequisite. Across forty-five operating points
+bound fails: at the library's default efficacy the settling majorant has certified contraction
+$0.529065$, against a worst-case row bound of $88.0$ that certifies no budget, and at the declared
+row-normalised operating point the same quantity is $0.931159$; every state of a twelve-state scanned
+domain stays below one, worst $0.941$. The growth machinery is exercised rather than blocked: with the
+prerequisite keyed on the declared pairs, three declared readouts give ninety growth attempts over
+$1200$ ticks each, and the verdict layer rolls all ninety back, because added neurons do not separate
+the answers that must be told apart; the same locomotion readout gated on an aggregate spread instead
+refuses all twelve hundred ticks, which is what a gate on the wrong quantity costs. The main negative
+finding is the prerequisite itself. Across forty-five operating points
 and nine situations the declared readout responds along a single direction: no point reaches the growth
 gate of $0.05$, the best spread is $0.0397$, and the largest absolute cosine between two context answers
 that must differ is at least $0.9979$ at every point. At the best point the answers span a cone of
 $1.45$ degrees with $99.95$ percent of their energy in one singular direction and a rank-one residual of
-$2.3$ percent. Capacity growth is therefore not the binding
+$2.3$ percent, and none of ten declared readouts separates the pairs, so the failure belongs to the
+substrate and its operating point rather than to a single declaration. Capacity growth is therefore not the binding
 constraint, and a growth study on this pair would measure an uninformative object. We conclude
 that structural growth studies must publish the prerequisite measurement alongside the growth
 result, and we give a receipt format that makes such claims comparable across connectome
@@ -107,9 +111,10 @@ parameter count sits four orders below the graph the generator can touch, which 
 structural plasticity from implicit weight learning.
 \item \textbf{A state-dependent contraction certificate.} On a measured connectome the global
 worst-case bound is vacuous at the library's default efficacy ($q = 88.0$, with $292$ of $302$ rows at
-or above one). Evaluating the settling majorant with the activation slopes of the current state gives
-spectral radius $0.529$ and a positive weighted witness $\alpha = 0.696$ there, and $0.931$ at the
-declared row-normalised operating point, hence a settling budget at both.
+or above one). Evaluating the settling majorant with the activation slopes of the current state gives a
+\emph{certified} contraction $\alpha = 0.529065$ there and $0.931159$ at the declared row-normalised
+operating point, with the witness inequality asserted under outward rounding, and every state of a
+twelve-state scanned domain stays below one (worst $0.941$), hence a settling budget throughout.
 \item \textbf{Measurements of the substrate.} Settlement cost and transport behaviour on the worm
 graph and on sparse graphs to $100{,}000$ neurons, a certificate comparison, and a negative
 control result for continuous tracking in a closed loop.
@@ -153,8 +158,11 @@ picture as the time-scale structure of the system but do not evaluate it here.
 \paragraph{Fly connectomes and their controllers.}
 The adult female brain reconstruction contains $139{,}255$ neurons \cite{dorkenwald2024}, and the
 male central nervous system, which includes the ventral nerve cord and therefore the leg and wing
-motor neurons, about $166{,}000$ \cite{male-cns}. The proofread release used by the library's fly
-lane carries $150{,}802$ neurons and $1{,}877{,}099$ connection classes \cite{banc2024}. Open
+motor neurons, about $166{,}000$ \cite{male-cns}. The BANC dataset spans the brain, the cervical connective and the ventral nerve cord of
+one adult female, about $160{,}000$ expected neurons and $199$ million predicted synapses
+\cite{banc2024}; the release that the library's fly lane is built on carries $150{,}802$ proofread
+neurons and $1{,}877{,}099$ connection classes after the library's own filtering, and the two counts
+should not be used interchangeably. Open
 projects in this space differ mainly in what they supply. A browser-facing demonstration with fly
 cell-type names runs a hand-wired network of $850$ neurons \cite{flynets}; a learned consequence
 model is paired with an application-level controller \cite{cadencedemos}; a directly read motor
@@ -180,17 +188,19 @@ search objective.
 
 \subsection{The four rules and the gate before them}
 
-\textbf{Prerequisite.} The declared readout is a named set of neurons, not the whole state. The
-whole state nearly always separates, because it contains the driven cells themselves. The system
-measures
+\textbf{Prerequisite.} The declared readout is a named set of neurons, and the unit the
+prerequisite keys on is the \emph{declared pair}: two situations that share the present input and
+differ only in context. For every pair the system measures the relative motion of the two answers,
 \[
-\texttt{readout\_spread} \;=\; \frac{1}{\abs{R}}\sum_{r\in R}
-\Big(\max_{s} a_r(s) - \min_{s} a_r(s)\Big),
+m(p) \;=\; \frac{\norm{a(s_1)-a(s_2)}}{\max\big(\norm{a(s_1)}, \norm{a(s_2)}\big)},
 \]
-the mean over readout cells $R$ of the range of activation across the declared situations $s$.
-Below \texttt{min\_response} the system records \texttt{no\_response} and does not grow: added
-capacity cannot separate answers that do not move, so growth would be the wrong repair and its
-recorded outcome would carry no information.
+and refuses to grow when the mean over pairs falls below \texttt{min\_pair\_motion}. The relative
+form is what separates "the two answers are the same object" from "they differ a little, and a
+repair could amplify that". An absolute spread averaged over all situations is not a substitute: it
+can move while every pair stands still, and a mean over many readout cells dilutes the few cells
+that carry the difference. The aggregate spread is still reported, as a diagnostic rather than as a
+gate. We also drop the intuition that the whole state separates by construction: at the scanned
+operating point the whole-state collision is $0.9997$, because the driven cells saturate.
 
 \textbf{Rule 1, demand.} Two situations that the world declares different, share the present input,
 and produce answers whose absolute cosine exceeds \texttt{code\_cap} constitute a capacity signal.
@@ -234,8 +244,13 @@ K \;=\; (1-\mathrm{d}t)\,I \;+\; \mathrm{d}t\, \abs{W} \diag\!\big(s'(v)\big),
 \label{eq:localK}
 \end{equation}
 so $\rho(J) \le \rho(K)$ by monotonicity of the spectral radius on nonnegative matrices, and a positive
-vector $h$ with $Kh \le \alpha h$ bounds $\rho(K)$ from above by the Collatz--Wielandt inequality. The
-settling budget follows as $k \approx \log(\epsilon/\delta)/\log(1/\alpha)$. For the library's stopping
+vector $h$ with $Kh \le \alpha h$ bounds $\rho(K)$ from above by the Kolmogorov--Collatz--Wielandt
+inequality. The witness is the Perron vector, obtained by power iteration, and the inequality is
+evaluated with one-ulp outward rounding and asserted, so $\alpha$ is a certificate rather than an
+eigenvalue estimate: at the library's default efficacy $\alpha = 0.529065$, at the declared
+row-normalised operating point $\alpha = 0.931159$, and over a scanned domain of twelve states
+(three operating points, four drive amplitudes) the worst value is $0.941$. The settling budget
+follows as $k \approx \log(\epsilon/\delta)/\log(1/\alpha)$. For the library's stopping
 rule the bridge is one line: the residual of the potential equation is
 $r = -v + Ws(v) + \text{stim} + \text{bias}$, so one step moves $\Delta v = \mathrm{d}t\, r$ and a residual
 budget of $\epsilon$ is a displacement budget of $\mathrm{d}t\,\epsilon$. The same quantity is the
@@ -331,9 +346,9 @@ should keep batch one.
 
 \noindent\textbf{Where the worm's cost comes from.} The sweep-count difference in Table~\ref{tab:scaling}
 is a statement about the graph's spectrum, and that statement is measured rather than inferred. At the
-same operating point and drive, the settling majorant has spectral radius $0.931$ on the worm graph and
-$0.618$ on a random graph of the same size and mean degree, and the true Jacobian gives $0.910$ against
-$0.591$. A contraction-rate account predicts a sweep ratio of
+same operating point and drive, the settling majorant has certified contraction $0.931$ on the worm graph
+and $0.6155$ to $0.6192$ on five random graphs of the same size and mean degree (mean $0.6174$), and the
+true Jacobian gives $0.910$ against $0.591$. A contraction-rate account predicts a sweep ratio of
 $\log(0.591)/\log(0.910) = 5.6$ against the measured $5.0$, so the fivefold difference is carried by
 the spectrum. Source: \texttt{probes/probe\_audit\_claims.py}.
 
@@ -361,17 +376,18 @@ Sources: \texttt{probes/probe\_certificate.py} and \texttt{probes/probe\_audit\_
 \toprule
 quantity & value \\
 \midrule
-global worst-case bound $q$, default efficacy & $88.0$ \ \ ($292$ of $302$ rows at or above $1$) \\
-Gershgorin row bound, default efficacy & $1.186$ \ \ ($1$ of $302$ rows, so the row criterion fails) \\
-spectral radius of $K$ in \eqref{eq:localK}, default efficacy & $0.529$ \\
-weighted witness $\alpha$, $Kh \le \alpha h$, default efficacy & $0.696$ \ \ ($h \in [2.89, 11.08]$) \\
-active neurons, default efficacy & $294$ of $302$ \\
+global worst-case bound $q$, default & $88.0$ \ \ ($292/302$ rows $\ge 1$) \\
+Gershgorin row bound, default & $1.186$ \ \ (row criterion fails) \\
+certified contraction $\alpha$, default & $0.529065$ \ \ ($\rho(K)$ agrees) \\
+active neurons, default & $294$ of $302$ \\
 \midrule
-$\rho(K)$ at the declared operating point, row sum $0.5$ & $0.931$ \\
-$\rho(J)$ at the declared operating point & $0.910$ \\
-Gershgorin row bound at the declared operating point & $6.310$ \ \ (row criterion fails) \\
-$\rho(K)$ at row sums $0.1$ and $2.0$ & $0.626$ and $0.689$ \\
-active fraction at the declared operating point & $0.937$ \\
+certified $\alpha$, declared point (row sum $0.5$) & $0.931159$ \\
+$\rho(J)$, declared point & $0.910035$ \\
+Gershgorin row bound, declared point & $6.310$ \ \ (row criterion fails) \\
+certified $\alpha$, row sums $0.1$ and $2.0$ & $0.625964$ and $0.688634$ \\
+active fraction, declared point & $0.937$ \\
+\midrule
+worst certified $\alpha$, scanned domain & $0.941$ \ \ (12 states) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -379,20 +395,25 @@ active fraction at the declared operating point & $0.937$ \\
 The global bound gives no certificate at this efficacy; the state-dependent one does, and it converts a
 refusal into a bounded settling budget. Which criterion carries it should be stated, because the row
 criterion carries nothing here: the Gershgorin row bound exceeds one somewhere in both blocks, and what
-remains is the spectral radius of the majorant together with the weighted witness. Three warnings follow
-from the same measurement. First, a certificate is a property of a state, not of a graph. Second, the
+remains is the certified contraction of the majorant. The certification route is worth naming: the
+witness is the Perron vector found by power iteration, its inequality is checked with one-ulp outward
+rounding, and it asserts, so the reported number is an upper bound on the spectral radius in exact
+arithmetic and not an eigenvalue estimate that could sit below it. Three warnings follow from the same
+measurement. First, a certificate is a property of a state, not of a graph; the twelve-state domain of
+Table~\ref{tab:cert} is the region we measured, and it is not a theorem about the graph. Second, the
 bound is a sufficient condition; its failure at a particular gain is not evidence that settling fails,
 only that the corresponding guarantee is unavailable. Third, a number belongs to its operating point:
-this graph yields $0.529$ at the default efficacy and $0.931$ at the declared row-normalised one, so a
-table that omits the operating point is not reproducible.
+this graph yields $0.529065$ at the default efficacy and $0.931159$ at the declared row-normalised one,
+so a table that omits the operating point is not reproducible.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.72\textwidth]{../assets/fig3_certificate.png}
-\caption{The global worst-case bound, the Gershgorin row bound, the spectral radius of the majorant at
-both operating points, the weighted witness, and the unit threshold, on a logarithmic axis. The gap
-between the first two bars is the price of a state-independent guarantee; the row bound above one is why
-the certificate is carried by the spectral radius rather than by the row criterion.}
+\caption{The global worst-case bound, the Gershgorin row bound, the certified contraction of the
+majorant at both operating points, the true Jacobian at the declared point, and the unit threshold, on a
+logarithmic axis. The gap between the first two bars is the price of a state-independent guarantee; the
+row bound above one is why the certificate is carried by the certified contraction rather than by the row
+criterion.}
 \label{fig:cert}
 \end{figure}
 
@@ -401,24 +422,32 @@ the certificate is carried by the spectral radius rather than by the row criteri
 \begin{table}[t]
 \centering
 \small
-\caption{Two variants, $1200$ ticks each, while the world increases the number of context levels
-that must be told apart. Neither variant kept a growth. Source: \texttt{ep4nn/grow.py}.}
+\caption{Three declared readouts, $1200$ ticks each, while the world increases the number of context
+levels that must be told apart. With the pairwise prerequisite in place the growth layer is exercised:
+ninety attempts, ninety verdicts, none kept, and no refusal, because every readout's declared pairs do
+move. Source: \texttt{ep4nn/grow.py}, receipts in \texttt{docs/receipts/}.}
 \label{tab:growth}
-\begin{tabular}{lrrrr}
+\begin{tabular}{lrrrrr}
 \toprule
-variant & kept & rolled back & refused, no response & neurons at the end \\
+declared readout & pair motion & kept & rolled back & refused & neurons at the end \\
 \midrule
-without prerequisite gate & $0$ & $30$ & --- & $302$ \\
-with prerequisite gate & $0$ & $0$ & $1200$ & $302$ \\
+forward + reverse (10 cells) & $0.081$ & $0$ & $30$ & $0$ & $302$ \\
+sensory (61 cells) & $0.083$ & $0$ & $30$ & $0$ & $302$ \\
+interneuron (91 cells) & $0.139$ & $0$ & $30$ & $0$ & $302$ \\
+\midrule
+forward + reverse, aggregate gate & $0.008$ & $0$ & $0$ & $1200$ & $302$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-In both variants the brain never shrank, every synapse kept an efficacy across every rebuild, the
-readout stayed inside the current graph, and the self-check passed. In the first variant the
-collision cosine read $1.000$ before and after every attempt, so the verdict layer rolled all thirty
-attempts back at about one millisecond of rebuild each. In the second the prerequisite measured
-$0.019$ and the system declined to act, recording why. Two failures of the machinery were found and
+In every variant the brain never shrank, every synapse kept an efficacy across every rebuild, the
+readout stayed inside the current graph, and the self-check passed. The last row is the same
+readout gated on the aggregate spread instead of the declared pairs: the aggregate reads $0.019$,
+below its $0.05$ gate, and the system refuses all twelve hundred times, while the pairwise measure of
+the very same answers is $0.0316$ to $0.1228$ across the readout family, well above the gate that
+matters. That is what the change of gate buys, and it is why ninety growth attempts now exist where
+before there were none. All ninety were rolled back: the collision cosine read $1.000$ before and
+after every attempt, so added neurons did not separate the answers that must be told apart. Two failures of the machinery were found and
 fixed during construction, and both are worth stating because they are cheap to reproduce: a
 calibration that maximised readout response pinned every answer to the same trajectory, and a
 rollback that rebuilt the connectome from truncated arrays silently carried the wrong efficacy. The
@@ -550,7 +579,11 @@ growth went unmeasured. The environment is a virtual environment with NumPy and 
 a mirror, and the library is a local checkout with \texttt{PYTHONPATH} set. The worm connectome is
 committed with the repository and its hash recorded. No GPU, no external service and no wallet is
 involved. Settlement numbers depend on the host, so the receipts record operation counts alongside
-wall-clock times. The figures of this paper are regenerated from the probe artefacts and the scan
+wall-clock times. Three checks are runnable. The artefact set (scan dump, audit dump, four figures) is
+identical after a full re-run. The growth receipts are byte-identical across two runs, which the receipt
+format makes possible by carrying counts and no timings. The paper builds byte-identically under a fixed
+\texttt{SOURCE\_DATE\_EPOCH}. The commands are \texttt{repro\_check.sh}, \texttt{receipt\_determinism.sh}
+and \texttt{docs/paper/build.sh}. The figures of this paper are regenerated from the probe artefacts and the scan
 dump by one command, and the exact input file of every figure is named in its caption.
 
 \section{Conclusion}
@@ -570,8 +603,10 @@ particular to connectomes whose motor neurons exist and whose dynamics are heter
 \bibitem{bai2019} S. Bai, J. Z. Kolter, and V. Koltun. Deep equilibrium models. In \emph{Advances in
 Neural Information Processing Systems}, 2019. arXiv:1909.01377.
 
-\bibitem{banc2024} The BANC consortium. BANC: a complete adult female \emph{Drosophila} ventral
-nerve cord connectome, version 888. Dataset release, 2024.
+\bibitem{banc2024} The BANC consortium. A synapse-resolution connectome of the adult female
+\emph{Drosophila} central nervous system, brain and ventral nerve cord, release v888. Dataset release,
+2024. Companion paper: Distributed control circuits across a brain-and-cord connectome, bioRxiv
+2025.07.31.667571.
 
 \bibitem{cadence-connectomes} Cadence documentation. \emph{Connectomes}: the antennal lobe gain
 measurements and the reduced-graph comparison. \url{https://github.com/PragmaResearch/cadence},
@@ -615,8 +650,8 @@ model. In \emph{Connectionist Models: Proceedings of the 1990 Summer School}, 19
 energy-based models and backpropagation. \emph{Frontiers in Computational Neuroscience}, 11:24,
 2017.
 
-\bibitem{shiu2024} P. K. Shiu et al. Leaky integrate-and-fire parameters for the fly motor system,
-2024. Used and cited by the offline fly-body study \cite{therealfly}.
+\bibitem{shiu2024} P. K. Shiu et al. A \emph{Drosophila} computational brain model reveals sensorimotor
+processing. \emph{Nature}, 634:210--219, 2024.
 
 \bibitem{song2020} Y. Song, T. Lukasiewicz, Z. Xu, and R. Bogacz. Can the brain do backpropagation?
 Exact implementation of backpropagation in predictive coding networks. In \emph{Advances in Neural
@@ -626,7 +661,8 @@ Information Processing Systems}, 2020.
 nervous system. Its own staged protocols and receipts report the outcome that real-time neural
 control was not demonstrated. Repository, 2026.
 
-\bibitem{vaxenburg2025} R. Vaxenburg et al. Fly-body modelling work cited by \cite{therealfly}, 2025.
+\bibitem{vaxenburg2025} R. Vaxenburg et al. Whole-body physics simulation of fruit fly locomotion.
+\emph{Nature}, 643:1312--1320, 2025.
 
 \bibitem{zucchet2022} N. Zucchet and J. Sacramento. Beyond backpropagation: bilevel optimization
 through implicit differentiation and equilibrium propagation. In \emph{Advances in Neural

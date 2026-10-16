@@ -114,20 +114,20 @@ def fig2() -> None:
 
 def fig3() -> None:
     # probes/probe_certificate.py on the worm graph at row sum 0.5
-    names = ["global\nbound q", "row bound\n(fails)", "rho(K)\ndefault",
-             "rho(J)\ndeclared", "witness\nalpha", "needed\n(1)"]
-    vals = [88.0, 1.186, 0.529, 0.931, 0.696, 1.0]
+    names = ["global\nbound q", "row bound\n(fails)", "certified\nalpha, default",
+             "certified\nalpha, declared", "rho(J)\ndeclared", "needed\n(1)"]
+    vals = [88.0, 1.186, 0.529065, 0.931159, 0.910035, 1.0]
     fig, ax = plt.subplots(figsize=(9.2, 6.0))
-    bars = ax.bar(names, vals, color=[MUTE, "#c9b7a7", LIGHT, ACCENT, "#4a7fb5", "#dcdcd6"], width=.62)
+    bars = ax.bar(names, vals, color=[MUTE, "#c9b7a7", LIGHT, ACCENT, "#7fa8d4", "#dcdcd6"], width=.62)
     ax.set(yscale="log", ylabel="contraction factor (log scale)",
            title="A certificate exists where the global bound fails\nsources: probe_certificate.py, probe_audit_claims.py",
            ylim=(0.4, 300))
     for b, v in zip(bars, vals):
-        ax.text(b.get_x() + b.get_width() / 2, v * 1.12, f"{v:g}", ha="center", fontsize=10.5, color=INK)
+        ax.text(b.get_x() + b.get_width() / 2, v * 1.12, f"{v:.4g}", ha="center", fontsize=10.5, color=INK)
     ax.annotate("292 of 302 rows at or above 1:\nno certificate", xy=(0, 88), xytext=(0.42, 170),
                 fontsize=9.5, color=INK, arrowprops=dict(arrowstyle="-", color=MUTE, lw=.9))
-    ax.annotate("certificate: spectral radius of the\nmajorant at both operating points,\nbounded by the weighted witness",
-                xy=(2, 0.529), xytext=(1.55, 2.6), fontsize=9.5, color=INK,
+    ax.annotate("certified: Kolmogorov's inequality on the\nmajorant, outward-rounded at both\noperating points",
+                xy=(2, 0.529), xytext=(1.5, 2.6), fontsize=9.5, color=INK,
                 arrowprops=dict(arrowstyle="-", color=MUTE, lw=.9))
     fig.tight_layout()
     fig.savefig(HERE / "fig3_certificate.png", dpi=100)

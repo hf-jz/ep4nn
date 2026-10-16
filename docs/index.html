@@ -189,9 +189,9 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       </div>
       <div>
         <dt>Growth decisions, 1200 ticks</dt>
-        <dd><span class="sym">1200 / 1200</span> refused with no response recorded, zero kept and zero rolled back, and 302 neurons before and after. The ungated variant attempted thirty growths and rolled all thirty back.</dd>
+        <dd><span class="sym">90 / 90</span> growth attempts rolled back across three declared readouts, zero kept, and 302 neurons before and after. The same locomotion readout gated on an aggregate spread instead refuses all 1200 ticks, which is what a gate on the wrong quantity costs.</dd>
         <dt>Certificate on the same graph</dt>
-        <dd><span class="sym">0.529</span> spectral radius of the settling majorant at the library's default efficacy and <span class="sym">0.931</span> at the declared operating point, against a global worst-case bound of 88.0 that certifies nothing.</dd>
+        <dd><span class="sym">0.529065</span> certified contraction of the settling majorant at the library's default efficacy and <span class="sym">0.931159</span> at the declared operating point, certified by Kolmogorov's inequality with outward rounding, against a global worst-case bound of 88.0 that certifies nothing; worst value 0.941 over a 12-state scanned domain.</dd>
       </div>
     </dl>
   </div>
@@ -204,10 +204,10 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
     <div class="titems">
       <article class="titem">
         <div>
-          <h3>Prerequisite: the answer must move <span class="tmeta">measured before anything else</span></h3>
-          <p>The declared readout is a named set of neurons, not the whole state, and the whole state nearly always separates because it contains the driven cells themselves. ep4nn measures the spread of that readout across situations and records a refusal to grow when it falls below the gate, because added capacity cannot separate answers that do not move.</p>
+          <h3>Prerequisite: the declared pair must move <span class="tmeta">measured before anything else</span></h3>
+          <p>The unit is the declared pair, two situations that share the present input and differ only in context, and the measure is the relative motion of the two answers. The relative form separates "the two answers are the same object" from "they differ a little and a repair could amplify that". An absolute spread averaged over all situations is not a substitute: it can move while every pair stands still, and a mean over many readout cells dilutes the few cells that carry the difference. The whole state does not separate by construction either: at the scanned operating point the whole-state collision is 0.9997, because the driven cells saturate.</p>
         </div>
-        <p class="tmeta">Measured 0.019 in the growth demo and 0.0397 in the best of forty-five scanned operating points, against a gate of 0.05.</p>
+        <p class="tmeta">Same answers, two gates: 0.0083 by the aggregate measure (refused for 1200 ticks) against 0.0316 by the declared-pair measure (thirty attempts).</p>
       </article>
       <article class="titem">
         <div>
@@ -235,7 +235,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
           <h3>Verdict: rollback unless the confusion falls <span class="tmeta">Rule 4</span></h3>
           <p>After growth, the same collisions are measured again. The connectome and the efficacy array are restored from the snapshot unless the collision falls by the margin, and the attempt is recorded as a failure. A growth that does not pay is a measurement, not a mistake to hide.</p>
         </div>
-        <p class="tmeta">Thirty of thirty attempts rolled back in the ungated variant, at about one millisecond of rebuild each.</p>
+        <p class="tmeta">Ninety of ninety attempts rolled back across three declared readouts, at about one millisecond of rebuild each, with the receipts in <span class="sym">docs/receipts/</span>.</p>
       </article>
     </div>
   </div>
@@ -256,7 +256,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       </div>
       <div class="row">
         <div class="src">Certificate<span>state-dependent, not worst case</span></div>
-        <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has spectral radius 0.529 there and 0.931 at the declared row-normalised operating point, bounded by a positive weighted witness at 0.696, and the Gershgorin row criterion exceeds one in both cases, so the certificate is carried by the spectrum and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
+        <p>The global contraction bound multiplies the largest absolute row sum by the largest activation slope and gives 88.0 on the worm graph at the library's default efficacy, which certifies no budget at all. The absolute-value majorant of the settling map evaluated with the slopes of the current state has certified contraction 0.529065 there and 0.931159 at the declared row-normalised operating point, with the witness inequality (Kolmogorov, Perron witness, outward-rounded) asserted rather than assumed, and the worst of a twelve-state scanned domain is 0.941. The Gershgorin row criterion exceeds one everywhere, so the certificate is carried by the certified contraction and not by the row sum. The same quantity is the precondition for reading the free and nudged contrast as a gradient, so it is measured at run time rather than assumed.</p>
       </div>
       <div class="row">
         <div class="src">Continuous tracking<span>a negative control result</span></div>
@@ -297,7 +297,7 @@ footer .frow{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:12px}
       <img src="assets/fig1_prereq_scan.png" width="1280" height="580" alt="Two panels: readout spread against row sum stays under the growth gate, and the largest absolute cosine between context answers sits at 1 for every point">
       <figcaption class="fig-note">Spread under the gate on the left, and the context collision at 1 on the right, for all forty-five points</figcaption>
     </figure>
-    <p>Four of the forty-five configurations collapse exactly, to a spread of zero on all nine situations, which indicates a fixed point dominated by the recurrent dynamics rather than by the input. The answer matrix at the best point makes the failure precise: a leading singular value sixty times the second, 99.95 percent of the energy in one direction, a rank-one residual of 2.3 percent, and at most 1.45 degrees between the answers that must be told apart. This is a negative result about the pair of a measured worm wiring and a rate model at a declared operating point, and not a claim about connectome substrates in general. The remedy has three candidates in ascending cost: a different declared readout, a dynamics with heterogeneous cells and per-type parameters, or a gain selected by protocol against held-out physiological facts, which is how the library's own fly guide repairs the same failure at a cosine of 0.98.</p>
+    <p>Four of the forty-five configurations collapse exactly, to a spread of zero on all nine situations, which indicates a fixed point dominated by the recurrent dynamics rather than by the input. Ten declared readouts were scanned at the best point, from the locomotion readout through the sensory, interneuron and motor populations to a random ten-cell set and the whole state of 302 cells: none separates the pairs, the smallest collision over the family is 0.9983, so the failure belongs to the substrate and its operating point rather than to one declaration. The declared-pair motion does vary across the family, from 0.019 for motor cells to 0.123 for a random ten-cell set, and that variation is what decides whether the growth layer has anything to work on. The answer matrix at the best point makes the failure precise: a leading singular value sixty times the second, 99.95 percent of the energy in one direction, a rank-one residual of 2.3 percent, and at most 1.45 degrees between the answers that must be told apart. This is a negative result about the pair of a measured worm wiring and a rate model at a declared operating point, and not a claim about connectome substrates in general. The remedy has three candidates in ascending cost: a different declared readout, a dynamics with heterogeneous cells and per-type parameters, or a gain selected by protocol against held-out physiological facts, which is how the library's own fly guide repairs the same failure at a cosine of 0.98.</p>
   </div>
 </section>
 
@@ -342,8 +342,8 @@ python probes/probe_scaling.py              # settlement cost to 100,000 neurons
 python probes/probe_certificate.py          # global bound against the local witness
 python docs/assets/make_figures.py          # regenerate the three figures</pre>
     <div class="cols2">
-      <div><b>Eleven probes</b><span>settlement cost, Anderson acceleration, end to end, worm graph, certificate, profile, continuous control, transport A/B, rhythm, scaling, prerequisite scan</span></div>
-      <div><b>Three self-checks</b><span>the growth demo asserts that nothing shrank, that efficacy survived every rebuild, and that no kept growth went unmeasured</span></div>
+      <div><b>Thirteen probes</b><span>settlement cost, Anderson acceleration, end to end, worm graph, certificate, profile, continuous control, transport A/B, rhythm, scaling, prerequisite scan, audit claims, audit fixes</span></div>
+      <div><b>Three self-checks</b><span>the growth demo asserts that nothing shrank, that efficacy survived every rebuild, and that no kept growth went unmeasured; <span class="sym">repro_check.sh</span> re-runs the pipeline and diffs the artefacts, <span class="sym">receipt_determinism.sh</span> diffs two runs of the growth receipts, and the paper builds byte-identically under SOURCE_DATE_EPOCH</span></div>
       <div><b>Receipts</b><span>six fields: dataset with a hash, nominal against executed counts, dynamics and what is absent, whether the loop is closed and what is supplied, the premise measurements, and the cost</span></div>
       <div><b>Data</b><span>openworm c302 A_Full, 302 neurons, 3,137 directed synapse classes, committed with SHA-256 2a7b117f, MIT</span></div>
     </div>

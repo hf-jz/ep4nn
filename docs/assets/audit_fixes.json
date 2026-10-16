@@ -1,0 +1,271 @@
+{
+ "G1_certified_bound": {
+  "default_efficacy": {
+   "sweeps": 32,
+   "residual": 4.3098184008272256e-06,
+   "active_fraction": 0.9735,
+   "majorant_dominates": true,
+   "rho_J": 0.529065,
+   "alpha_certified": 0.529065,
+   "witness_holds": true,
+   "h_min": 0.0,
+   "h_max": 1.0,
+   "rho_numeric": 0.529065
+  },
+  "declared_point_row_sum_0.5": {
+   "sweeps": 160,
+   "residual": 4.813989840535271e-06,
+   "active_fraction": 0.9371,
+   "majorant_dominates": true,
+   "rho_J": 0.910035,
+   "alpha_certified": 0.931159,
+   "witness_holds": true,
+   "h_min": 0.0,
+   "h_max": 1.0,
+   "rho_numeric": 0.931159
+  }
+ },
+ "G2_validity_domain": {
+  "cells": [
+   {
+    "row_sum": 0.1,
+    "drive_amplitude": 0.5,
+    "sweeps": 32,
+    "active_fraction": 0.9139,
+    "alpha_certified": 0.625965,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.1,
+    "drive_amplitude": 1.0,
+    "sweeps": 32,
+    "active_fraction": 0.9139,
+    "alpha_certified": 0.625964,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.1,
+    "drive_amplitude": 2.0,
+    "sweeps": 32,
+    "active_fraction": 0.9139,
+    "alpha_certified": 0.62596,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.1,
+    "drive_amplitude": 4.0,
+    "sweeps": 32,
+    "active_fraction": 0.9139,
+    "alpha_certified": 0.625957,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.5,
+    "drive_amplitude": 0.5,
+    "sweeps": 160,
+    "active_fraction": 0.9305,
+    "alpha_certified": 0.940691,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.5,
+    "drive_amplitude": 1.0,
+    "sweeps": 160,
+    "active_fraction": 0.9371,
+    "alpha_certified": 0.931159,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.5,
+    "drive_amplitude": 2.0,
+    "sweeps": 128,
+    "active_fraction": 0.9371,
+    "alpha_certified": 0.920839,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 0.5,
+    "drive_amplitude": 4.0,
+    "sweeps": 128,
+    "active_fraction": 0.9338,
+    "alpha_certified": 0.915409,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 2.0,
+    "drive_amplitude": 0.5,
+    "sweeps": 64,
+    "active_fraction": 0.9735,
+    "alpha_certified": 0.688882,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 2.0,
+    "drive_amplitude": 1.0,
+    "sweeps": 64,
+    "active_fraction": 0.9735,
+    "alpha_certified": 0.688634,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 2.0,
+    "drive_amplitude": 2.0,
+    "sweeps": 64,
+    "active_fraction": 0.9735,
+    "alpha_certified": 0.688415,
+    "witness_holds": true
+   },
+   {
+    "row_sum": 2.0,
+    "drive_amplitude": 4.0,
+    "sweeps": 64,
+    "active_fraction": 0.9735,
+    "alpha_certified": 0.688312,
+    "witness_holds": true
+   }
+  ],
+  "worst_alpha": 0.940691,
+  "all_below_one": true,
+  "n_states": 12
+ },
+ "G5_random_seeds": [
+  {
+   "seed": 1,
+   "synapses": 3072,
+   "sweeps": 32,
+   "rho_K_numeric": 0.616324,
+   "alpha_certified": 0.616324
+  },
+  {
+   "seed": 2,
+   "synapses": 3054,
+   "sweeps": 32,
+   "rho_K_numeric": 0.618026,
+   "alpha_certified": 0.618026
+  },
+  {
+   "seed": 3,
+   "synapses": 3073,
+   "sweeps": 32,
+   "rho_K_numeric": 0.615491,
+   "alpha_certified": 0.615491
+  },
+  {
+   "seed": 4,
+   "synapses": 3083,
+   "sweeps": 32,
+   "rho_K_numeric": 0.617982,
+   "alpha_certified": 0.617982
+  },
+  {
+   "seed": 5,
+   "synapses": 3059,
+   "sweeps": 32,
+   "rho_K_numeric": 0.619177,
+   "alpha_certified": 0.619177
+  }
+ ],
+ "G4_readout_family": {
+  "rows": [
+   {
+    "readout": "forward+reverse (declared)",
+    "cells": 10,
+    "spread": 0.0399,
+    "collision": 0.999955,
+    "pair_motion_rel": 0.031597,
+    "separates": false,
+    "growth_exercisable": false
+   },
+   {
+    "readout": "command",
+    "cells": 10,
+    "spread": 0.0399,
+    "collision": 0.999955,
+    "pair_motion_rel": 0.031597,
+    "separates": false,
+    "growth_exercisable": false
+   },
+   {
+    "readout": "interneuron",
+    "cells": 91,
+    "spread": 0.0532,
+    "collision": 0.999412,
+    "pair_motion_rel": 0.070302,
+    "separates": false,
+    "growth_exercisable": true
+   },
+   {
+    "readout": "motor",
+    "cells": 118,
+    "spread": 0.0262,
+    "collision": 0.999979,
+    "pair_motion_rel": 0.018507,
+    "separates": false,
+    "growth_exercisable": false
+   },
+   {
+    "readout": "sensory",
+    "cells": 61,
+    "spread": 0.153,
+    "collision": 0.999789,
+    "pair_motion_rel": 0.057916,
+    "separates": false,
+    "growth_exercisable": true
+   },
+   {
+    "readout": "first hop from the senses",
+    "cells": 110,
+    "spread": 0.0748,
+    "collision": 0.999805,
+    "pair_motion_rel": 0.055105,
+    "separates": false,
+    "growth_exercisable": true
+   },
+   {
+    "readout": "forward only",
+    "cells": 4,
+    "spread": 0.026,
+    "collision": 0.999981,
+    "pair_motion_rel": 0.020377,
+    "separates": false,
+    "growth_exercisable": false
+   },
+   {
+    "readout": "reverse only",
+    "cells": 6,
+    "spread": 0.0492,
+    "collision": 0.999952,
+    "pair_motion_rel": 0.040195,
+    "separates": false,
+    "growth_exercisable": false
+   },
+   {
+    "readout": "random 10 (control)",
+    "cells": 10,
+    "spread": 0.0745,
+    "collision": 0.99831,
+    "pair_motion_rel": 0.122752,
+    "separates": false,
+    "growth_exercisable": true
+   },
+   {
+    "readout": "all 302 (the whole state)",
+    "cells": 302,
+    "spread": 0.059,
+    "collision": 0.999694,
+    "pair_motion_rel": 0.052474,
+    "separates": false,
+    "growth_exercisable": true
+   }
+  ],
+  "any_readout_separates": false,
+  "any_growth_exercisable": true,
+  "exercisable_readouts": [
+   "interneuron",
+   "sensory",
+   "first hop from the senses",
+   "random 10 (control)",
+   "all 302 (the whole state)"
+  ]
+ }
+}

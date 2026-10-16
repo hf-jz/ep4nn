@@ -1,6 +1,6 @@
 {
   "cost": {
-    "growths_failed": 0,
+    "growths_failed": 30,
     "growths_kept": 0,
     "per_sweep_us": null,
     "ticks": 1200
@@ -30,9 +30,13 @@
   },
   "premise": {
     "collision_cap": 0.85,
-    "min_response": 0.05,
-    "readout_spread": 0.0188,
-    "refusals_no_response": 1200
+    "min_pair_motion": 0.001,
+    "pair_motion": 0.13896,
+    "readout": [
+      "class_interneuron"
+    ],
+    "readout_spread": 0.0257,
+    "refusals_no_response": 0
   },
   "run": {
     "executed": {

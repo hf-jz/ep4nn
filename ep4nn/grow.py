@@ -32,6 +32,7 @@ Growth is therefore rare-per-contradiction, never per tick.
 from __future__ import annotations
 
 import json
+import sys
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -71,6 +72,10 @@ def load_worm() -> Connectome:
             for x, y in ((a, b), (b, a)):  # gap junctions conduct both ways
                 pre.append(x); post.append(y); count.append(c); sign.append(1.0)
     populations = {k: tuple(index[n] for n in cells) for k, cells in POPULATION_CELLS.items()}
+    # the wiring's own cell classes (the only class metadata a connectome file carries)
+    roles = [c.get("role", "unknown") for c in raw["neurons"]]
+    for role in sorted(set(roles)):
+        populations[f"class_{role}"] = tuple(i for i, r in enumerate(roles) if r == role)
     return Connectome.from_synapses(len(names), pre=pre, post=post, count=count,
                                     sign=sign, populations=populations, label="celegans:c302")
 
@@ -101,6 +106,9 @@ class GrowthConfig:
     calibrate: bool = True             # centre the readout's operating point, as the library prescribes
     row_sum: float = 0.5               # the declared operating point
     code_cap: float = 0.85             # |cosine| above this counts as "the same answer"
+    min_pair_motion: float = 1e-3      # the *declared pair* must differ at least this much, relative to its own
+                                       # size, or the two answers are the same object and growth cannot touch it
+    readout: tuple[str, ...] = ("forward", "reverse")   # populations that constitute the declared answer
     min_evidence: int = 3              # collisions required before one growth event
     min_response: float = 0.05         # the answer must move this much, or growth is the wrong repair
     improve_margin: float = 0.02       # the re-measured collision cosine must drop this much
@@ -128,11 +136,13 @@ class EP4NN:
     # -- brain plumbing -------------------------------------------------
     def _rebuild(self) -> None:
         populations = self.connectome.populations
-        self.readout = np.array(sorted(set(populations["forward"]) | set(populations["reverse"])))
+        self.readout = np.array(sorted({i for name in self.config.readout
+                                        for i in populations[name]}))
         self.brain = Brain(self.connectome, learning_neuron_model(), backend="cpu",
                            efficacy=self._efficacy)
         if not self.config.calibrate:
             self.readout_spread = self._spread(np.zeros(self.neurons))
+            self.pair_motion = self._pair_motion()
             return
         # The operating point a connectome does not carry. Calibration is kept only
         # if it makes the readout *more responsive*: forcing every cell to one half
@@ -149,6 +159,36 @@ class EP4NN:
                            efficacy=self._efficacy, bias=bias)
         candidates = [(self.readout_spread, raw), (self._spread(bias, drives), calibrated)]
         self.readout_spread, self.brain = max(candidates, key=lambda pair: pair[0])
+        self.pair_motion = self._pair_motion()
+
+    def _pair_motion(self) -> float:
+        """How far apart a *declared pair*'s answers sit, relative to their own size.
+
+        The pair is the unit the world declares: same present, different context. The
+        relative form is the one that matters, because the gate has to tell "the two
+        answers are the same object" from "they differ by a little and a repair could
+        amplify that". An aggregate spread over all situations cannot: it can move while
+        every pair stands still, and a mean over many readout cells dilutes the few cells
+        that carry the difference.
+        """
+        codes = self._situation_codes()
+        half = len(codes) // 2
+        motions = []
+        for start in (0, half):
+            for i in range(start, start + half):
+                for j in range(i + 1, start + half):
+                    scale = max(float(np.linalg.norm(codes[i])), float(np.linalg.norm(codes[j])), 1e-12)
+                    motions.append(float(np.linalg.norm(codes[i] - codes[j])) / scale)
+        return float(np.mean(motions)) if motions else 0.0
+
+    def _situation_codes(self) -> np.ndarray:
+        """The declared readout's answer to every declared situation."""
+        levels = np.linspace(0.2, 1.0, 5)
+        rows = [self._drive(("odour_A", 1.0), ("pain", float(lv)))[0] for lv in levels]
+        rows += [self._drive(("odour_B", 1.0), ("pain", float(lv)))[0] for lv in levels]
+        eq = self.brain.equilibrate(np.stack(rows), budget=self.budget, chunk=self.chunk,
+                                    tolerance=self.tolerance)
+        return np.asarray(eq.state.activation)[:, self.readout]
 
     def _spread(self, bias: np.ndarray, drives: np.ndarray | None = None) -> float:
         """How much the readout cells move across the declared situations."""
@@ -331,12 +371,12 @@ class EP4NN:
             self.silent += 1  # a silent answer is a response failure, not a capacity one
         collision = self._collision(code, present_id, context_id)
         self._remember(code, present_id, context_id)
-        if self.readout_spread < self.config.min_response:
-            # the premise of growth is false here: the wiring does not move the answer
-            # at all, so no amount of capacity can fix a collision. Say so, do not grow.
+        if self.pair_motion < self.config.min_pair_motion:
+            # the premise of growth is false here: the declared pairs do not move the
+            # answer, so no amount of capacity can separate them. Say so, do not grow.
             self._evidence = 0
-            self.log.append({"event": "no_response", "spread": round(self.readout_spread, 4),
-                             "neurons": self.neurons})
+            self.log.append({"event": "no_response", "pair_motion": round(self.pair_motion, 5),
+                             "spread": round(self.readout_spread, 4), "neurons": self.neurons})
             return {**info, "collision": round(collision, 3), "growth": None}
         if collision > self.config.code_cap:
             self._evidence += 1
@@ -360,14 +400,19 @@ def _report(tag: str, ep: EP4NN, t0: float, ticks: int) -> None:
     per_sweep = 1e6 * (time.perf_counter() - t2) / (5 * ep.chunk)
     ms_tick = 1000 * (time.perf_counter() - t0) / max(1, ticks)
     print(f"{tag:>10s} | neurons {ep.neurons:>5d} | synapses {ep.synapses:>6d} | "
-          f"per-sweep {per_sweep:6.1f} us | readout spread {ep.readout_spread:.3f} | "
+          f"per-sweep {per_sweep:6.1f} us | pair motion {ep.pair_motion:.4f} | "
           f"{ms_tick:5.1f} ms/tick | "
           f"kept {ep.growths_kept:>2d} | failed {ep.growths_failed:>2d}")
 
 
-def demo(ticks: int = 1200) -> None:
-    """Start at 302 neurons; the world keeps requiring new distinctions."""
-    ep = EP4NN(load_worm())
+def demo(ticks: int = 1200, readout: tuple[str, ...] = ("forward", "reverse")) -> None:
+    """Start at 302 neurons; the world keeps requiring new distinctions.
+
+    ``readout`` is the declared answer. The locomotion readout fails the prerequisite on
+    this substrate; the sensory readout contains the cells that carry the context, so the
+    pairs do move and the growth layer is exercised rather than refused.
+    """
+    ep = EP4NN(load_worm(), GrowthConfig(readout=readout))
     print(f"start: neurons={ep.neurons} synapses={ep.synapses} "
           f"(row-normalised operating point {ep.config.row_sum})")
     rng = np.random.default_rng(3)
@@ -410,7 +455,9 @@ def demo(ticks: int = 1200) -> None:
         loop={"closed": False, "supplied": ["situations", "context levels", "readout declaration"],
               "note": "the world declares which situations must be distinguishable"},
         premise={"readout_spread": round(ep.readout_spread, 4),
-                 "min_response": ep.config.min_response,
+                 "pair_motion": round(ep.pair_motion, 5),
+                 "min_pair_motion": ep.config.min_pair_motion,
+                 "readout": list(ep.config.readout),
                  "collision_cap": ep.config.code_cap,
                  "refusals_no_response": no_response},
         cost={"per_sweep_us": None, "ticks": ep.ticks, "growths_kept": ep.growths_kept,
@@ -426,4 +473,6 @@ def demo(ticks: int = 1200) -> None:
 
 
 if __name__ == "__main__":
-    demo()
+    which = sys.argv[1] if len(sys.argv) > 1 else "default"
+    demo(readout={"default": ("forward", "reverse"), "sensory": ("class_sensory",),
+                  "interneuron": ("class_interneuron",)}.get(which, ("forward", "reverse")))

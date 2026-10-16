@@ -1,0 +1,55 @@
+{
+  "cost": {
+    "growths_failed": 30,
+    "growths_kept": 0,
+    "per_sweep_us": null,
+    "ticks": 1200
+  },
+  "dataset": {
+    "sha256": "2a7b117f156e4be0314c01f4db92f046cab3c40140ac72124444fa76cf72b1d9",
+    "source": "openworm/c302 A_Full via cadence-examples/worm"
+  },
+  "dynamics": {
+    "absent": [
+      "delay",
+      "adaptation",
+      "heterogeneous cell types"
+    ],
+    "model": "cadence rate (rectified sigmoid)",
+    "row_sum": 0.5
+  },
+  "format": "ep4nn-receipt/1",
+  "loop": {
+    "closed": false,
+    "note": "the world declares which situations must be distinguishable",
+    "supplied": [
+      "situations",
+      "context levels",
+      "readout declaration"
+    ]
+  },
+  "premise": {
+    "collision_cap": 0.85,
+    "min_pair_motion": 0.001,
+    "pair_motion": 0.08282,
+    "readout": [
+      "class_sensory"
+    ],
+    "readout_spread": 0.0485,
+    "refusals_no_response": 0
+  },
+  "run": {
+    "executed": {
+      "neurons": 302,
+      "synapses": 3137
+    },
+    "nominal": {
+      "neurons": 302,
+      "synapses": 3137
+    },
+    "scale_ratio": {
+      "neurons": 1.0,
+      "synapses": 1.0
+    }
+  }
+}

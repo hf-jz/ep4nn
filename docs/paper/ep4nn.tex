@@ -48,7 +48,7 @@ $1200$ ticks each, and the verdict layer rolls all ninety back, because added ne
 the answers that must be told apart; the same locomotion readout gated on an aggregate spread instead
 refuses all twelve hundred ticks, which is what a gate on the wrong quantity costs. The main negative
 finding is the prerequisite itself, and the mechanism's own design space was swept to the end before
-that conclusion was drawn: three hundred and thirty growth attempts across substrates, gates,
+that conclusion was drawn: three hundred and sixty growth attempts across substrates, gates,
 targeting rules, scales, signs, operating points and per-neuron heterogeneity, none kept. Across
 forty-five operating points
 and nine situations the declared readout responds along a single direction: no point reaches the growth
@@ -318,7 +318,6 @@ supplied; the premise measurements; and the cost. The receipt is written by the 
 so two results can be compared without reading anyone's prose.
 
 \section{Measurements}
-\label{sec:measurements}
 
 All measurements are from one Apple Silicon laptop, CPU only, single-threaded, Python 3.13 with
 NumPy 2.5 and SciPy 1.18, against the released library at version 0.80.0 plus local commits. Each
@@ -352,7 +351,8 @@ frequency of a settling brain is bounded by
 f \;\approx\; \frac{1}{n_{\text{syn}}\times 1.8\,\text{ns}\times \text{sweeps}} .
 \]
 A $10{,}000$-neuron sparse graph settles in $6.48$\,ms and a $100{,}000$-neuron graph in
-$77.4$\,ms, which makes the first a real-time-scale object and the second an offline one. Two
+$77.4$\,ms, which makes the first a real-time-scale object and the second an offline one
+(Figure~\ref{fig:scaling}). Two
 library defaults matter at this scale. The default constructors wire at about $30$ percent density
 independent of size, measured at $29.1$, $30.8$, $31.7$ and $32.3$ percent at $152$, $280$, $536$
 and $1048$ neurons, so $10{,}000$ neurons would carry about $30$ million synapses and settle in
@@ -411,8 +411,9 @@ worst certified $\alpha$, scanned domain & $0.941$ \ \ (12 states) \\
 \end{tabular}
 \end{table}
 
-The global bound gives no certificate at this efficacy; the state-dependent one does, and it converts a
-refusal into a bounded settling budget. Which criterion carries it should be stated, because the row
+The global bound gives no certificate at this efficacy; the state-dependent one does
+(Table~\ref{tab:cert}, Figure~\ref{fig:cert}), and it converts a refusal into a bounded settling
+budget. Which criterion carries it should be stated, because the row
 criterion carries nothing here: the Gershgorin row bound exceeds one somewhere in both blocks, and what
 remains is the certified contraction of the majorant. The certification route is worth naming: the
 witness is the Perron vector found by power iteration, its inequality is checked with one-ulp outward
@@ -447,7 +448,7 @@ readout and reads $0.0746$ for all three; the last row gates on the readout's ow
 refuses every tick. Ninety attempts produce no kept growth. Source: \texttt{ep4nn/grow.py},
 receipts in \texttt{docs/receipts/}.}
 \label{tab:growth}
-\begin{tabular}{lrrrrr}
+\begin{tabular}{@{}lrrrrr@{}}
 \toprule
 declared readout & gate & kept & rolled back & refused & neurons at the end \\
 \midrule
@@ -455,13 +456,14 @@ forward + reverse (10 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
 sensory (61 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
 interneuron (91 cells) & $0.0746$ & $0$ & $30$ & $0$ & $302$ \\
 \midrule
-forward + reverse, gated on the readout & $0.0083$ & $0$ & $0$ & $1200$ & $302$ \\
+forward + reverse, earlier readout-motion gate & $0.0083$ & $0$ & $0$ & $1200$ & $302$ \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-In every variant the brain never shrank, every synapse kept an efficacy across every rebuild, the
-readout stayed inside the current graph, and the self-check passed. The last row gates the same readout on its own motion instead of
+Table~\ref{tab:growth} reports the three readouts. In every variant the brain never shrank, every
+synapse kept an efficacy across every rebuild, the readout stayed inside the current graph, and the
+self-check passed. The last row gates the same readout on its own motion instead of
 on the network's: that reads $0.0083$, the system refuses all twelve hundred times, and the ninety
 growth attempts of the rows above disappear. That is what the change of gate buys. The distinction is
 not cosmetic: a gate on the readout's motion refuses exactly the case a structural repair exists for,
@@ -505,7 +507,8 @@ rank & row sum & class gain & scale & spread & collision \\
 \end{tabular}
 \end{table}
 
-The best configuration moves the readout by $0.0397$ across situations, below the growth gate of $0.05$,
+Table~\ref{tab:scan2} ranks the scan and Figure~\ref{fig:scan2} plots it. The best configuration
+moves the readout by $0.0397$ across situations, below the growth gate of $0.05$,
 while leaving every pair of context answers at a cosine of at least $0.9979$: the difference that exists
 is not the one that would separate them. The shape of the answer is measured rather than asserted. At
 that point the $9\times10$ answer matrix has a leading singular value $60$ times the second
@@ -555,7 +558,8 @@ learning on every outcome & $1.016$ & $1.007$ & $0.000$ & $0.980$ \\
 \end{tabular}
 \end{table}
 
-The structural reason is the mismatch between the credit window and the plant: the composed brain's
+Table~\ref{tab:control} reports the arms. The structural reason is the mismatch between the credit
+window and the plant: the composed brain's
 eligibility span is $12$ steps, while the closed-loop time constant of the plant is $50$ to $100$
 steps. This is consistent with the library's own control-oriented demonstration, which learns a
 consequence model and leaves the controller supplied. It is also the reason the growth layer is not
@@ -617,18 +621,19 @@ percent between the two contexts, so the prerequisite passes on its own terms, w
 the declared readout stays at $1.000$ and the demand signal fires.
 
 The generator is free to read exactly those two cells, since they are the cells that carry the
-difference, and it may project into the answer. Sixty attempts were run over the design space the
+difference, and it may project into the answer. Ninety attempts were run over the design space the
 generator owns: a new-synapse scale of $3$, $6$, $10$ and $20$ times the mean magnitude, with the
-projection into the answer either excitatory or inhibitory, fifteen attempts each.
+projection into the answer either excitatory or inhibitory, fifteen attempts per arm and six arms.
 
 \begin{table}[t]
 \centering
 \small
 \caption{The unit test. Two input cells carry the distinction and reach nothing; the generator reads
 them and may project into the answer. Every arm rolls every attempt back and leaves the collision
-unchanged to three decimals. The reason is measured and local: the answer's cells sit at the ceiling
-of the rectified sigmoid, so added excitatory current is invisible and inhibition is too weak to move
-them off it. Source: \texttt{tone\_sweep.sh}, logs in \texttt{docs/receipts/}.}
+unchanged to three decimals. At this operating point the answer's cells sit below threshold, where the
+rectified sigmoid has almost no slope, so a new input is invisible; the regime screen below then
+separates that from the ceiling case, which fails for the same reason. Source:
+\texttt{tone\_sweep.sh}, logs in \texttt{docs/receipts/}.}
 \label{tab:unittest}
 \begin{tabular}{lrrr}
 \toprule
@@ -647,9 +652,11 @@ scale $20$, inhibitory & $15$ & $0$ & $1.000 \to 1.000$ \\
 The test was then extended over the regime, since the first version left the answer below threshold
 and an added synapse cannot be seen by a cell whose response gain is zero. Twenty-four regimes were
 screened (row sums $0.5$ to $4$, input scales $1$ to $10$, with and without per-neuron
-heterogeneity), reporting the answer's mean potential, its mean local slope, and its collision; growth
-was then run for two hundred and forty attempts in the regimes whose gain is not zero. None was kept
-and none moved the collision.
+heterogeneity), reporting the answer's mean potential, its mean local slope, and its collision
+(Table~\ref{tab:regime}); growth
+was then run for one hundred and twenty attempts in the regimes whose gain is not zero, and a further
+sixty with per-neuron heterogeneity under the library's own calibration. None was kept and none moved
+the collision.
 
 \begin{table}[t]
 \centering
@@ -675,7 +682,8 @@ $1.0$ & $1$ & $0.5$ & $0.000$ & $0.025$ & $1.000000$ \\
 \end{tabular}
 \end{table}
 
-So the negative result survives its own unit test and the regime sweep. Combined with the ceiling of
+Table~\ref{tab:unittest} reports the arms of the unit test. So the negative result survives its own
+unit test and the regime sweep. Combined with the ceiling of
 Section~\ref{sec:ceiling}, where the most favourable hand-built intervention achieves a fifth of the
 margin, the reading is that this substrate's answers are parallel for a structural reason that adding
 neurons does not address, and that the binding quantity is the answer's response gain: a cell below

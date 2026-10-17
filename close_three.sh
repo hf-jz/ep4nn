@@ -3,7 +3,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 export PYTHONPATH=/Users/sheng/math/cadence/src
-P=/Users/sheng/.hermes/cache/scratch/cad-venv/bin/python
+P="${PY:-$( [ -x .venv/bin/python ] && echo .venv/bin/python || command -v python3 )}"   # >= 3.10 with numpy
 $P probes/probe_closure.py 2>&1 | tail -20
 for which in default sensory interneuron; do
   $P ep4nn/grow.py "$which" >/dev/null 2>&1

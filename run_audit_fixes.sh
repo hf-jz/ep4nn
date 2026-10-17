@@ -3,7 +3,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 export PYTHONPATH=/Users/sheng/math/cadence/src
-P=/Users/sheng/.hermes/cache/scratch/cad-venv/bin/python
+P="${PY:-$( [ -x .venv/bin/python ] && echo .venv/bin/python || command -v python3 )}"   # >= 3.10 with numpy
 
 echo "== receipt self-check"; $P ep4nn/receipt.py
 echo "== audit fixes probe (G1 certified bound, G2 domain, G5 seeds, G4 readout family)"

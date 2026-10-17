@@ -3,6 +3,8 @@
 # One command: bash docs/paper/build.sh
 set -euo pipefail
 cd "$(dirname "$0")"
+PY="${PY:-$( [ -x ../../.venv/bin/python ] && echo ../../.venv/bin/python || command -v python3 )}"
+"$PY" test_paper_numbers.py || { echo "FAIL: a printed number does not match its artefact"; exit 1; }
 xelatex -interaction=nonstopmode -halt-on-error ep4nn.tex >/dev/null
 xelatex -interaction=nonstopmode -halt-on-error ep4nn.tex >/dev/null
 

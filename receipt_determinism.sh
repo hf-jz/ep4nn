@@ -4,7 +4,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 export PYTHONPATH=/Users/sheng/math/cadence/src
-P=/Users/sheng/.hermes/cache/scratch/cad-venv/bin/python
+P="${PY:-$( [ -x .venv/bin/python ] && echo .venv/bin/python || command -v python3 )}"   # >= 3.10 with numpy
 A=/Users/sheng/.hermes/cache/scratch/rcpt-a; B=/Users/sheng/.hermes/cache/scratch/rcpt-b
 rm -rf "$A" "$B"; mkdir -p "$A" "$B"
 for round in "$A" "$B"; do

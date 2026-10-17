@@ -3,7 +3,7 @@
 set -uo pipefail
 cd "$(dirname "$0")"
 export PYTHONPATH=/Users/sheng/math/cadence/src
-P=/Users/sheng/.hermes/cache/scratch/cad-venv/bin/python
+P="${PY:-$( [ -x .venv/bin/python ] && echo .venv/bin/python || command -v python3 )}"   # >= 3.10 with numpy
 for arm in "3 1" "6 1" "10 1" "20 1" "10 -1" "20 -1"; do
   set -- $arm
   $P ep4nn/grow.py tone "$1" state 600 "$2" >"docs/receipts/tone-scale$1-sign$2.log" 2>&1

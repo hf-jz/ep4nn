@@ -1,0 +1,224 @@
+{
+ "as the generator is": [
+  {
+   "neurons": 302,
+   "synapses": 3137,
+   "edges_per_neuron": 10.39,
+   "per_sweep_us": 100.1,
+   "settle_ms": 16.82,
+   "sweeps": 160,
+   "firing_fraction": 0.9205,
+   "reachable_to_readout": 0.9205,
+   "readout_spread": 0.018619,
+   "collision": 0.999873
+  },
+  {
+   "neurons": 606,
+   "synapses": 14491,
+   "edges_per_neuron": 23.91,
+   "per_sweep_us": 143.3,
+   "settle_ms": 154.42,
+   "sweeps": 1024,
+   "firing_fraction": 0.9983,
+   "reachable_to_readout": 0.9983,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 38
+  },
+  {
+   "neurons": 1214,
+   "synapses": 37301,
+   "edges_per_neuron": 30.73,
+   "per_sweep_us": 374.0,
+   "settle_ms": 404.8,
+   "sweeps": 1024,
+   "firing_fraction": 0.9992,
+   "reachable_to_readout": 0.9992,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 76
+  }
+ ],
+ "density held": [
+  {
+   "neurons": 302,
+   "synapses": 3137,
+   "edges_per_neuron": 10.39,
+   "per_sweep_us": 100.2,
+   "settle_ms": 16.7,
+   "sweeps": 160,
+   "firing_fraction": 0.9205,
+   "reachable_to_readout": 0.9205,
+   "readout_spread": 0.018619,
+   "collision": 0.999873
+  },
+  {
+   "neurons": 606,
+   "synapses": 8113,
+   "edges_per_neuron": 13.39,
+   "per_sweep_us": 150.5,
+   "settle_ms": 160.45,
+   "sweeps": 1024,
+   "firing_fraction": 0.9967,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 38
+  },
+  {
+   "neurons": 1214,
+   "synapses": 18003,
+   "edges_per_neuron": 14.83,
+   "per_sweep_us": 374.0,
+   "settle_ms": 411.02,
+   "sweeps": 1024,
+   "firing_fraction": 0.9959,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 76
+  }
+ ],
+ "readout barred": [
+  {
+   "neurons": 302,
+   "synapses": 3137,
+   "edges_per_neuron": 10.39,
+   "per_sweep_us": 98.9,
+   "settle_ms": 16.85,
+   "sweeps": 160,
+   "firing_fraction": 0.9205,
+   "reachable_to_readout": 0.9205,
+   "readout_spread": 0.018619,
+   "collision": 0.999873
+  },
+  {
+   "neurons": 606,
+   "synapses": 7997,
+   "edges_per_neuron": 13.2,
+   "per_sweep_us": 145.4,
+   "settle_ms": 161.05,
+   "sweeps": 1024,
+   "firing_fraction": 0.995,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 38
+  },
+  {
+   "neurons": 1214,
+   "synapses": 17771,
+   "edges_per_neuron": 14.64,
+   "per_sweep_us": 450.2,
+   "settle_ms": 390.3,
+   "sweeps": 1024,
+   "firing_fraction": 0.9942,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.0,
+   "collision": 1.0,
+   "growth_events": 76
+  }
+ ],
+ "operating point held": [
+  {
+   "neurons": 302,
+   "synapses": 3137,
+   "edges_per_neuron": 10.39,
+   "per_sweep_us": 99.7,
+   "settle_ms": 17.02,
+   "sweeps": 160,
+   "firing_fraction": 0.9205,
+   "reachable_to_readout": 0.9205,
+   "readout_spread": 0.018619,
+   "collision": 0.999873
+  },
+  {
+   "neurons": 606,
+   "synapses": 8116,
+   "edges_per_neuron": 13.39,
+   "per_sweep_us": 147.1,
+   "settle_ms": 15.21,
+   "sweeps": 96,
+   "firing_fraction": 0.9587,
+   "reachable_to_readout": 0.9983,
+   "readout_spread": 0.022615,
+   "collision": 0.999977,
+   "growth_events": 38
+  },
+  {
+   "neurons": 1214,
+   "synapses": 18010,
+   "edges_per_neuron": 14.84,
+   "per_sweep_us": 375.4,
+   "settle_ms": 47.93,
+   "sweeps": 96,
+   "firing_fraction": 0.9489,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.020765,
+   "collision": 0.999983,
+   "growth_events": 76
+  }
+ ],
+ "held, readout barred": [
+  {
+   "neurons": 302,
+   "synapses": 3137,
+   "edges_per_neuron": 10.39,
+   "per_sweep_us": 107.9,
+   "settle_ms": 17.34,
+   "sweeps": 160,
+   "firing_fraction": 0.9205,
+   "reachable_to_readout": 0.9205,
+   "readout_spread": 0.018619,
+   "collision": 0.999873
+  },
+  {
+   "neurons": 606,
+   "synapses": 7973,
+   "edges_per_neuron": 13.16,
+   "per_sweep_us": 144.3,
+   "settle_ms": 14.76,
+   "sweeps": 96,
+   "firing_fraction": 0.9637,
+   "reachable_to_readout": 0.9983,
+   "readout_spread": 0.020763,
+   "collision": 0.99998,
+   "growth_events": 38
+  },
+  {
+   "neurons": 1214,
+   "synapses": 17753,
+   "edges_per_neuron": 14.62,
+   "per_sweep_us": 380.0,
+   "settle_ms": 37.14,
+   "sweeps": 96,
+   "firing_fraction": 0.9638,
+   "reachable_to_readout": 1.0,
+   "readout_spread": 0.014633,
+   "collision": 0.999992,
+   "growth_events": 76
+  }
+ ],
+ "composed_examples": [
+  {
+   "example": "continuing_brain: compose(2, 2, modules=(8,))",
+   "neurons": 20,
+   "synapses": 114
+  },
+  {
+   "example": "walking_for_reward: compose(..., modules=(32,))",
+   "neurons": 68,
+   "synapses": 1218
+  },
+  {
+   "example": "walking_rhythm: compose(..., modules=(32,))",
+   "neurons": 68,
+   "synapses": 1218
+  },
+  {
+   "example": "memory_imagination: compose(..., modules=(32,))",
+   "neurons": 68,
+   "synapses": 1218
+  }
+ ]
+}

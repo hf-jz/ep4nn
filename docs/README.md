@@ -20,7 +20,8 @@ EP 是条件普遍的局部伴随法（有向真实接线上梯度语义失效�
    页面布局（配色 `--accent:#1d4e89`、`--maxw:1080px`、62px 吸顶导航、`.hero` 1.35fr/.65fr、`.result` 软色块、`.titem` 左边框、`.row` 290px/1fr、`.panel` 双栏、`pre` 复现块）逐行取自同一作者的 `hf-jz/eep` 的 `gep/` 页面，CSS 原样搬运。
    `assets/make_figures.py` 一条命令重画四张图，数据来自 `probes/` 与 `assets/prereq_scan.json`。
 8. `receipts/` —— 运行收据（`ep4nn/receipt.py` 写出；六字段：dataset / run / dynamics / loop / premise / cost）。
-9. `审计-论证严谨性.md` —— 对论文每个创新点的论证审计：4 处实质缺陷 + 3 处口径问题 + 7 条未测缺口。
+9. `能力评估-翻倍与逐项对比.md` —— 翻倍容量实测（2×/4×，含失败臂与根因）与 cadence 示例的逐项对比判语。
+10. `审计-论证严谨性.md` —— 对论文每个创新点的论证审计：4 处实质缺陷 + 3 处口径问题 + 7 条未测缺口。
    其中 D1（扫描丢掉接触计数 → 与成本/证书表不是同一张图）导致全部数字重跑：最好 spread **0.0777 → 0.0397**，
    工作点数 **60 → 45**，**0/45 过闸**（负结果更强）。新增探针 `probes/probe_audit_claims.py` 把三条推断变成测量。
 

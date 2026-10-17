@@ -691,11 +691,52 @@ threshold and a cell at the ceiling are equally deaf to a new input, and the ban
 where the collision is already $1.000$. That is a statement about the pair of the model and the
 readout, and it is the honest form of the negative this paper reports.
 
+\subsection{Capacity, forced: doubling the neurons works once the contract is held}
+\label{sec:capacity}
+
+The verdict layer answers whether growth pays. A different question is whether growth can even hold
+twice the neurons, and it has a sharp answer once the generator's own contract is respected. Forcing
+growth (bypassing the verdict, since this is a question of capacity) takes the $302$-neuron graph to
+$606$ and $1{,}214$.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Forced growth on the worm graph, two hundred and forty events. As written, the generator
+gives a new synapse three times the mean efficacy, which puts a new row's sum at about $1.35$ against
+the declared $0.5$; the network then stops contracting and the settle exhausts its $1024$-sweep budget.
+Scaling the new rows to the declared operating point instead makes both doublings settle in $96$
+sweeps, raises the firing share from $0.92$ to $0.96$, and leaves the answer responsive. Source:
+\texttt{probes/probe\_capacity.py}, data in \texttt{docs/assets/capacity.json}.}
+\label{tab:capacity}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+arm & neurons & synapses & edges/neuron & $\mu$s/sweep & settle ms & sweeps & firing \\
+\midrule
+as written & $302$ & $3137$ & $10.4$ & $99.7$ & $17.0$ & $160$ & $0.920$ \\
+as written & $606$ & $14{,}491$ & $23.9$ & $143.3$ & $154.4$ & $1024$ & $0.998$ \\
+as written & $1{,}214$ & $37{,}301$ & $30.7$ & $374.0$ & $404.8$ & $1024$ & $0.999$ \\
+\midrule
+contract held & $606$ & $8116$ & $13.4$ & $147.1$ & $15.2$ & $96$ & $0.959$ \\
+contract held & $1{,}214$ & $18{,}010$ & $14.8$ & $375.4$ & $47.9$ & $96$ & $0.949$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two things follow. First, the doubling is real: twice and four times the neurons, a firing share that
+rises rather than falls, and a settle cost of $0.9$ times and $2.8$ times the baseline, because the
+contraction improves enough to more than pay for the extra per-sweep work. Second, capacity is not
+capability: the collision moves from $0.999873$ to $0.999977$ and $0.999983$, that is, it does not
+improve at all. A doubling that leaves the answer as parallel as it was is a counter that went up,
+not a capability that arrived.
+
 \section{Discussion}
 
 \textbf{What is shown.} The growth contract is implementable on a measured connectome at negligible
 rebuild cost, its gates fire in the intended order, and the prerequisite measurement is what decides
-whether structural work is meaningful. Two library-level results are independent of this system: a
+whether structural work is meaningful. Capacity is separately shown to double and quadruple once the
+generator holds the declared operating point (Section~\ref{sec:capacity}), which locates the failure
+of the growth experiments in the substrate's separability rather than in an inability to add cells. Two library-level results are independent of this system: a
 state-dependent certificate exists where the global bound fails, and a sparse graph is settled at
 about $1.8$\,ns per synapse, which makes $10{,}000$ neurons a real-time-scale object rather than a
 research curiosity.

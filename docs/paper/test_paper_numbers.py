@@ -104,6 +104,23 @@ def main() -> None:
     expect(total == 360, f"the attempts total {total}, the paper says three hundred and sixty")
     expect("three hundred and sixty" in TEX, "the abstract does not print the total")
 
+    cap = json.loads((ASSETS / "capacity.json").read_text())
+    written = cap["as the generator is"]
+    held = cap["operating point held"]
+    expect([r["neurons"] for r in held] == [302, 606, 1214], "the capacity arm's sizes moved")
+    expect(written[1]["sweeps"] == 1024 and written[2]["sweeps"] == 1024,
+           "the as-written arm settles again; the paper says it exhausts the budget")
+    expect(held[1]["sweeps"] < 200 and held[2]["sweeps"] < 200,
+           "the contract-held arm no longer settles")
+    expect(held[1]["readout_spread"] > 0 and held[2]["readout_spread"] > 0,
+           "the contract-held arm's answer is dead")
+    expect(held[1]["settle_ms"] < held[0]["settle_ms"],
+           "doubling is no longer cheaper than the baseline; the paper says it is")
+    expect(printed(held[1]["settle_ms"], 3) and printed(held[2]["settle_ms"], 3),
+           "the capacity settle times are not printed")
+    expect(printed(held[1]["firing_fraction"], 3) and printed(written[2]["firing_fraction"], 3),
+           "the firing shares are not printed")
+
     # the page count and the build are checked by build.sh; here only the content
     if FAILS:
         print(f"{len(FAILS)} of {check_count} checks failed")

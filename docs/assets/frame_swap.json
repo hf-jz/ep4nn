@@ -1,0 +1,53 @@
+{
+ "rows": [
+  {
+   "arm": "cadence compose, declared point, efference on",
+   "feeding_tail": 0.65,
+   "feeding_all": 0.5767,
+   "distinct_actions": 2,
+   "ms_per_moment": 1.31,
+   "neurons": 72,
+   "synapses": 1346
+  },
+  {
+   "arm": "cadence compose, declared point, no efference",
+   "feeding_tail": 0.73,
+   "feeding_all": 0.5367,
+   "distinct_actions": 2,
+   "ms_per_moment": 1.26,
+   "neurons": 70,
+   "synapses": 1282
+  },
+  {
+   "arm": "worm 302 (ep4nn substrate)",
+   "feeding_tail": 0.5,
+   "feeding_all": 0.645,
+   "distinct_actions": 10,
+   "ms_per_moment": 1.52,
+   "neurons": 302,
+   "synapses": 3137
+  },
+  {
+   "arm": "worm grown to 606 (ep4nn growth)",
+   "feeding_tail": 0.5,
+   "feeding_all": 0.645,
+   "distinct_actions": 10,
+   "ms_per_moment": 2.05,
+   "neurons": 606,
+   "synapses": 8090
+  }
+ ],
+ "task": {
+  "moments": 600,
+  "tail": 100,
+  "drive": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  ],
+  "reward": "one unit when the action differs from the previous one"
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "fly": {
+  "neurons": 139255,
+  "synapses": 2698236
+ },
+ "worm 302": {
+  "neurons": 302,
+  "synapses": 3137,
+  "spread": 1.7e-05,
+  "collision": 1.0,
+  "settle_ms": 6.8
+ },
+ "fly FAFB, all excitatory": {
+  "neurons": 139255,
+  "synapses": 2698236,
+  "spread": 0.014218,
+  "collision": 0.999901,
+  "settle_ms": 302.2
+ },
+ "fly FAFB, inhibition": {
+  "neurons": 139255,
+  "synapses": 2698236,
+  "spread": 0.025789,
+  "collision": 0.999723,
+  "settle_ms": 397.62
+ },
+ "peak_mb": 652.6
+}

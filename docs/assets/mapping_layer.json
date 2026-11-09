@@ -1,0 +1,125 @@
+{
+ "probe": "probe_mapping_layer.py",
+ "samples": 600,
+ "input_dim": 61,
+ "row_sum": 0.5,
+ "sweeps_max": 160,
+ "residual_max": 0.0,
+ "baseline_unfitted_rho": {
+  "smooth": -0.098,
+  "gate": -0.098
+ },
+ "ranks": {
+  "smooth": {
+   "rows": [
+    {
+     "rank": 1,
+     "rho_mean": 0.384,
+     "rho_sd": 0.053,
+     "mae": 0.102,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 2,
+     "rho_mean": 0.389,
+     "rho_sd": 0.05,
+     "mae": 0.102,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 4,
+     "rho_mean": 0.509,
+     "rho_sd": 0.083,
+     "mae": 0.103,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 8,
+     "rho_mean": 0.551,
+     "rho_sd": 0.063,
+     "mae": 0.104,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 16,
+     "rho_mean": 0.541,
+     "rho_sd": 0.082,
+     "mae": 0.107,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 32,
+     "rho_mean": 0.674,
+     "rho_sd": 0.072,
+     "mae": 0.112,
+     "sign_accuracy_strong": 1.0
+    },
+    {
+     "rank": 64,
+     "rho_mean": 0.839,
+     "rho_sd": 0.019,
+     "mae": 0.119,
+     "sign_accuracy_strong": 1.0
+    }
+   ],
+   "best_rho": 0.839,
+   "rank_needed": 64
+  },
+  "gate": {
+   "rows": [
+    {
+     "rank": 1,
+     "rho_mean": 0.384,
+     "rho_sd": 0.053,
+     "mae": 0.185,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 2,
+     "rho_mean": 0.389,
+     "rho_sd": 0.048,
+     "mae": 0.185,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 4,
+     "rho_mean": 0.509,
+     "rho_sd": 0.084,
+     "mae": 0.188,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 8,
+     "rho_mean": 0.553,
+     "rho_sd": 0.064,
+     "mae": 0.191,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 16,
+     "rho_mean": 0.546,
+     "rho_sd": 0.084,
+     "mae": 0.195,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 32,
+     "rho_mean": 0.683,
+     "rho_sd": 0.073,
+     "mae": 0.203,
+     "sign_accuracy_strong": 0.964
+    },
+    {
+     "rank": 64,
+     "rho_mean": 0.848,
+     "rho_sd": 0.019,
+     "mae": 0.215,
+     "sign_accuracy_strong": 0.964
+    }
+   ],
+   "best_rho": 0.848,
+   "rank_needed": 64
+  }
+ },
+ "verdict": "smooth 目标就需要大秩，映射层容量是瓶颈"
+}

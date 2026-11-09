@@ -1,0 +1,1418 @@
+{
+ "cells_with_edges": 271,
+ "pure_inhibitory": [
+  "VD8",
+  "VD6",
+  "VD5",
+  "VD3",
+  "VD2",
+  "VD13",
+  "VD12",
+  "VD11",
+  "VD10",
+  "VD1",
+  "RMEV",
+  "RMED",
+  "RIVR",
+  "RIVL",
+  "RIS",
+  "RID",
+  "RIAR",
+  "RIAL",
+  "DVC",
+  "DVB",
+  "DVA",
+  "DD5",
+  "DD2",
+  "DD1",
+  "BDUR",
+  "BDUL",
+  "AVL"
+ ],
+ "implied_gabaergic": [
+  "AVL",
+  "BDUL",
+  "BDUR",
+  "DD1",
+  "DD2",
+  "DD5",
+  "DVA",
+  "DVB",
+  "DVC",
+  "RIAL",
+  "RIAR",
+  "RID",
+  "RIS",
+  "RIVL",
+  "RIVR",
+  "RMED",
+  "RMEV",
+  "VD1",
+  "VD10",
+  "VD11",
+  "VD12",
+  "VD13",
+  "VD2",
+  "VD3",
+  "VD5",
+  "VD6",
+  "VD8"
+ ],
+ "fractions": [
+  {
+   "cell": "VD8",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "VD6",
+   "frac": 1.0,
+   "edges": 3
+  },
+  {
+   "cell": "VD5",
+   "frac": 1.0,
+   "edges": 3
+  },
+  {
+   "cell": "VD3",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "VD2",
+   "frac": 1.0,
+   "edges": 3
+  },
+  {
+   "cell": "VD13",
+   "frac": 1.0,
+   "edges": 4
+  },
+  {
+   "cell": "VD12",
+   "frac": 1.0,
+   "edges": 4
+  },
+  {
+   "cell": "VD11",
+   "frac": 1.0,
+   "edges": 3
+  },
+  {
+   "cell": "VD10",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "VD1",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "RMEV",
+   "frac": 1.0,
+   "edges": 1
+  },
+  {
+   "cell": "RMED",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "RIVR",
+   "frac": 1.0,
+   "edges": 10
+  },
+  {
+   "cell": "RIVL",
+   "frac": 1.0,
+   "edges": 6
+  },
+  {
+   "cell": "RIS",
+   "frac": 1.0,
+   "edges": 19
+  },
+  {
+   "cell": "RID",
+   "frac": 1.0,
+   "edges": 7
+  },
+  {
+   "cell": "RIAR",
+   "frac": 1.0,
+   "edges": 18
+  },
+  {
+   "cell": "RIAL",
+   "frac": 1.0,
+   "edges": 15
+  },
+  {
+   "cell": "DVC",
+   "frac": 1.0,
+   "edges": 14
+  },
+  {
+   "cell": "DVB",
+   "frac": 1.0,
+   "edges": 7
+  },
+  {
+   "cell": "DVA",
+   "frac": 1.0,
+   "edges": 35
+  },
+  {
+   "cell": "DD5",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "DD2",
+   "frac": 1.0,
+   "edges": 3
+  },
+  {
+   "cell": "DD1",
+   "frac": 1.0,
+   "edges": 2
+  },
+  {
+   "cell": "BDUR",
+   "frac": 1.0,
+   "edges": 11
+  },
+  {
+   "cell": "BDUL",
+   "frac": 1.0,
+   "edges": 8
+  },
+  {
+   "cell": "AVL",
+   "frac": 1.0,
+   "edges": 12
+  },
+  {
+   "cell": "VC5",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "VC4",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "VC3",
+   "frac": 0.0,
+   "edges": 19
+  },
+  {
+   "cell": "VC2",
+   "frac": 0.0,
+   "edges": 15
+  },
+  {
+   "cell": "VC1",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "VB9",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "VB8",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "VB7",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "VB6",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "VB5",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "VB4",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "VB3",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "VB2",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "VB11",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "VB10",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "VB1",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "VA9",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "VA8",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "VA7",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "VA6",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "VA5",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "VA4",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "VA3",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "VA2",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "VA12",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "VA11",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "VA1",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "URYVR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "URYVL",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "URYDR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "URYDL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "URXR",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "URXL",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "URBR",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "URBL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "URAVR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "URAVL",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "URADR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "URADL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "SMDVR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "SMDVL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "SMDDR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "SMDDL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "SMBVR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "SMBVL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "SMBDR",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "SMBDL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "SDQR",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "SDQL",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "SABD",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "SAAVR",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "SAAVL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "SAADR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "SAADL",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "RMHR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "RMHL",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "RMGR",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "RMGL",
+   "frac": 0.0,
+   "edges": 19
+  },
+  {
+   "cell": "RMFR",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "RMFL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "RMDVR",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "RMDVL",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "RMDR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "RMDL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "RMDDR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "RMDDL",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "RIR",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "RIPR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "RIPL",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "RIMR",
+   "frac": 0.0,
+   "edges": 17
+  },
+  {
+   "cell": "RIML",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "RIH",
+   "frac": 0.0,
+   "edges": 24
+  },
+  {
+   "cell": "RIGR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "RIGL",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "RIFR",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "RIFL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "RICR",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "RICL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "RIBR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "RIBL",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "PVWR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "PVWL",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "PVT",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "PVR",
+   "frac": 0.0,
+   "edges": 22
+  },
+  {
+   "cell": "PVQR",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "PVQL",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "PVPR",
+   "frac": 0.0,
+   "edges": 18
+  },
+  {
+   "cell": "PVPL",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "PVNR",
+   "frac": 0.0,
+   "edges": 22
+  },
+  {
+   "cell": "PVNL",
+   "frac": 0.0,
+   "edges": 19
+  },
+  {
+   "cell": "PVM",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "PVDR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "PVDL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "PVCR",
+   "frac": 0.0,
+   "edges": 32
+  },
+  {
+   "cell": "PVCL",
+   "frac": 0.0,
+   "edges": 32
+  },
+  {
+   "cell": "PQR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "PLNR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "PLNL",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "PLMR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "PLML",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "PHCR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "PHCL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "PHBR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "PHBL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "PHAR",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "PHAL",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "PDER",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "PDEL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "PDB",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "PDA",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "OLQVR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "OLQVL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "OLQDR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "OLQDL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "OLLR",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "OLLL",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "NSMR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "NSML",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "MCR",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "MCL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "M5",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "M4",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "M3R",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "M3L",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "M2R",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "M2L",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "LUAR",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "LUAL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "IL2VR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "IL2VL",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "IL2R",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "IL2L",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "IL2DR",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "IL2DL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "IL1VR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "IL1VL",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "IL1R",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "IL1L",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "IL1DR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "IL1DL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "I6",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "I5",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "I4",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "I3",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "I2R",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "I2L",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "I1R",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "I1L",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "HSNR",
+   "frac": 0.0,
+   "edges": 25
+  },
+  {
+   "cell": "HSNL",
+   "frac": 0.0,
+   "edges": 17
+  },
+  {
+   "cell": "FLPR",
+   "frac": 0.0,
+   "edges": 15
+  },
+  {
+   "cell": "FLPL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "DB7",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "DB4",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "DB3",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "DB2",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "DB1",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "DA9",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "DA6",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "DA5",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "DA4",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "DA3",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "DA2",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "DA1",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "CEPVR",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "CEPVL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "CEPDR",
+   "frac": 0.0,
+   "edges": 20
+  },
+  {
+   "cell": "CEPDL",
+   "frac": 0.0,
+   "edges": 17
+  },
+  {
+   "cell": "BAGR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "BAGL",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "AWCR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "AWCL",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "AWBR",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "AWBL",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "AWAR",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "AWAL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "AVM",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "AVKR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "AVKL",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "AVJR",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "AVJL",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "AVHR",
+   "frac": 0.0,
+   "edges": 16
+  },
+  {
+   "cell": "AVHL",
+   "frac": 0.0,
+   "edges": 17
+  },
+  {
+   "cell": "AVG",
+   "frac": 0.0,
+   "edges": 17
+  },
+  {
+   "cell": "AVFR",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "AVFL",
+   "frac": 0.0,
+   "edges": 15
+  },
+  {
+   "cell": "AVER",
+   "frac": 0.0,
+   "edges": 18
+  },
+  {
+   "cell": "AVEL",
+   "frac": 0.0,
+   "edges": 16
+  },
+  {
+   "cell": "AVDR",
+   "frac": 0.0,
+   "edges": 24
+  },
+  {
+   "cell": "AVDL",
+   "frac": 0.0,
+   "edges": 19
+  },
+  {
+   "cell": "AVBR",
+   "frac": 0.0,
+   "edges": 15
+  },
+  {
+   "cell": "AVBL",
+   "frac": 0.0,
+   "edges": 20
+  },
+  {
+   "cell": "AVAR",
+   "frac": 0.0,
+   "edges": 49
+  },
+  {
+   "cell": "AVAL",
+   "frac": 0.0,
+   "edges": 37
+  },
+  {
+   "cell": "AUAR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "AUAL",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "ASKR",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "ASKL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "ASJR",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "ASJL",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "ASIR",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "ASIL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "ASHR",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "ASHL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "ASGR",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "ASGL",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "ASER",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "ASEL",
+   "frac": 0.0,
+   "edges": 9
+  },
+  {
+   "cell": "AS9",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "AS6",
+   "frac": 0.0,
+   "edges": 1
+  },
+  {
+   "cell": "AS5",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "AS4",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "AS3",
+   "frac": 0.0,
+   "edges": 4
+  },
+  {
+   "cell": "AS2",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "AS11",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "AS1",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "AQR",
+   "frac": 0.0,
+   "edges": 14
+  },
+  {
+   "cell": "ALNR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "ALNL",
+   "frac": 0.0,
+   "edges": 3
+  },
+  {
+   "cell": "ALMR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "ALML",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "ALA",
+   "frac": 0.0,
+   "edges": 5
+  },
+  {
+   "cell": "AIZR",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "AIZL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "AIYR",
+   "frac": 0.0,
+   "edges": 6
+  },
+  {
+   "cell": "AIYL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "AINR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "AINL",
+   "frac": 0.0,
+   "edges": 7
+  },
+  {
+   "cell": "AIMR",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "AIML",
+   "frac": 0.0,
+   "edges": 16
+  },
+  {
+   "cell": "AIBR",
+   "frac": 0.0,
+   "edges": 11
+  },
+  {
+   "cell": "AIBL",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "AIAR",
+   "frac": 0.0,
+   "edges": 10
+  },
+  {
+   "cell": "AIAL",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "AFDR",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "AFDL",
+   "frac": 0.0,
+   "edges": 2
+  },
+  {
+   "cell": "ADLR",
+   "frac": 0.0,
+   "edges": 15
+  },
+  {
+   "cell": "ADLL",
+   "frac": 0.0,
+   "edges": 16
+  },
+  {
+   "cell": "ADFR",
+   "frac": 0.0,
+   "edges": 13
+  },
+  {
+   "cell": "ADFL",
+   "frac": 0.0,
+   "edges": 8
+  },
+  {
+   "cell": "ADER",
+   "frac": 0.0,
+   "edges": 20
+  },
+  {
+   "cell": "ADEL",
+   "frac": 0.0,
+   "edges": 26
+  },
+  {
+   "cell": "ADAR",
+   "frac": 0.0,
+   "edges": 12
+  },
+  {
+   "cell": "ADAL",
+   "frac": 0.0,
+   "edges": 14
+  }
+ ]
+}

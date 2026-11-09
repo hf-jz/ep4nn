@@ -1,0 +1,45 @@
+{
+ "probe": "probe_readout_search.py",
+ "row_sum": 0.5,
+ "samples": 200,
+ "sweeps_max": 160,
+ "residual_max": 0.0,
+ "pool": 288,
+ "k": 10,
+ "declared": {
+  "share_of_var": 0.0043,
+  "participation_ratio": 1.88,
+  "min_pair_distance": 0.0019,
+  "cells": [
+   "AVBL",
+   "AVBR",
+   "PVCL",
+   "PVCR",
+   "AVAL",
+   "AVAR",
+   "AVDL",
+   "AVDR",
+   "AVEL",
+   "AVER"
+  ]
+ },
+ "greedy": {
+  "share_of_var": 0.0011,
+  "participation_ratio": 8.51,
+  "min_pair_distance": 0.0214,
+  "cells": [
+   "ADAL",
+   "RMDL",
+   "VD11",
+   "ALA",
+   "SDQL",
+   "PHCL",
+   "ADLR",
+   "SIBVL",
+   "RMED",
+   "LUAR"
+  ]
+ },
+ "ceiling_share_of_var": 0.1862,
+ "verdict": "FAIL: 高维输入下 10 个细胞也撑不起读出 → 瓶颈在 302 图本身的读出层"
+}

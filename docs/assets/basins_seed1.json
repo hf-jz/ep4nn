@@ -1,0 +1,150 @@
+{
+ "probe": "probe_basins.py",
+ "delay": 64,
+ "trials": 30,
+ "rows": [
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 2,
+   "min_pair_separation": 150.75,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 4,
+   "min_pair_separation": 37.58,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 8,
+   "min_pair_separation": 5.66,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 16,
+   "min_pair_separation": 2.9,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 32,
+   "min_pair_separation": 1.76,
+   "separable": false
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 2,
+   "min_pair_separation": 93.49,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 4,
+   "min_pair_separation": 21.22,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 8,
+   "min_pair_separation": 25.56,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 16,
+   "min_pair_separation": 13.58,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 32,
+   "min_pair_separation": 5.79,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 2,
+   "min_pair_separation": 206.4,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 4,
+   "min_pair_separation": 42.73,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 8,
+   "min_pair_separation": 10.45,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 16,
+   "min_pair_separation": 10.75,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 32,
+   "min_pair_separation": 3.81,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 2,
+   "min_pair_separation": 392.67,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 4,
+   "min_pair_separation": 22.63,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 8,
+   "min_pair_separation": 14.81,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 16,
+   "min_pair_separation": 11.78,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 32,
+   "min_pair_separation": 5.98,
+   "separable": true
+  }
+ ],
+ "held_small": 16,
+ "held_large": 32,
+ "verdict": "PASS: 规模买到记忆槽位（16 → 32）"
+}

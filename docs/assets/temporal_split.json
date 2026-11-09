@@ -1,0 +1,13 @@
+{
+ "probe": "probe_temporal_split.py",
+ "k": 128,
+ "trials": 200,
+ "pc1_share": 1.0,
+ "sign_match": 0.695,
+ "gap_ratio": 2.71,
+ "group_sizes": [
+  93,
+  107
+ ],
+ "verdict": "bistable: 两个紧吸引盆（记忆靠盆地，不靠时间常数）"
+}

@@ -1,0 +1,150 @@
+{
+ "probe": "probe_basins.py",
+ "delay": 64,
+ "trials": 30,
+ "rows": [
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 2,
+   "min_pair_separation": 52.33,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 4,
+   "min_pair_separation": 15.45,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 8,
+   "min_pair_separation": 10.48,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 16,
+   "min_pair_separation": 4.01,
+   "separable": true
+  },
+  {
+   "hidden": 32,
+   "n_neurons": 56,
+   "cues": 32,
+   "min_pair_separation": 2.04,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 2,
+   "min_pair_separation": 91.63,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 4,
+   "min_pair_separation": 80.48,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 8,
+   "min_pair_separation": 8.52,
+   "separable": true
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 16,
+   "min_pair_separation": 0.59,
+   "separable": false
+  },
+  {
+   "hidden": 64,
+   "n_neurons": 88,
+   "cues": 32,
+   "min_pair_separation": 0.99,
+   "separable": false
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 2,
+   "min_pair_separation": 105.12,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 4,
+   "min_pair_separation": 36.67,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 8,
+   "min_pair_separation": 15.64,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 16,
+   "min_pair_separation": 7.67,
+   "separable": true
+  },
+  {
+   "hidden": 128,
+   "n_neurons": 152,
+   "cues": 32,
+   "min_pair_separation": 7.15,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 2,
+   "min_pair_separation": 65.59,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 4,
+   "min_pair_separation": 29.09,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 8,
+   "min_pair_separation": 16.96,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 16,
+   "min_pair_separation": 14.97,
+   "separable": true
+  },
+  {
+   "hidden": 256,
+   "n_neurons": 280,
+   "cues": 32,
+   "min_pair_separation": 11.77,
+   "separable": true
+  }
+ ],
+ "held_small": 32,
+ "held_large": 32,
+ "verdict": "FAIL: 槽位数与规模无关（32 → 32），由拓扑决定"
+}

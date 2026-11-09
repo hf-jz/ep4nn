@@ -1,0 +1,196 @@
+{
+ "probe": "probe_difficulty.py",
+ "samples": 600,
+ "row_sum": 0.5,
+ "levels": [
+  0,
+  4,
+  8,
+  16,
+  32
+ ],
+ "curve": [
+  {
+   "nuisance_cells": 0,
+   "rank_needed": 4,
+   "best_rho": 0.905,
+   "rows": [
+    {
+     "rank": 1,
+     "rho": 0.835
+    },
+    {
+     "rank": 2,
+     "rho": 0.846
+    },
+    {
+     "rank": 4,
+     "rho": 0.905
+    },
+    {
+     "rank": 8,
+     "rho": 0.869
+    },
+    {
+     "rank": 16,
+     "rho": 0.866
+    },
+    {
+     "rank": 32,
+     "rho": 0.866
+    },
+    {
+     "rank": 64,
+     "rho": 0.866
+    }
+   ],
+   "sweeps": 192
+  },
+  {
+   "nuisance_cells": 4,
+   "rank_needed": 1,
+   "best_rho": 0.872,
+   "rows": [
+    {
+     "rank": 1,
+     "rho": 0.868
+    },
+    {
+     "rank": 2,
+     "rho": 0.862
+    },
+    {
+     "rank": 4,
+     "rho": 0.872
+    },
+    {
+     "rank": 8,
+     "rho": 0.861
+    },
+    {
+     "rank": 16,
+     "rho": 0.839
+    },
+    {
+     "rank": 32,
+     "rho": 0.839
+    },
+    {
+     "rank": 64,
+     "rho": 0.839
+    }
+   ],
+   "sweeps": 160
+  },
+  {
+   "nuisance_cells": 8,
+   "rank_needed": 2,
+   "best_rho": 0.891,
+   "rows": [
+    {
+     "rank": 1,
+     "rho": 0.863
+    },
+    {
+     "rank": 2,
+     "rho": 0.873
+    },
+    {
+     "rank": 4,
+     "rho": 0.891
+    },
+    {
+     "rank": 8,
+     "rho": 0.888
+    },
+    {
+     "rank": 16,
+     "rho": 0.846
+    },
+    {
+     "rank": 32,
+     "rho": 0.847
+    },
+    {
+     "rank": 64,
+     "rho": 0.846
+    }
+   ],
+   "sweeps": 160
+  },
+  {
+   "nuisance_cells": 16,
+   "rank_needed": 2,
+   "best_rho": 0.885,
+   "rows": [
+    {
+     "rank": 1,
+     "rho": 0.845
+    },
+    {
+     "rank": 2,
+     "rho": 0.87
+    },
+    {
+     "rank": 4,
+     "rho": 0.884
+    },
+    {
+     "rank": 8,
+     "rho": 0.885
+    },
+    {
+     "rank": 16,
+     "rho": 0.869
+    },
+    {
+     "rank": 32,
+     "rho": 0.848
+    },
+    {
+     "rank": 64,
+     "rho": 0.848
+    }
+   ],
+   "sweeps": 128
+  },
+  {
+   "nuisance_cells": 32,
+   "rank_needed": 2,
+   "best_rho": 0.85,
+   "rows": [
+    {
+     "rank": 1,
+     "rho": 0.806
+    },
+    {
+     "rank": 2,
+     "rho": 0.843
+    },
+    {
+     "rank": 4,
+     "rho": 0.85
+    },
+    {
+     "rank": 8,
+     "rho": 0.84
+    },
+    {
+     "rank": 16,
+     "rho": 0.823
+    },
+    {
+     "rank": 32,
+     "rho": 0.813
+    },
+    {
+     "rank": 64,
+     "rho": 0.802
+    }
+   ],
+   "sweeps": 128
+  }
+ ],
+ "rank_delta": -2,
+ "verdict": "FAIL: 曲线平坦，干扰不抬高所需秩 → 该基质上不支持自适应扩规模"
+}

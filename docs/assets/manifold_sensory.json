@@ -1,0 +1,43 @@
+{
+ "probe": "probe_manifold.py",
+ "row_sum": 0.5,
+ "seed": 0,
+ "slope": null,
+ "leak": null,
+ "bias_jitter": 0.0,
+ "gain_jitter": 0.0,
+ "input_mode": "sensory",
+ "input_dim": 61,
+ "input_spectrum": {
+  "participation_ratio": 45.711,
+  "k90": 45,
+  "k99": 59,
+  "pc1_share": 0.04,
+  "rank": 61
+ },
+ "readout_cells": 10,
+ "n_samples": 200,
+ "n_neurons": 302,
+ "sweeps_max": 160,
+ "residual_max": 0.0,
+ "full": {
+  "participation_ratio": 36.102,
+  "k90": 43,
+  "k99": 58,
+  "pc1_share": 0.075,
+  "rank": 199
+ },
+ "readout": {
+  "participation_ratio": 1.88,
+  "k90": 3,
+  "k99": 6,
+  "pc1_share": 0.713,
+  "rank": 10
+ },
+ "state_rms": 0.060185,
+ "readout_rms": 0.019792,
+ "leakage": 0.3288,
+ "readout_rank_share": 0.07,
+ "readout_share_of_var": 0.1297,
+ "verdict": "capacity-open: \u72b6\u6001\u5bcc\u4e14\u8bfb\u51fa\u80fd\u5403\u8fdb\u53bb \u2192 \u589e\u957f\u53ef\u7528\u6d41\u5f62\u5916\u8ddd\u79bb\u6765\u5224"
+}

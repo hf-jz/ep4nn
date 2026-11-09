@@ -1,0 +1,45 @@
+{
+ "probe": "probe_readout_search.py",
+ "row_sum": 0.5,
+ "samples": 200,
+ "sweeps_max": 192,
+ "residual_max": 0.0,
+ "pool": 288,
+ "k": 10,
+ "declared": {
+  "share_of_var": 0.0073,
+  "min_pair_distance": 0.005,
+  "participation_ratio": 1.443,
+  "cells": [
+   "AVBL",
+   "AVBR",
+   "PVCL",
+   "PVCR",
+   "AVAL",
+   "AVAR",
+   "AVDL",
+   "AVDR",
+   "AVEL",
+   "AVER"
+  ]
+ },
+ "greedy": {
+  "share_of_var": 0.0161,
+  "min_pair_distance": 0.0555,
+  "participation_ratio": 1.786,
+  "cells": [
+   "CANL",
+   "CANR",
+   "IL2DL",
+   "IL2DR",
+   "PLNR",
+   "PVDR",
+   "VC6",
+   "ADAL",
+   "AIYR",
+   "AS8"
+  ]
+ },
+ "ceiling_share_of_var": 0.446,
+ "verdict": "FAIL: 10 个非感觉细胞仍分不开情境 → 读出搜索关闭，瓶颈在输入维数/架构"
+}

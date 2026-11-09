@@ -1,0 +1,119 @@
+{
+ "probe": "probe_locomotion.py",
+ "row_sum": 0.5,
+ "readout": "mean(AVB,PVC) - mean(AVA,AVD,AVE)",
+ "spearman_rho": -0.441,
+ "signs_agree": false,
+ "L_range": 0.0,
+ "conditions": [
+  {
+   "condition": "none",
+   "expected": 0.0,
+   "L": 0.0,
+   "forward_mean": 0.0,
+   "reverse_mean": 0.0,
+   "sweeps": 0,
+   "residual": 0.0
+  },
+  {
+   "condition": "attract_weak",
+   "expected": 0.25,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "attract_mid",
+   "expected": 0.5,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "attract_strong",
+   "expected": 1.0,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "food",
+   "expected": 0.85,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "attractB",
+   "expected": 0.75,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "repel_weak",
+   "expected": -0.25,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "repel_mid",
+   "expected": -0.5,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "repel_strong",
+   "expected": -1.0,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "conflict_low",
+   "expected": 0.35,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "conflict_mid",
+   "expected": 0.0,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  },
+  {
+   "condition": "conflict_high",
+   "expected": -0.4,
+   "L": 0.0,
+   "forward_mean": 1.0,
+   "reverse_mean": 1.0,
+   "sweeps": 64,
+   "residual": 0.0
+  }
+ ],
+ "verdict": "FAIL: 该工作点下不编码 locomotion 极性 → 下一杠杆是动力学（慢变量）"
+}

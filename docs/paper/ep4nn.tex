@@ -730,6 +730,90 @@ capability: the collision moves from $0.999873$ to $0.999977$ and $0.999983$, th
 improve at all. A doubling that leaves the answer as parallel as it was is a counter that went up,
 not a capability that arrived.
 
+\subsection{Where the limitation lies: eight probes}
+\label{sec:probes}
+
+The scan of Section~\ref{sec:scan} leaves the remedy open, so the candidates were measured rather
+than ranked by plausibility. Table~\ref{tab:probes} lists the eight hypotheses, the probe that tests
+each, and the outcome. Every probe runs on the same measured connectome, the same declared operating
+point, frozen inputs and paired comparisons; each writes a machine-readable record under
+\texttt{docs/assets/}, and the full numbers are in \texttt{docs/实测台账.md}, Sections 11 to 18.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Eight hypotheses about where the limitation lies, each tested on the measured connectome.
+``Refuted'' means the measured effect is absent or has the wrong sign for the hypothesis.
+Sources: \texttt{probes/probe\_manifold.py}, \texttt{probe\_readout\_search.py},
+\texttt{probe\_locomotion.py}, \texttt{probe\_mapping\_layer.py}, \texttt{probe\_difficulty.py},
+\texttt{probe\_temporal.py}, \texttt{probe\_temporal\_split.py}, \texttt{probe\_basins.py}.}
+\label{tab:probes}
+\begin{tabular}{p{0.26\linewidth}p{0.30\linewidth}p{0.36\linewidth}}
+\toprule
+hypothesis & measurement & outcome \\
+\midrule
+more neurons buy capability & with $61$ sensory inputs the $302$-neuron state has participation
+ratio $36.1$ and $k_{90}=43$ & refuted: capacity is not scarce \\
+node scalars buy capability & slope $2\to12$ moves the ratio $1.46\to1.00$; leak $0,0.5,0.9$
+are identical; per-neuron jitter $2.17$ to $2.49$ against a $2.70$ baseline & refuted: worse or inert \\
+the declared readout is the defect & a searched ten-cell set raises readout rank $1.88\to8.51$,
+but the worst situation pair subtends $1.3$ degrees & refuted for separability \\
+the wiring decides by itself & forward-minus-reverse command never changes sign over twelve
+conditions, three weightings, five magnitudes; signs are per-cell and correct ($27$ GABAergic) but
+a $\gamma=5$ GABA gain only lifts $\rho$ from $0.39$ to $0.83$, never reverses the command &
+refuted: no push--pull \\
+the mapping needs capacity & rank one reaches $100$ percent sign accuracy at MAE $0.10$; rank $64$
+lifts the correlation to $0.84$ and worsens MAE to $0.12$ & refuted: rank one suffices \\
+difficulty raises the required rank & $0$ to $32$ nuisance cells move rank-one correlation
+$0.835\to0.806$ & refuted: flat \\
+temporal depth needs capacity & after $128$ blank steps sign accuracy is $0.74$ to $0.79$; final
+states are one-dimensional (PC1 share $1.00$) in two clusters (gap ratio $2.71$) &
+refuted, with a mechanism \\
+scale buys memory slots & median slots $16$ at $56$ neurons, $32$ (the measurement ceiling) at
+$88$, $152$ and $280$, three seeds & partially: floor, then saturation at input width \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three outcomes carry the argument. First, capacity: with $61$ sensory inputs the settled state spans
+$36$ effective dimensions, so adding neurons has nothing to add; the collapse reported in
+Section~\ref{sec:scan} was an artefact of a four-dimensional drive, not of the connectome. Second, the
+readout: a searched ten-cell set raises the readout's own rank by a factor of $4.5$, yet the nine
+situations remain inside a $1.3$ degree cone, so the limitation is not which cells are read. Third,
+the wiring: under row-normalised, raw and square-root weightings at five magnitudes from $0.005$ to
+$2.0$, the forward-minus-reverse command never reverses sign. Noxious input raises both populations
+together, an arousal response rather than a decision.
+
+The corpus explains the third, and then qualifies it. The sign layer is not noise: $27$ cells have
+every outgoing chemical edge inhibitory and $244$ have every edge excitatory, with no mixed cell, and
+the $27$ are the canonical GABAergic set of the hermaphrodite (AVL, DVB, RIS, RIAR/RIAL, DD and VD
+motor neurons, RME, DVC). Signs are therefore correct per cell. What the corpus does not carry is
+strength: row normalisation gives every postsynaptic cell the same total input, so a GABAergic
+efferent is diluted by its in-degree. Scaling those $27$ cells' efficacy by a factor $\gamma$ tests
+that directly: $\gamma=5$ lifts the valence rank correlation from $0.39$ to $0.83$, while the same
+$\gamma$ on $27$ random cells leaves it at $0.38$. Strength matters, and only where the inhibition
+belongs. It is still not sufficient: at every $\gamma$ from $1$ to $20$ the forward-minus-reverse
+command stays positive, so the network ranks the situations without ever committing to reverse. A
+push--pull decision needs per-synapse weights --- which GABA terminal presses on which command
+neuron --- and no public reconstruction of this animal carries them.
+
+The remaining probes converge on the same reading from another direction: the state is close to linear in
+the drive, so nuisance dimensions are projected out by a rank-one readout (rows five and six of
+Table~\ref{tab:probes}), and memory is free rather than capacity-bound. A cue followed by $128$ blank
+steps stays readable because the state settles into one of two attractor basins, not because a trace
+decays slowly; the split appears directly as a one-dimensional final-state distribution with a
+between-to-within ratio of $2.71$.
+
+One regularity is positive, and it constrains the growth contract: memory slots follow input width and
+motif type, not neuron count. $61$ sensory inputs support $36$ effective dimensions, $14$ inputs
+support about $16$ distinguishable cues, and tripling the hidden region from $88$ to $280$ neurons
+adds none. Scaling input width together with the hidden region confirms the mechanism by manipulation
+rather than correlation: at $56$ neurons with $14$ inputs only $4$ to $16$ cues survive the $64$-step
+delay, while $90$ neurons with $16$ inputs hold all $64$ cues tested; beyond $90$ neurons nothing
+changes, so the curve is a step and a plateau, not a power law. Growing neurons buys nothing
+measurable on this substrate; growth would have to add input channels or new motifs to add basins.
+This is also the one claim in the section that survived repetition across seeds.
+
 \section{Discussion}
 
 \textbf{What is shown.} The growth contract is implementable on a measured connectome at negligible

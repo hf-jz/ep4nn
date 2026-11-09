@@ -1,0 +1,32 @@
+{
+ "probe": "probe_manifold.py",
+ "row_sum": 0.5,
+ "seed": 0,
+ "slope": 4.0,
+ "leak": 0.5,
+ "readout_cells": 10,
+ "n_samples": 124,
+ "n_neurons": 302,
+ "sweeps_max": 64,
+ "residual_max": 0.0,
+ "full": {
+  "participation_ratio": 1.01,
+  "k90": 1,
+  "k99": 1,
+  "pc1_share": 0.995,
+  "rank": 74
+ },
+ "readout": {
+  "participation_ratio": 1.0,
+  "k90": 1,
+  "k99": 1,
+  "pc1_share": 1.0,
+  "rank": 10
+ },
+ "state_rms": 0.059597,
+ "readout_rms": 0.061753,
+ "leakage": 1.0362,
+ "readout_rank_share": 1.0,
+ "readout_share_of_var": 1.1516,
+ "verdict": "collapse: \u72b6\u6001\u584c\u4e86 \u2192 \u4e0d\u589e\u957f\uff1b\u7ed9\u8282\u70b9\u52a0\u8868\u8fbe\u529b / \u52a0\u53bb\u76f8\u5173\u9879"
+}

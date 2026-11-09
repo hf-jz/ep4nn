@@ -292,6 +292,67 @@ steps, while the closed-loop time constant of the plant is 50 to 100 steps. This
 with the library's own control-oriented demo, which learns a consequence model and leaves the
 controller supplied.
 
+## 5.6 Where the limitation lies: eight probes
+
+The scan of Section~\ref{sec:scan} leaves the remedy open, so we measured the candidates rather
+than ranking them by plausibility. Table~\ref{tab:probes} lists the eight hypotheses, the probe
+that tests each, and the outcome. All probes run on the same measured connectome and the same
+declared operating point, with frozen inputs and paired comparisons; each writes a machine-readable
+record under `docs/assets/`.
+
+| # | hypothesis | probe | measurement | outcome |
+|---|---|---|---|---|
+| 1 | more neurons buy capability | `probe_manifold --input-mode sensory` | 302-neuron state under 61 sensory inputs has participation ratio 36.1 (k90 = 43) | refuted: capacity is not scarce |
+| 2 | node scalars buy capability | `probe_manifold --slope/--leak/--jitter` | slope 2 to 12 drives the ratio from 1.46 to 1.00; leak 0/0.5/0.9 identical; jitter 2.17 to 2.49 against a 2.70 baseline | refuted: monotone worse or inert |
+| 3 | the declared readout is the defect | `probe_readout_search` | a searched ten-cell set raises readout rank from 1.88 to 8.51, yet the worst situation pair stays at 1.3 degrees | refuted for separability |
+| 4 | the wiring decides by itself | `probe_locomotion`, three weightings | the forward-minus-reverse command never changes sign over twelve conditions; 91 percent of chemical synapses are excitatory | refuted: no push-pull |
+| 5 | the mapping needs capacity | `probe_mapping_layer` | rank one reaches 100 percent sign accuracy at MAE 0.10; rank 64 only lifts the rank correlation to 0.84 and worsens MAE | refuted: rank one suffices |
+| 6 | difficulty raises the required rank | `probe_difficulty` | 0 to 32 nuisance cells move rank-one correlation from 0.835 to 0.806 | refuted: flat |
+| 7 | temporal depth needs capacity | `probe_temporal`, `probe_temporal_split` | after 128 blank steps sign accuracy is 0.74 to 0.79; the final states are one-dimensional (PC1 share 1.00) and split into two clusters (gap ratio 2.71) | refuted, with a mechanism: memory is basin selection |
+| 8 | scale buys memory slots | `probe_basins`, three seeds | median slots: 16 at 56 neurons, 32 (the measurement ceiling) at 88, 152 and 280 | partially: a floor exists, and saturation follows input width |
+
+Table: `tab:probes`.
+
+Three of the outcomes carry the argument. First, capacity: with 61 sensory inputs the settled state
+spans 36 effective dimensions, so adding neurons has nothing to add; the earlier collapse of
+Section~\ref{sec:scan} was an artefact of a four-dimensional drive, not of the connectome. Second,
+the readout: a searched ten-cell set does raise the readout's own rank by a factor of 4.5, but the
+nine situations remain inside a 1.3 degree cone, so the limitation is not which cells are read.
+Third, the wiring: with row-normalised, raw and square-root weightings at five magnitudes
+(0.005 to 2.0), the forward-minus-reverse command never reverses sign. Noxious input raises both
+populations together, which is an arousal response rather than a decision.
+
+The corpus explains the third, and then qualifies it. The sign layer is not noise: 27 cells have
+every outgoing chemical edge inhibitory and 244 have every edge excitatory, with no mixed cell, and
+the 27 are the canonical GABAergic set of the hermaphrodite (AVL, DVB, RIS, RIAR/RIAL, DD and VD
+motor neurons, RME, DVC). Signs are therefore correct per cell and predicted from transmitter
+identity. What the corpus does not carry is strength: row normalisation gives every postsynaptic
+cell the same total input, so a GABAergic efferent is diluted by its in-degree.
+Scaling those 27 cells' efficacy by a factor gamma tests exactly that: gamma of 5 lifts the
+valence rank correlation from 0.39 to 0.83, while the same gamma on 27 random cells leaves it at
+0.38. Strength matters, and it matters only where the inhibition belongs. It is still not enough:
+at every gamma from 1 to 20 the forward-minus-reverse command stays positive, so the network ranks
+the situations without ever committing to reverse. A push--pull decision needs per-synapse weights
+--- which GABA terminal presses on which command neuron --- and no public reconstruction of this
+animal carries them.
+The remaining probes converge on the same reading from a different direction: the state is close to
+linear in the drive, so nuisance dimensions are projected out by a rank-one readout (Table~\ref{tab:probes},
+rows 5 and 6), and memory is free rather than capacity-bound. A cue followed by 128 blank steps
+remains readable because the state settles into one of two attractor basins, not because a trace
+decays slowly; the split is visible directly as a one-dimensional final-state distribution with a
+between-to-within ratio of 2.71.
+
+The single positive regularity is that memory slots follow input width and motif type, not neuron
+count: 61 sensory inputs support 36 effective dimensions, 14 inputs support about 16 distinguishable
+cues, and tripling the hidden region from 88 to 280 neurons adds none. This is the only claim in
+this section that survived repetition (three seeds); it is also the one that constrains the growth
+contract, because it says what growth may purchase. Scaling input width together with the hidden
+region confirms the mechanism by manipulation rather than correlation: at 56 neurons with 14 inputs
+only 4 to 16 cues survive the 64-step delay, while 90 neurons with 16 inputs hold all 64 cues
+tested; beyond 90 neurons nothing changes, so the curve is a step and a plateau, not a power law.
+Growing neurons buys nothing measurable here; growth would have to add input channels or new motifs
+to add basins.
+
 # 6 Discussion
 
 **What is shown.** The growth contract is implementable on a measured connectome at negligible

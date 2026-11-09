@@ -1,0 +1,76 @@
+{
+ "probe": "probe_calcium_plasticity.py",
+ "theta": 0.02,
+ "decay": 0.7,
+ "epochs": 8,
+ "eta": 0.01,
+ "settings": {
+  "easy": {
+   "delta": {
+    "train_accuracy": 0.71,
+    "test_accuracy": 0.589,
+    "refusal_rate": 0.0,
+    "ca_median": 0.18381
+   },
+   "ca@0.05": {
+    "train_accuracy": 0.71,
+    "test_accuracy": 0.589,
+    "refusal_rate": 0.0,
+    "ca_median": 0.18379
+   },
+   "ca@0.15": {
+    "train_accuracy": 0.714,
+    "test_accuracy": 0.6,
+    "refusal_rate": 0.016,
+    "ca_median": 0.18622
+   },
+   "ca@0.3": {
+    "train_accuracy": 0.71,
+    "test_accuracy": 0.622,
+    "refusal_rate": 0.128,
+    "ca_median": 0.18962
+   },
+   "ca@0.6": {
+    "train_accuracy": 0.438,
+    "test_accuracy": 0.344,
+    "refusal_rate": 0.617,
+    "ca_median": 0.30136
+   }
+  },
+  "hard": {
+   "delta": {
+    "train_accuracy": 0.743,
+    "test_accuracy": 0.711,
+    "refusal_rate": 0.0,
+    "ca_median": 0.19967
+   },
+   "ca@0.05": {
+    "train_accuracy": 0.743,
+    "test_accuracy": 0.711,
+    "refusal_rate": 0.0,
+    "ca_median": 0.1997
+   },
+   "ca@0.15": {
+    "train_accuracy": 0.733,
+    "test_accuracy": 0.711,
+    "refusal_rate": 0.03,
+    "ca_median": 0.19937
+   },
+   "ca@0.3": {
+    "train_accuracy": 0.69,
+    "test_accuracy": 0.667,
+    "refusal_rate": 0.153,
+    "ca_median": 0.22734
+   },
+   "ca@0.6": {
+    "train_accuracy": 0.643,
+    "test_accuracy": 0.544,
+    "refusal_rate": 0.564,
+    "ca_median": 0.29862
+   }
+  }
+ },
+ "gap_easy": 0.033,
+ "gap_hard": 0.0,
+ "verdict": "NO GAIN: 阈值只买来可解释性，不买准确率"
+}

@@ -1,0 +1,76 @@
+{
+ "probe": "probe_calcium_plasticity.py",
+ "theta": 0.02,
+ "decay": 0.7,
+ "epochs": 8,
+ "eta": 0.01,
+ "settings": {
+  "easy": {
+   "delta": {
+    "train_accuracy": 0.714,
+    "test_accuracy": 0.708,
+    "refusal_rate": 0.0,
+    "ca_median": 0.14676
+   },
+   "ca@0.05": {
+    "train_accuracy": 0.714,
+    "test_accuracy": 0.708,
+    "refusal_rate": 0.0,
+    "ca_median": 0.1464
+   },
+   "ca@0.15": {
+    "train_accuracy": 0.714,
+    "test_accuracy": 0.688,
+    "refusal_rate": 0.009,
+    "ca_median": 0.15112
+   },
+   "ca@0.3": {
+    "train_accuracy": 0.723,
+    "test_accuracy": 0.729,
+    "refusal_rate": 0.079,
+    "ca_median": 0.21424
+   },
+   "ca@0.6": {
+    "train_accuracy": 0.661,
+    "test_accuracy": 0.646,
+    "refusal_rate": 0.579,
+    "ca_median": 0.35947
+   }
+  },
+  "hard": {
+   "delta": {
+    "train_accuracy": 0.438,
+    "test_accuracy": 0.479,
+    "refusal_rate": 0.0,
+    "ca_median": 0.38705
+   },
+   "ca@0.05": {
+    "train_accuracy": 0.438,
+    "test_accuracy": 0.479,
+    "refusal_rate": 0.001,
+    "ca_median": 0.38678
+   },
+   "ca@0.15": {
+    "train_accuracy": 0.429,
+    "test_accuracy": 0.458,
+    "refusal_rate": 0.033,
+    "ca_median": 0.39161
+   },
+   "ca@0.3": {
+    "train_accuracy": 0.402,
+    "test_accuracy": 0.479,
+    "refusal_rate": 0.166,
+    "ca_median": 0.38533
+   },
+   "ca@0.6": {
+    "train_accuracy": 0.67,
+    "test_accuracy": 0.646,
+    "refusal_rate": 0.609,
+    "ca_median": 0.30704
+   }
+  }
+ },
+ "gap_easy": 0.021,
+ "gap_hard": 0.167,
+ "verdict": "PASS: 阈值规则在低信噪下更准，且拒绝可计数"
+}

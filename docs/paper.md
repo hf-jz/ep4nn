@@ -292,10 +292,10 @@ steps, while the closed-loop time constant of the plant is 50 to 100 steps. This
 with the library's own control-oriented demo, which learns a consequence model and leaves the
 controller supplied.
 
-## 5.6 Where the limitation lies: eight probes
+## 5.6 Where the limitation lies: nine probes
 
 The scan of Section~\ref{sec:scan} leaves the remedy open, so we measured the candidates rather
-than ranking them by plausibility. Table~\ref{tab:probes} lists the eight hypotheses, the probe
+than ranking them by plausibility. Table~\ref{tab:probes} lists the nine hypotheses, the probe
 that tests each, and the outcome. All probes run on the same measured connectome and the same
 declared operating point, with frozen inputs and paired comparisons; each writes a machine-readable
 record under `docs/assets/`.
@@ -309,7 +309,8 @@ record under `docs/assets/`.
 | 5 | the mapping needs capacity | `probe_mapping_layer` | rank one reaches 100 percent sign accuracy at MAE 0.10; rank 64 only lifts the rank correlation to 0.84 and worsens MAE | refuted: rank one suffices |
 | 6 | difficulty raises the required rank | `probe_difficulty` | 0 to 32 nuisance cells move rank-one correlation from 0.835 to 0.806 | refuted: flat |
 | 7 | temporal depth needs capacity | `probe_temporal`, `probe_temporal_split` | after 128 blank steps sign accuracy is 0.74 to 0.79; the final states are one-dimensional (PC1 share 1.00) and split into two clusters (gap ratio 2.71) | refuted, with a mechanism: memory is basin selection |
-| 8 | scale buys memory slots | `probe_basins`, three seeds | median slots: 16 at 56 neurons, 32 (the measurement ceiling) at 88, 152 and 280 | partially: a floor exists, and saturation follows input width |
+| 8 | scale buys memory slots | `probe_basins`, three seeds; `--input-div 4`, two seeds | median slots: 16 at 56 neurons, 32 (the measurement ceiling) at 88, 152 and 280; with input width scaled alongside, 56 neurons hold 4 to 16 and 90 hold all 64 tested | partially: a floor exists, and saturation follows input width |
+| 9 | a second compartment buys capability | `probe_two_compartment` | rule-gated somatic threshold reaches 1.000 on XOR of stimulus and rule, against 0.29 to 0.47 for the same node given the rule additively, although the additive arm carries the larger separation (8.3 against 0.8) | confirmed, for conjunctive tasks only |
 
 Table: `tab:probes`.
 
@@ -352,6 +353,16 @@ only 4 to 16 cues survive the 64-step delay, while 90 neurons with 16 inputs hol
 tested; beyond 90 neurons nothing changes, so the curve is a step and a plateau, not a power law.
 Growing neurons buys nothing measurable here; growth would have to add input channels or new motifs
 to add basins.
+The last row of Table~\ref{tab:probes} is the one place where a change to the node itself pays. Giving
+each cell a second compartment whose state gates the somatic threshold multiplicatively lets a fixed
+linear readout solve a context-dependent reversal that no single-compartment node solves, at 1.000
+against chance. The control rules out the obvious explanation: when the same rule signal is added to
+the drive instead of gating the threshold, the state carries a larger separation (8.3 against 0.8)
+and the readout still fails, because a sum cannot represent a conjunction. Two limits matter: the
+gain is in rule-time tasks and not in the push-pull failure above, which is a weight problem and
+stays one; and the gate strength must stay moderate, since kappa = 3 swings the threshold far enough
+to push every cell to one side.
+
 
 # 6 Discussion
 

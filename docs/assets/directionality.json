@@ -1,0 +1,88 @@
+{
+ "probe": "probe_directionality.py",
+ "by_role": {
+  "command": {
+   "n": 10,
+   "median": 0.388,
+   "mean": 0.375
+  },
+  "interneuron": {
+   "n": 91,
+   "median": 0.673,
+   "mean": 0.639
+  },
+  "motor": {
+   "n": 118,
+   "median": 0.304,
+   "mean": 0.366
+  },
+  "pharyngeal": {
+   "n": 22,
+   "median": 0.515,
+   "mean": 0.491
+  },
+  "sensory": {
+   "n": 61,
+   "median": 0.792,
+   "mean": 0.76
+  }
+ },
+ "command_vs_sensory": {
+  "median_command": 0.388,
+  "median_sensory": 0.792,
+  "diff": -0.404,
+  "permutation_p": 0.0002
+ },
+ "most_control_like": [
+  {
+   "cell": "SDQR",
+   "role": "interneuron",
+   "ratio": 1.0
+  },
+  {
+   "cell": "PVDR",
+   "role": "sensory",
+   "ratio": 1.0
+  },
+  {
+   "cell": "PLNR",
+   "role": "interneuron",
+   "ratio": 1.0
+  },
+  {
+   "cell": "PLML",
+   "role": "sensory",
+   "ratio": 1.0
+  },
+  {
+   "cell": "PHCR",
+   "role": "interneuron",
+   "ratio": 1.0
+  },
+  {
+   "cell": "MCR",
+   "role": "pharyngeal",
+   "ratio": 1.0
+  },
+  {
+   "cell": "MCL",
+   "role": "pharyngeal",
+   "ratio": 1.0
+  },
+  {
+   "cell": "M4",
+   "role": "pharyngeal",
+   "ratio": 1.0
+  },
+  {
+   "cell": "IL2DR",
+   "role": "sensory",
+   "ratio": 1.0
+  },
+  {
+   "cell": "IL2DL",
+   "role": "sensory",
+   "ratio": 1.0
+  }
+ ]
+}

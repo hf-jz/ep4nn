@@ -734,19 +734,20 @@ not a capability that arrived.
 \label{sec:probes}
 
 The scan of Section~\ref{sec:scan} leaves the remedy open, so the candidates were measured rather
-than ranked by plausibility. Table~\ref{tab:probes} lists the eight hypotheses, the probe that tests
+than ranked by plausibility. Table~\ref{tab:probes} lists the nine hypotheses, the probe that tests
 each, and the outcome. Every probe runs on the same measured connectome, the same declared operating
 point, frozen inputs and paired comparisons; each writes a machine-readable record under
-\texttt{docs/assets/}, and the full numbers are in \texttt{docs/实测台账.md}, Sections 11 to 18.
+\texttt{docs/assets/}, and the full numbers are in \texttt{docs/实测台账.md}, Sections 11 to 22.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Eight hypotheses about where the limitation lies, each tested on the measured connectome.
+\caption{Nine hypotheses about where the limitation lies, each tested on the measured connectome.
 ``Refuted'' means the measured effect is absent or has the wrong sign for the hypothesis.
 Sources: \texttt{probes/probe\_manifold.py}, \texttt{probe\_readout\_search.py},
 \texttt{probe\_locomotion.py}, \texttt{probe\_mapping\_layer.py}, \texttt{probe\_difficulty.py},
-\texttt{probe\_temporal.py}, \texttt{probe\_temporal\_split.py}, \texttt{probe\_basins.py}.}
+\texttt{probe\_temporal.py}, \texttt{probe\_temporal\_split.py}, \texttt{probe\_basins.py},
+\texttt{probe\_two\_compartment.py}.}
 \label{tab:probes}
 \begin{tabular}{p{0.26\linewidth}p{0.30\linewidth}p{0.36\linewidth}}
 \toprule
@@ -770,7 +771,12 @@ temporal depth needs capacity & after $128$ blank steps sign accuracy is $0.74$ 
 states are one-dimensional (PC1 share $1.00$) in two clusters (gap ratio $2.71$) &
 refuted, with a mechanism \\
 scale buys memory slots & median slots $16$ at $56$ neurons, $32$ (the measurement ceiling) at
-$88$, $152$ and $280$, three seeds & partially: floor, then saturation at input width \\
+$88$, $152$ and $280$, three seeds; with input width scaled alongside, $56$ neurons hold $4$ to $16$
+and $90$ neurons hold all $64$ tested & partially: floor, then saturation at input width \\
+a second compartment buys capability & rule-gated somatic threshold (multiplicative) reaches $1.000$
+on XOR of stimulus and rule, against $0.29$ to $0.47$ for the same node with the rule added
+additively, although the additive arm carries the larger state separation ($8.3$ against $0.8$) &
+confirmed, for conjunctive tasks only \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -813,6 +819,16 @@ delay, while $90$ neurons with $16$ inputs hold all $64$ cues tested; beyond $90
 changes, so the curve is a step and a plateau, not a power law. Growing neurons buys nothing
 measurable on this substrate; growth would have to add input channels or new motifs to add basins.
 This is also the one claim in the section that survived repetition across seeds.
+
+The last row of Table~\ref{tab:probes} is the one place where a change to the node itself pays. Giving
+each cell a second compartment whose state gates the somatic threshold multiplicatively lets a fixed
+linear readout solve a context-dependent reversal that no single-compartment node solves, at $1.000$
+against chance. The control rules out the obvious explanation: when the same rule signal is added to
+the drive instead of gating the threshold, the state carries a larger separation ($8.3$ against $0.8$)
+and the readout still fails, because a sum cannot represent a conjunction. Two limits matter. The gain
+is in rule-time tasks and not in the push--pull failure of Section~\ref{sec:probes}, which is a weight
+problem and stays one; and the gate strength must stay moderate, since $\kappa=3$ swings the threshold
+far enough to push every cell to one side and the capability disappears.
 
 \section{Discussion}
 

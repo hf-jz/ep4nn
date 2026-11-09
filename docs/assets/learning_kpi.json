@@ -1,0 +1,16 @@
+{
+ "probe": "probe_learning_kpi.py",
+ "samples": 120,
+ "rank": 8,
+ "rho_valence_within": {
+  "A": 1.0,
+  "B": 1.0
+ },
+ "rho_transfer": {
+  "A->B": 1.0,
+  "B->A": 1.0
+ },
+ "rho_set_id_chance_corrected": 0.55,
+ "ratio_valence_over_set_id": 1.82,
+ "verdict": "PASS: 状态带抽象效价，跨刺激集可迁移"
+}

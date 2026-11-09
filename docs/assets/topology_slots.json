@@ -1,0 +1,49 @@
+{
+ "probe": "probe_topology_slots.py",
+ "input_div": 4,
+ "rows": [
+  {
+   "n": 56,
+   "vertices_with_edges": 56,
+   "edges": 271,
+   "b0": 1,
+   "b1": 216,
+   "triangles": 234,
+   "b1_per_vertex": 3.86,
+   "slots_measured": 4
+  },
+  {
+   "n": 90,
+   "vertices_with_edges": 90,
+   "edges": 821,
+   "b0": 1,
+   "b1": 732,
+   "triangles": 1307,
+   "b1_per_vertex": 8.13,
+   "slots_measured": 64
+  },
+  {
+   "n": 170,
+   "vertices_with_edges": 170,
+   "edges": 3041,
+   "b0": 1,
+   "b1": 2872,
+   "triangles": 9048,
+   "b1_per_vertex": 16.89,
+   "slots_measured": 64
+  },
+  {
+   "n": 330,
+   "vertices_with_edges": 330,
+   "edges": 12007,
+   "b0": 1,
+   "b1": 11678,
+   "triangles": 76322,
+   "b1_per_vertex": 35.39,
+   "slots_measured": 64
+  }
+ ],
+ "b1_growth": 54.1,
+ "slot_growth": 16.0,
+ "verdict": "REFUTED: b1 与槽位不同构——b1 随边数增长 54.1x，槽位只有 16.0x，且槽位已到测量上限"
+}
